@@ -15,3 +15,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
+
+// routes/web.php
+Route::get('/deploy', 'DeployController@deploy');
