@@ -23,15 +23,14 @@ export default defineConfig({
         },
     },
     server: {
-        host: true,
+        host: '0.0.0.0', // Permite conexiones desde cualquier IP
+        port: 5174,
+        strictPort: true,
         hmr: {
-            host: 'bianco.net.ar',
+            protocol: 'ws',
+            host: 'bianco.net.ar', // Ajusta según tu dominio
         },
-       origin: 'http://bianco.net.ar',
-        port: 5173,
-        watch: {
-            usePolling: true,
-        },
+        cors: true, // Habilita CORS
     },
 
 });
