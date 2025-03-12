@@ -23,9 +23,15 @@ export default defineConfig({
         },
     },
     server: {
-        host: 'localhost', // or '0.0.0.0' if you need to access it from other devices in the network
-        origin: 'http://localhost:5174', //change to http://0.0.0.0:5174 if you need to access it from other devices in the network
-        cors: true,
+        host: true,
+        hmr: {
+            host: 'bianco.net.ar',
+        },
+       origin: 'http://bianco.net.ar',
+        port: 5173,
+        watch: {
+            usePolling: true,
+        },
     },
 
 });
