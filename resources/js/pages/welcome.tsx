@@ -26,7 +26,11 @@ export default function Welcome() {
 
                 {/* Main Content */}
                 <div className="mx-auto flex h-full max-w-3xl flex-col items-center justify-center px-6 text-center">
-                    <h1 className="text-2xl font-bold text-white">Bianco Home Page</h1>
+                    <h1 className="text-2xl font-bold text-white">Bianco OnLine</h1>
+
+                    {/* Profile Image */}
+                    <img src="/imgs/perfil2.png" alt="Perfil" className="mt-6 h-32 w-32 rounded-full border-4 border-green-400 shadow-lg" />
+
                     <p className="mt-4 text-sm text-green-300">
                         A passionate IT professional with a strong academic background, I'm currently pursuing a Bachelor's degree in Systems
                         Engineering (anticipated completion soon) while simultaneously working as a Software Analyst and Full Stack Developer.
