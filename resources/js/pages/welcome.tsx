@@ -127,11 +127,14 @@ export default function Welcome() {
 
         // Actualizar juego
         function update() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'black'; // fondo negro
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
             drawShip();
             drawBullets();
             drawAsteroids();
             detectCollisions();
+
             requestAnimationFrame(update);
         }
 
@@ -152,7 +155,7 @@ export default function Welcome() {
             </Head>
             <div className="relative flex min-h-screen flex-col bg-black p-6 font-mono text-green-500">
                 {/* Canvas para el juego */}
-                <canvas ref={canvasRef} className="absolute top-0 left-0 -z-10 h-full w-full"></canvas>
+                <canvas ref={canvasRef} className="pointer-events-none fixed top-0 left-0 -z-10 h-full w-full"></canvas>
 
                 {/* Enlaces de navegación estilo terminal */}
                 <nav className="mb-6 flex justify-center gap-8 text-lg">
