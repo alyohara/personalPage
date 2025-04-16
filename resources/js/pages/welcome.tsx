@@ -48,11 +48,13 @@ export default function Welcome() {
                             A passionate IT professional with a strong academic background, currently pursuing a Bachelor's degree in Systems
                             Engineering (anticipated completion soon) while working as a Software Analyst and Full Stack Developer.
                         </p>
-                        <p className=mt-4 text-left" style={{ textAlign: 'left' }}>
+                        <p className="mt-4 text-left" style={{ textAlign: 'left' }}>
                             At my current role, I tackle complex challenges and guide best practices aligned with quality metrics. I also help build
                             and implement custom solutions.
                         </p>
-                        <p className="mt-4 text-left" style={{ textAlign: 'left' }} >Since joining the team, we built a robust sector and a custom CRM system for streamlined workflows.</p>
+                        <p className="mt-4 text-left" style={{ textAlign: 'left' }}>
+                            Since joining the team, we built a robust sector and a custom CRM system for streamlined workflows.
+                        </p>
                         <p className="mt-4 text-left" style={{ textAlign: 'left' }}>
                             I'm constantly learning — from website development (
                             <a href="https://sosma.com.ar" className="text-green-300 underline hover:text-white">
