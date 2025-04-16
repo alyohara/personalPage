@@ -75,7 +75,7 @@ export default function Welcome() {
                     <div className="container mx-auto px-6 py-8 text-center">
                         <p className="text-lg font-bold text-white">Angel Leonardo Bianco</p>
                         <p className="mt-2 text-sm">
-                            Correo electrónico:
+                            E-mails:
                             <a href="mailto:angel.leonardo.bianco@gmail.com" className="ml-1 text-blue-400 hover:text-white">
                                 angel.leonardo.bianco@gmail.com
                             </a>
@@ -110,9 +110,7 @@ export default function Welcome() {
                                 https://github.com/alyohara
                             </a>
                         </p>
-                        <p className="mt-4 text-xs text-gray-500">
-                            &copy; {new Date().getFullYear()} Angel Leonardo Bianco. Todos los derechos reservados.
-                        </p>
+                        <p className="mt-4 text-xs text-gray-500">&copy; {new Date().getFullYear()} Angel Leonardo Bianco. All Rights Reserved.</p>
                     </div>
                 </footer>
             </div>
