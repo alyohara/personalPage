@@ -184,3 +184,5 @@ export default function Welcome() {
         </>
     );
 }
+
+Welcome.layout = null;
