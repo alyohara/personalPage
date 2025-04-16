@@ -21,11 +21,11 @@ export default function Welcome() {
                     <div className="flex w-full items-center justify-between border-b border-green-600 bg-black px-4 py-2 text-sm font-bold text-green-400">
                         <span>Bianco(R) Angel Leonardo</span>
                         <div className="flex gap-1">
-                            <div className="h-3 w-3 border border-green-400 bg-black"></div>
+                            <div className="h-3 w-3 border border-green-400 bg-black">_</div>
                             {/* Minimize */}
-                            <div className="h-3 w-3 border border-green-400 bg-black"></div>
+                            <div className="h-3 w-3 border border-green-400 bg-black">■</div>
                             {/* Maximize */}
-                            <div className="h-3 w-3 border border-green-400 bg-black"></div>
+                            <div className="h-3 w-3 border border-green-400 bg-black text-red-500">x</div>
                             {/* Close */}
                         </div>
                     </div>
