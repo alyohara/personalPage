@@ -194,4 +194,4 @@ export default function Welcome() {
 }
 
 // Disable global layout if needed:
-// Welcome.layout = null;
+Welcome.layout = null;
