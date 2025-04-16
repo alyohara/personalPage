@@ -67,7 +67,6 @@ export default function Welcome() {
                             fontFamily: 'monospace',
                             fontSize: '8px',
                             lineHeight: '8px',
-                            transform: 'scale(0.5)',
                             transformOrigin: 'center',
                         }}
                     >
