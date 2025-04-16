@@ -42,7 +42,6 @@ export default function Welcome() {
                     <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 font-mono text-sm leading-relaxed text-green-400">
                         <h1 className="mb-4 text-xl font-bold text-white">C:\\BIOGRAPHY&gt;</h1>
 
-                        <img src="/imgs/perfil2.png" alt="Perfil" className="mb-6 h-28 w-28 border-2 border-green-400" />
                         <img src="/imgs/perfil2.png" alt="Perfil" className="mt-6 h-32 w-32 rounded-full border-4 border-green-400 shadow-lg" />
                         <p>
                             A passionate IT professional with a strong academic background, currently pursuing a Bachelor's degree in Systems
