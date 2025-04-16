@@ -9,19 +9,19 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/about', function () {
-    return inertia('About');
+    return inertia('about');
 })->name('about');
 
 Route::get('/projects', function () {
-    return inertia('Projects');
+    return inertia('projects');
 })->name('projects');
 
 Route::get('/blog', function () {
-    return inertia('Blog');
+    return inertia('blog');
 })->name('blog');
 
 Route::get('/contact', function () {
-    return inertia('Contact');
+    return inertia('contact');
 })->name('contact');
 
 Route::middleware(['auth', 'verified'])->group(function () {
