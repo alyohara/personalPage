@@ -19,7 +19,7 @@ export default function Welcome() {
                 <div className="w-full max-w-4xl border border-green-600 bg-black">
                     {/* Top Bar */}
                     <div className="w-full border-b border-green-600 bg-black px-4 py-2 text-sm font-bold text-green-400">
-                        Microsoft(R) Windows DOS
+                        Bianco(R) Angel Leonardo
                     </div>
 
                     {/* Navigation */}
@@ -43,24 +43,24 @@ export default function Welcome() {
                         <h1 className="mb-4 text-xl font-bold text-white">C:\\BIOGRAPHY&gt;</h1>
 
                         <img src="/imgs/perfil2.png" alt="Perfil" className="mb-6 h-28 w-28 border-2 border-green-400" />
-
+                        <img src="/imgs/perfil2.png" alt="Perfil" className="mt-6 h-32 w-32 rounded-full border-4 border-green-400 shadow-lg" />
                         <p>
                             A passionate IT professional with a strong academic background, currently pursuing a Bachelor's degree in Systems
                             Engineering (anticipated completion soon) while working as a Software Analyst and Full Stack Developer.
                         </p>
-                        <p className="mt-4">
+                        <p className=mt-4 text-left" style={{ textAlign: 'left' }}>
                             At my current role, I tackle complex challenges and guide best practices aligned with quality metrics. I also help build
                             and implement custom solutions.
                         </p>
-                        <p className="mt-4">Since joining the team, we built a robust sector and a custom CRM system for streamlined workflows.</p>
-                        <p className="mt-4">
+                        <p className="mt-4 text-left" style={{ textAlign: 'left' }} >Since joining the team, we built a robust sector and a custom CRM system for streamlined workflows.</p>
+                        <p className="mt-4 text-left" style={{ textAlign: 'left' }}>
                             I'm constantly learning — from website development (
                             <a href="https://sosma.com.ar" className="text-green-300 underline hover:text-white">
                                 sosma.com.ar
                             </a>
                             ) to QA and crypto projects. I develop Laravel applications for various organizations and consulting firms.
                         </p>
-                        <p className="mt-4">
+                        <p className="mt-4 text-left" style={{ textAlign: 'left' }}>
                             I also teach Data Structures at{' '}
                             <a href="https://unab.edu.ar" className="text-green-300 underline hover:text-white">
                                 UNAB
@@ -71,7 +71,7 @@ export default function Welcome() {
                             </a>
                             .
                         </p>
-                        <p className="mt-4">
+                        <p className="mt-4 text-left" style={{ textAlign: 'left' }}>
                             Academic rigor + dev experience + teaching = well-rounded IT profile.<span className="blinking-cursor"></span>
                         </p>
                     </div>
