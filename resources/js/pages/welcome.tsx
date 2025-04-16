@@ -11,8 +11,13 @@ export default function Welcome() {
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        // Configurar tamaño del canvas
+        const resizeCanvas = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
 
         // Nave
         const ship = {
@@ -134,6 +139,7 @@ export default function Welcome() {
 
         // Limpiar al desmontar
         return () => {
+            window.removeEventListener('resize', resizeCanvas);
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         };
     }, []);
@@ -146,7 +152,7 @@ export default function Welcome() {
             </Head>
             <div className="relative flex min-h-screen flex-col bg-black p-6 font-mono text-green-500">
                 {/* Canvas para el juego */}
-                <canvas ref={canvasRef} className="absolute top-0 left-0 -z-10"></canvas>
+                <canvas ref={canvasRef} className="absolute top-0 left-0 -z-10 h-full w-full"></canvas>
 
                 {/* Enlaces de navegación estilo terminal */}
                 <nav className="mb-6 flex justify-center gap-8 text-lg">
