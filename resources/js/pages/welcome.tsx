@@ -18,8 +18,16 @@ export default function Welcome() {
                 {/* Terminal Window */}
                 <div className="w-full max-w-4xl border border-green-600 bg-black">
                     {/* Top Bar */}
-                    <div className="w-full border-b border-green-600 bg-black px-4 py-2 text-sm font-bold text-green-400">
-                        Bianco(R) Angel Leonardo
+                    <div className="flex w-full items-center justify-between border-b border-green-600 bg-black px-4 py-2 text-sm font-bold text-green-400">
+                        <span>Bianco(R) Angel Leonardo</span>
+                        <div className="flex gap-1">
+                            <div className="h-3 w-3 border border-green-400 bg-black"></div>
+                            {/* Minimize */}
+                            <div className="h-3 w-3 border border-green-400 bg-black"></div>
+                            {/* Maximize */}
+                            <div className="h-3 w-3 border border-green-400 bg-black"></div>
+                            {/* Close */}
+                        </div>
                     </div>
 
                     {/* Navigation */}
