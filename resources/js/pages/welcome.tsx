@@ -8,16 +8,16 @@ export default function Welcome() {
                 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
             </Head>
             <div className="flex min-h-screen items-center justify-center bg-gray-900">
-                {/* Terminal Window */}
+                {/* Ventana de Terminal */}
                 <div className="w-full max-w-4xl rounded-lg border border-gray-700 bg-black shadow-lg">
-                    {/* Terminal Header */}
+                    {/* Encabezado de la Terminal */}
                     <div className="flex items-center justify-start gap-2 border-b border-gray-700 bg-gray-800 px-4 py-2">
                         <div className="h-3 w-3 rounded-full bg-red-500"></div>
                         <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
                         <div className="h-3 w-3 rounded-full bg-green-500"></div>
                     </div>
 
-                    {/* Navigation Bar */}
+                    {/* Barra de Navegación */}
                     <nav className="flex justify-center gap-8 border-b border-gray-700 bg-gray-800 py-3 text-sm">
                         <Link href={route('about')} className="text-blue-400 hover:text-white">
                             __About__
@@ -33,11 +33,11 @@ export default function Welcome() {
                         </Link>
                     </nav>
 
-                    {/* Main Content */}
+                    {/* Contenido Principal */}
                     <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 text-center text-green-400">
                         <h1 className="text-2xl font-bold text-white">Bianco OnLine</h1>
 
-                        {/* Profile Image */}
+                        {/* Imagen de Perfil */}
                         <img src="/imgs/perfil2.png" alt="Perfil" className="mt-6 h-32 w-32 rounded-full border-4 border-green-400 shadow-lg" />
 
                         <p className="mt-4 text-sm">
@@ -80,7 +80,7 @@ export default function Welcome() {
                         </p>
                     </div>
 
-                    {/* Footer */}
+                    {/* Pie de Página */}
                     <footer className="border-t border-gray-700 bg-gray-800 px-6 py-4 text-center text-gray-300">
                         <p className="text-lg font-bold text-white">Angel Leonardo Bianco</p>
                         <p className="mt-2 text-sm">
@@ -124,7 +124,7 @@ export default function Welcome() {
                 </div>
             </div>
 
-            {/* CSS for blinking cursor */}
+            {/* CSS para el cursor parpadeante */}
             <style>
                 {`
                     .blinking-cursor {
