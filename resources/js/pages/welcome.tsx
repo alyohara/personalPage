@@ -26,7 +26,7 @@ export default function Welcome() {
 
                 {/* Main Content */}
                 <div className="mx-auto flex h-full max-w-4xl flex-col items-center justify-center px-6 text-center">
-                    <h1 className="text-3xl font-bold text-white">Welcome to My Page!</h1>
+                    <h1 className="text-3xl font-bold text-white">Bianco Home Page</h1>
                     <p className="mt-4 text-lg text-green-500">
                         A passionate IT professional with a strong academic background, I'm currently pursuing a Bachelor's degree in Systems
                         Engineering (anticipated completion soon) while simultaneously working as a Software Analyst and Full Stack Developer.
@@ -51,8 +51,15 @@ export default function Welcome() {
                         developing applications using Laravel for various organizations and external consulting firms.
                     </p>
                     <p className="mt-4 text-lg text-green-500">
-                        Additionally, I share my knowledge as a Professor of Data Structures at the Universidad Nacional Guillermo Brown (UNAB) and as
-                        a Professor of NTICS at Instituto Superior FEMEBA, fostering the next generation of IT professionals.
+                        Additionally, I share my knowledge as a Professor of Data Structures at the{' '}
+                        <a href="https://unab.edu.ar" className="underline hover:text-white">
+                            Universidad Nacional Guillermo Brown (UNAB)
+                        </a>{' '}
+                        and as a Professor of NTICS at{' '}
+                        <a href="https://www.institutosuperiorfemeba.com/" className="underline hover:text-white">
+                            Instituto Superior FEMEBA
+                        </a>
+                        , fostering the next generation of IT professionals.
                     </p>
                     <p className="mt-4 text-lg text-green-500">
                         This combination of academic rigor, hands-on development experience, and a passion for teaching demonstrates my well-rounded
