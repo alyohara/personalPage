@@ -1,9 +1,34 @@
 import { Head, Link } from '@inertiajs/react';
+import { useState } from 'react';
 
 export default function Welcome() {
+    const [language, setLanguage] = useState('en'); // Estado para el idioma actual
+
+    // Contenido en inglés y español
+    const content = {
+        en: {
+            title: "Bianco's Personal Page",
+            greeting: 'Welcome to my portfolio. Here you will find information about my projects, experience, and contact details.',
+            options: 'Select an option:',
+            about: 'About Me',
+            projects: 'Projects',
+            blog: 'Blog',
+            contact: 'Contact',
+        },
+        es: {
+            title: 'Página Personal de Bianco',
+            greeting: 'Bienvenido a mi portafolio. Aquí encontrarás información sobre mis proyectos, experiencia y detalles de contacto.',
+            options: 'Selecciona una opción:',
+            about: 'Acerca de mí',
+            projects: 'Proyectos',
+            blog: 'Blog',
+            contact: 'Contacto',
+        },
+    };
+
     return (
         <>
-            <Head title="Bianco's Personal Page">
+            <Head title={content[language].title}>
                 <link rel="preconnect" href="https://fonts.bunny.net" />
                 <link rel="icon" type="image/png" href="/imgs/perfil2.png" />
                 <style>
@@ -22,9 +47,19 @@ export default function Welcome() {
                     <div className="flex w-full items-center justify-between border-b border-green-600 bg-black px-4 py-2 text-sm font-bold text-green-400">
                         <span>Bianco(R) Angel Leonardo</span>
                         <div className="flex gap-1">
-                            <div className="h-3 w-3 border border-green-400 bg-black">_</div>
+                            <div
+                                className="h-3 w-3 cursor-pointer border border-green-400 bg-black"
+                                onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
+                            >
+                                _
+                            </div>
                             {/* Minimize */}
-                            <div className="h-3 w-3 border border-green-400 bg-black">■</div>
+                            <div
+                                className="h-3 w-3 cursor-pointer border border-green-400 bg-black"
+                                onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
+                            >
+                                ■
+                            </div>
                             {/* Maximize */}
                             <div className="h-3 w-3 border border-green-400 bg-black text-red-500">x</div>
                             {/* Close */}
@@ -34,16 +69,16 @@ export default function Welcome() {
                     {/* Navigation */}
                     <nav className="flex justify-center gap-6 border-b border-green-600 bg-black py-2 text-sm">
                         <Link href={route('about')} className="text-green-400 hover:text-white">
-                            [About]
+                            [{content[language].about}]
                         </Link>
                         <Link href={route('projects')} className="text-green-400 hover:text-white">
-                            [Projects]
+                            [{content[language].projects}]
                         </Link>
                         <Link href={route('blog')} className="text-green-400 hover:text-white">
-                            [Blog]
+                            [{content[language].blog}]
                         </Link>
                         <Link href={route('contact')} className="text-green-400 hover:text-white">
-                            [Contact]
+                            [{content[language].contact}]
                         </Link>
                     </nav>
 
@@ -52,38 +87,8 @@ export default function Welcome() {
                         <h1 className="mb-4 text-xl font-bold text-white">C:\\BIOGRAPHY&gt;</h1>
 
                         <img src="/imgs/perfil2.png" alt="Perfil" className="mt-6 mb-4 h-32 w-32 rounded-full border-4 border-green-400 shadow-lg" />
-                        <p>
-                            A passionate IT professional with a strong academic background, currently pursuing a Bachelor's degree in Systems
-                            Engineering (anticipated completion soon) while working as a Software Analyst and Full Stack Developer.
-                        </p>
-                        <p className="mt-4 text-left" style={{ textAlign: 'left' }}>
-                            At my current role, I tackle complex challenges and guide best practices aligned with quality metrics. I also help build
-                            and implement custom solutions.
-                        </p>
-                        <p className="mt-4 text-left" style={{ textAlign: 'left' }}>
-                            Since joining the team, we built a robust sector and a custom CRM system for streamlined workflows.
-                        </p>
-                        <p className="mt-4 text-left" style={{ textAlign: 'left' }}>
-                            I'm constantly learning — from website development (
-                            <a href="https://sosma.com.ar" className="text-green-300 underline hover:text-white">
-                                sosma.com.ar
-                            </a>
-                            ) to QA and crypto projects. I develop Laravel applications for various organizations and consulting firms.
-                        </p>
-                        <p className="mt-4 text-left" style={{ textAlign: 'left' }}>
-                            I also teach Data Structures at{' '}
-                            <a href="https://unab.edu.ar" className="text-green-300 underline hover:text-white">
-                                UNAB
-                            </a>{' '}
-                            and NTICS at{' '}
-                            <a href="https://www.institutosuperiorfemeba.com/" className="text-green-300 underline hover:text-white">
-                                Instituto Superior FEMEBA
-                            </a>
-                            .
-                        </p>
-                        <p className="mt-4 text-left" style={{ textAlign: 'left' }}>
-                            Academic rigor + dev experience + teaching = well-rounded IT profile.<span className="blinking-cursor"></span>
-                        </p>
+                        <p>{content[language].greeting}</p>
+                        <p className="mt-4">{content[language].options}</p>
                     </div>
 
                     {/* Footer */}
