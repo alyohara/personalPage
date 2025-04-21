@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function About() {
@@ -9,6 +9,10 @@ export default function About() {
         en: {
             title: 'About Me',
             biography: 'About Me',
+            about: 'About Me',
+            projects: 'Projects',
+            blog: 'Blog',
+            contact: 'Contact',
             description: [
                 "I'm a passionate IT professional with a strong academic background and extensive experience in software development, systems analysis, and university-level teaching.",
                 "I'm currently completing a Bachelor's degree in Systems Engineering at the National University of La Plata, while working as a Software Analyst, Full Stack Developer, and Adjunct Professor at the National University Guillermo Brown.",
@@ -25,6 +29,11 @@ export default function About() {
         es: {
             title: 'Sobre mí',
             biography: 'Sobre mí',
+            options: 'Selecciona una opción:',
+            about: 'Acerca de mí',
+            projects: 'Proyectos',
+            blog: 'Blog',
+            contact: 'Contacto',
             description: [
                 'Soy un profesional de IT apasionado, con una sólida formación académica y una amplia experiencia en desarrollo de software, análisis de sistemas y docencia universitaria.',
                 'Actualmente me encuentro finalizando la carrera de Ingeniería en Sistemas en la Universidad Nacional de La Plata, mientras trabajo como Analista de Software, Desarrollador Full Stack y Profesor Adjunto en la Universidad Nacional Guillermo Brown.',
@@ -61,21 +70,29 @@ export default function About() {
                     <div className="flex w-full items-center justify-between border-b border-green-600 bg-black px-4 py-2 text-sm font-bold text-green-400">
                         <span>Bianco(R) Angel Leonardo</span>
                         <div className="flex gap-1">
-                            <div
-                                className="h-3 w-3 cursor-pointer border border-green-400 bg-black"
-                                onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
-                            >
-                                _
-                            </div>
-                            <div
-                                className="h-3 w-3 cursor-pointer border border-green-400 bg-black"
-                                onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
-                            >
-                                ■
-                            </div>
-                            <div className="h-3 w-3 border border-green-400 bg-black text-red-500">x</div>
+                            <button className="text-green-400 hover:text-white" onClick={() => setLanguage('en')}>
+                                [En]
+                            </button>
+                            <button className="text-green-400 hover:text-white" onClick={() => setLanguage('es')}>
+                                [Sp]
+                            </button>
                         </div>
                     </div>
+                    {/* Navigation */}
+                    <nav className="flex justify-center gap-6 border-b border-green-600 bg-black py-2 text-sm">
+                        <Link href={route('about')} className="text-green-400 hover:text-white">
+                            [{content[language].about}]
+                        </Link>
+                        <Link href={route('projects')} className="text-green-400 hover:text-white">
+                            [{content[language].projects}]
+                        </Link>
+                        <Link href={route('blog')} className="text-green-400 hover:text-white">
+                            [{content[language].blog}]
+                        </Link>
+                        <Link href={route('contact')} className="text-green-400 hover:text-white">
+                            [{content[language].contact}]
+                        </Link>
+                    </nav>
 
                     {/* Main Content */}
                     <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 font-mono text-sm leading-relaxed text-green-400">
