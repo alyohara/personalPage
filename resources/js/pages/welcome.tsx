@@ -19,7 +19,8 @@ export default function Welcome() {
                 "A passionate IT professional with a strong academic background, currently pursuing a Bachelor's degree in Systems Engineering (anticipated completion soon) while working as a Software Analyst and Full Stack Developer.",
                 'At my current role, I tackle complex challenges and guide best practices aligned with quality metrics. I also help build and implement custom solutions.',
                 'Since joining the team, we built a robust sector and a custom CRM system for streamlined workflows.',
-                "I'm constantly learning — from website development to QA and crypto projects. I develop Laravel applications for various organizations and consulting firms.",
+                "I'm constantly learning — from website development to QA and crypto projects.",
+                'I develop Laravel applications for various organizations and consulting firms.',
                 'I also teach Data Structures at UNAB and NTICS at Instituto Superior FEMEBA.',
                 'Academic rigor + dev experience + teaching = well-rounded IT profile.',
             ],
@@ -34,12 +35,13 @@ export default function Welcome() {
             contact: 'Contacto',
             biography: 'Biografía',
             description: [
-                'Un profesional de TI apasionado con una sólida formación académica, actualmente cursando una Licenciatura en Ingeniería en Sistemas (próxima finalización) mientras trabajo como Analista de Software y Desarrollador Full Stack.',
+                'Un profesional de IT apasionado con una sólida formación académica, actualmente cursando Licenciatura en  Sistemas (próxima finalización) mientras trabajo como Analista de Software y Desarrollador Full Stack.',
                 'En mi rol actual, enfrento desafíos complejos y guío las mejores prácticas alineadas con métricas de calidad. También ayudo a construir e implementar soluciones personalizadas.',
                 'Desde que me uní al equipo, construimos un sector sólido y un sistema CRM personalizado para flujos de trabajo optimizados.',
-                'Estoy en constante aprendizaje: desde desarrollo web hasta QA y proyectos de criptomonedas. Desarrollo aplicaciones Laravel para diversas organizaciones y consultoras.',
-                'También enseño Estructuras de Datos en la UNAB y NTICS en el Instituto Superior FEMEBA.',
-                'Rigor académico + experiencia en desarrollo + enseñanza = perfil de TI integral.',
+                'Estoy en constante aprendizaje: desde desarrollo web hasta QA y proyectos de criptomonedas.',
+                'Desarrollo aplicaciones en Laravel para diversas organizaciones y consultoras.',
+                'También enseño Algoritmos y Estructuras de Datos en la UNAB y NTICS en el Instituto Superior FEMEBA.',
+                'Rigor académico + experiencia en desarrollo + enseñanza = perfil de IT integral.',
             ],
         },
     };
@@ -65,22 +67,12 @@ export default function Welcome() {
                     <div className="flex w-full items-center justify-between border-b border-green-600 bg-black px-4 py-2 text-sm font-bold text-green-400">
                         <span>Bianco(R) Angel Leonardo</span>
                         <div className="flex gap-1">
-                            <div
-                                className="h-3 w-3 cursor-pointer border border-green-400 bg-black"
-                                onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
-                            >
-                                _
-                            </div>
-                            {/* Minimize */}
-                            <div
-                                className="h-3 w-3 cursor-pointer border border-green-400 bg-black"
-                                onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
-                            >
-                                ■
-                            </div>
-                            {/* Maximize */}
-                            <div className="h-3 w-3 border border-green-400 bg-black text-red-500">x</div>
-                            {/* Close */}
+                            <button className="text-green-400 hover:text-white" onClick={() => setLanguage('en')}>
+                                [En]
+                            </button>
+                            <button className="text-green-400 hover:text-white" onClick={() => setLanguage('es')}>
+                                [Sp]
+                            </button>
                         </div>
                     </div>
 
