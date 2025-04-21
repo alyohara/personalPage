@@ -105,6 +105,97 @@ export default function About() {
                         ))}
                         <span className="blinking-cursor"></span>
                     </div>
+                    {/* Skills Section */}
+                    <div className="mx-auto mt-8 w-full max-w-4xl px-6 py-8 text-green-400">
+                        <h2 className="text-2xl font-bold text-white">{language === 'en' ? 'Skills' : 'Habilidades'}</h2>
+                        <ul className="mt-4 list-disc pl-6">
+                            <li>
+                                <strong>{language === 'en' ? 'Programming Languages' : 'Lenguajes de Programación'}:</strong> PHP (Laravel, Zend
+                                Framework, Drupal), C++, Java, Python, Spoon
+                            </li>
+                            <li>
+                                <strong>{language === 'en' ? 'Databases' : 'Bases de Datos'}:</strong> MySQL, PostgreSQL, MongoDB, SQLite, Microsoft
+                                SQL Server, Redis
+                            </li>
+                            <li>
+                                <strong>{language === 'en' ? 'Web Development' : 'Desarrollo Web'}:</strong> HTML5, CSS3, JavaScript (jQuery, React),
+                                PHP, RESTful APIs, AJAX
+                            </li>
+                            <li>
+                                <strong>{language === 'en' ? 'Frameworks & CMS' : 'Frameworks y CMS'}:</strong> Laravel, CodeIgniter, Drupal, Moodle,
+                                WordPress
+                            </li>
+                            <li>
+                                <strong>{language === 'en' ? 'DevOps & Tools' : 'DevOps y Herramientas'}:</strong> Git, Docker, Jenkins, CI/CD,
+                                FLUIGsoftware
+                            </li>
+                            <li>
+                                <strong>{language === 'en' ? 'Cloud Services' : 'Servicios en la Nube'}:</strong> AWS (EC2, S3), Azure, Google Cloud
+                                Platform (GCP)
+                            </li>
+                            <li>
+                                <strong>{language === 'en' ? 'Version Control' : 'Control de Versiones'}:</strong> Git, GitHub, GitLab, Bitbucket
+                            </li>
+                            <li>
+                                <strong>{language === 'en' ? 'Testing & Debugging Tools' : 'Herramientas de Pruebas y Depuración'}:</strong> PHPUnit,
+                                Selenium, Postman, Chrome DevTools
+                            </li>
+                            <li>
+                                <strong>{language === 'en' ? 'Other' : 'Otros'}:</strong> Leaflet (interactive maps), API integration, Agile/Scrum
+                                methodologies, Software Documentation
+                            </li>
+                        </ul>
+                    </div>
+
+                    {/* Experience Section */}
+                    <div className="mx-auto mt-8 w-full max-w-4xl px-6 py-8 text-green-400">
+                        <h2 className="text-2xl font-bold text-white">{language === 'en' ? 'Experience' : 'Experiencia'}</h2>
+                        <div className="mt-4">
+                            <h3 className="text-lg font-bold text-green-300">
+                                {language === 'en' ? 'Software Developer & Analyst (Freelance)' : 'Desarrollador y Analista de Software (Freelance)'}
+                            </h3>
+                            <p className="text-sm">{language === 'en' ? '01/2017 - Present' : '01/2017 - Presente'}</p>
+                            <ul className="mt-2 list-disc pl-6">
+                                <li>
+                                    {language === 'en'
+                                        ? 'Developed robust full-stack applications using frameworks like Laravel for client-facing applications.'
+                                        : 'Desarrollé aplicaciones full-stack robustas utilizando frameworks como Laravel para aplicaciones orientadas al cliente.'}
+                                </li>
+                                <li>
+                                    {language === 'en'
+                                        ? 'Led full-stack development of client websites and platforms, ensuring scalability and functionality using PHP, MySQL, and Laravel.'
+                                        : 'Lideré el desarrollo full-stack de sitios web y plataformas de clientes, asegurando escalabilidad y funcionalidad utilizando PHP, MySQL y Laravel.'}
+                                </li>
+                                <li>
+                                    {language === 'en'
+                                        ? 'Collaborated with teams to implement cross-border digital signature solutions using RESTful APIs and third-party integrations.'
+                                        : 'Colaboré con equipos para implementar soluciones de firma digital transfronterizas utilizando APIs RESTful e integraciones de terceros.'}
+                                </li>
+                            </ul>
+                        </div>
+                        {/* Add other experience sections similarly */}
+                    </div>
+
+                    {/* Education Section */}
+                    <div className="mx-auto mt-8 w-full max-w-4xl px-6 py-8 text-green-400">
+                        <h2 className="text-2xl font-bold text-white">{language === 'en' ? 'Education' : 'Educación'}</h2>
+                        <ul className="mt-4 list-disc pl-6">
+                            <li>
+                                <strong>{language === 'en' ? 'National University of La Plata' : 'Universidad Nacional de La Plata'}</strong> |{' '}
+                                {language === 'en' ? '2004 - Present (anticipated completion soon)' : '2004 - Presente (próxima finalización)'}
+                                <p>{language === 'en' ? 'Bachelor of Science in Systems Engineering' : 'Licenciatura en Ingeniería en Sistemas'}</p>
+                            </li>
+                            <li>
+                                <strong>{language === 'en' ? 'National University of La Plata' : 'Universidad Nacional de La Plata'}</strong> |{' '}
+                                {language === 'en' ? '2004 - 2018' : '2004 - 2018'}
+                                <p>
+                                    {language === 'en'
+                                        ? 'Computer Science Analyst and Programmer'
+                                        : 'Analista y Programador en Ciencias de la Computación'}
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
 
                     {/* Footer */}
                     <footer className="border-t border-green-600 bg-black px-6 py-4 text-center font-mono text-sm text-green-400">
