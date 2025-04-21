@@ -3,8 +3,9 @@ import { Head, Link } from '@inertiajs/react';
 export default function Welcome() {
     return (
         <>
-            <Head title="About Me">
+            <Head title="Bianco's Personal Page">
                 <link rel="preconnect" href="https://fonts.bunny.net" />
+                <link rel="icon" type="image/png" href="/imgs/perfil2.png" />
                 <style>
                     {`
                         body {
@@ -50,7 +51,7 @@ export default function Welcome() {
                     <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 font-mono text-sm leading-relaxed text-green-400">
                         <h1 className="mb-4 text-xl font-bold text-white">C:\\BIOGRAPHY&gt;</h1>
 
-                        <img src="/imgs/perfil2.png" alt="Perfil" className="mt-6 h-32 w-32 rounded-full border-4 border-green-400 shadow-lg" />
+                        <img src="/imgs/perfil2.png" alt="Perfil" className="mt-6 mb-4 h-32 w-32 rounded-full border-4 border-green-400 shadow-lg" />
                         <p>
                             A passionate IT professional with a strong academic background, currently pursuing a Bachelor's degree in Systems
                             Engineering (anticipated completion soon) while working as a Software Analyst and Full Stack Developer.
