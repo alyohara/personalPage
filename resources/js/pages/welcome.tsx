@@ -47,22 +47,18 @@ export default function Welcome() {
                     <div className="flex w-full items-center justify-between border-b border-green-600 bg-black px-4 py-2 text-sm font-bold text-green-400">
                         <span>Bianco(R) Angel Leonardo</span>
                         <div className="flex gap-1">
-                            <div
-                                className="h-3 w-3 cursor-pointer border border-green-400 bg-black"
-                                onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
+                            <button
+                                className="h-6 w-6 cursor-pointer border border-green-400 bg-black text-green-400 hover:text-white"
+                                onClick={() => setLanguage('en')}
                             >
-                                _
-                            </div>
-                            {/* Minimize */}
-                            <div
-                                className="h-3 w-3 cursor-pointer border border-green-400 bg-black"
-                                onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
+                                [En]
+                            </button>
+                            <button
+                                className="h-6 w-6 cursor-pointer border border-green-400 bg-black text-green-400 hover:text-white"
+                                onClick={() => setLanguage('es')}
                             >
-                                ■
-                            </div>
-                            {/* Maximize */}
-                            <div className="h-3 w-3 border border-green-400 bg-black text-red-500">x</div>
-                            {/* Close */}
+                                [Sp]
+                            </button>
                         </div>
                     </div>
 
