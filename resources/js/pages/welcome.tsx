@@ -102,6 +102,7 @@ export default function Welcome() {
                                 {paragraph}
                             </p>
                         ))}
+                        <span className="blinking-cursor"></span>
                     </div>
 
                     {/* Footer */}
