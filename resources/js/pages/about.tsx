@@ -120,7 +120,6 @@ export default function About() {
                             <Code size={20} /> {currentContent.skills}
                         </h2>
                         {/*<p>Laravel, JavaScript, React, MySQL, RESTful APIs, Git, HTML, CSS, C++, Python</p>*/}
-                        <h2 className="text-2xl font-bold text-white">{language === 'en' ? 'Skills' : 'Habilidades'}</h2>
                         <ul className="mt-4 list-disc pl-6">
                             <li>
                                 <strong>{language === 'en' ? 'Programming Languages' : 'Lenguajes de Programación'}:</strong> PHP (Laravel, Zend
@@ -168,6 +167,19 @@ export default function About() {
                             <li>Software Analyst & Full Stack Developer – UNaB</li>
                             <li>Adjunct Professor – UNaB</li>
                             <li>Freelance Web Developer & QA Engineer</li>
+                            <li>Software Developer & Analyst (Freelance) – 01/2017 - Present</li>
+                            <li>Full Stack Developer – 01/2017 - Present</li>
+                            <ul className="list-disc pl-8">
+                                <li>SOSMA (La Plata, AR) – 01/2017 - 03/2022</li>
+                                <li>Ministerio de Desarrollo Productivo (La Plata, AR) – 08/2021 - 01/2022</li>
+                                <li>Withmenetworks SL (Argentina & Spain) – 08/2017 - 11/2018</li>
+                            </ul>
+                            <li>Other Relevant Experience</li>
+                            <ul className="list-disc pl-8">
+                                <li>Universidad Nacional Guillermo Brown (UNaB) – 02/2022 - Present</li>
+                                <li>FEMEBA (La Plata, AR) – 01/2011 - Present</li>
+                                <li>Previous Freelance Work – 01/2015 - 12/2016</li>
+                            </ul>
                         </ul>
                     </div>
 
