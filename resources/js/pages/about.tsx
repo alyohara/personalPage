@@ -1,4 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
+import { Briefcase, Code, GraduationCap } from 'lucide-react';
 import { useState } from 'react';
 
 export default function About() {
@@ -76,7 +77,7 @@ export default function About() {
             </Head>
 
             <div className="flex min-h-screen items-center justify-center bg-black">
-                <div className="w-full max-w-4xl border border-green-600 bg-black">
+                <div className="w-full max-w-4xl rounded-2xl border border-green-600 bg-black shadow-lg">
                     <div className="flex w-full items-center justify-between border-b border-green-600 bg-black px-4 py-2 text-sm font-bold text-green-400">
                         <span>Bianco(R) Angel Leonardo</span>
                         <div className="flex gap-1">
@@ -115,12 +116,16 @@ export default function About() {
                     </div>
 
                     <div className="border-t border-green-600 p-6 text-green-400">
-                        <h2 className="text-lg font-bold text-white">{currentContent.skills}</h2>
+                        <h2 className="mb-2 flex items-center gap-2 text-lg font-bold text-white">
+                            <Code size={20} /> {currentContent.skills}
+                        </h2>
                         <p>Laravel, JavaScript, React, MySQL, RESTful APIs, Git, HTML, CSS, C++, Python</p>
                     </div>
 
                     <div className="border-t border-green-600 p-6 text-green-400">
-                        <h2 className="text-lg font-bold text-white">{currentContent.experience}</h2>
+                        <h2 className="mb-2 flex items-center gap-2 text-lg font-bold text-white">
+                            <Briefcase size={20} /> {currentContent.experience}
+                        </h2>
                         <ul className="list-disc pl-6">
                             <li>Software Analyst & Full Stack Developer – UNaB</li>
                             <li>Adjunct Professor – UNaB</li>
@@ -129,7 +134,9 @@ export default function About() {
                     </div>
 
                     <div className="border-t border-green-600 p-6 text-green-400">
-                        <h2 className="text-lg font-bold text-white">{currentContent.education}</h2>
+                        <h2 className="mb-2 flex items-center gap-2 text-lg font-bold text-white">
+                            <GraduationCap size={20} /> {currentContent.education}
+                        </h2>
                         <ul className="list-disc pl-6">
                             <li>Bachelor’s in Systems Engineering – UNLP (in progress)</li>
                             <li>Professional Certifications in Web Development & QA</li>
