@@ -100,7 +100,7 @@ export default function Welcome() {
                         {content[language].description.map((paragraph, index) => (
                             <p key={index} className="mt-4 text-left" style={{ textAlign: 'left' }}>
                                 {paragraph}
-                                {index === currentContent.description.length - 1 && <span className="blinking-cursor"></span>}
+                                {index === content[language].description.length - 1 && <span className="blinking-cursor"></span>}
                             </p>
                         ))}
                         <p className="blinking-cursor"></p>
