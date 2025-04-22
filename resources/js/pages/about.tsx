@@ -164,9 +164,22 @@ export default function About() {
                             <Briefcase size={20} /> {currentContent.experience}
                         </h2>
                         <ul className="list-disc pl-6">
-                            <li>Desarrollador y Analista de Software (Freelance) | Software Developer & Analyst (Freelance)</li>
-                            <li>Desarrollador Full Stack – SOSMA / Ministerio de Desarrollo Productivo / Withmenetworks SL | Full Stack Developer</li>
-                            <li>Analista Desarrollador – FEMEBA | Developer Analyst – FEMEBA</li>
+                            <li>
+                                {language === 'sp' ? 'Desarrollador y Analista de Software (Freelance)' : 'Software Developer & Analyst (Freelance)'}
+                            </li>
+
+                            <li>
+                                {language === 'sp'
+                                    ? 'Desarrollador Full Stack – SOSMA / Ministerio de Desarrollo Productivo / Withmenetworks SL'
+                                    : 'Full Stack Developer – SOSMA / Ministerio de Desarrollo Productivo / Withmenetworks SL'}
+                            </li>
+                            <li>{language === 'sp' ? 'Analista Desarrollador – FEMEBA' : 'Developer Analyst – FEMEBA'}</li>
+                            <li>
+                                {language === 'sp'
+                                    ? 'Desarrollador Web – Universidad Nacional Guillermo Brown'
+                                    : 'Web Developer – National University Guillermo Brown'}
+                            </li>
+
                             <li>Líder de equipo y responsable de soporte – FEMEBA | Team Leader & Help Desk Manager – FEMEBA</li>
                             <li>Analista de soporte y testing – FEMEBA | Help Desk Analyst & Tester – FEMEBA</li>
                             <li>
