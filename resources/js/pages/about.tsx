@@ -112,7 +112,7 @@ export default function About() {
                                 {paragraph}
                             </p>
                         ))}
-                        <span className="blinking-cursor"></span>
+                        <p className="blinking-cursor"></p>
                     </div>
 
                     <div className="border-t border-green-600 p-6 text-green-400">
