@@ -110,9 +110,9 @@ export default function About() {
                         {currentContent.description.map((paragraph, index) => (
                             <p key={index} className="mt-4 text-left">
                                 {paragraph}
+                                {index === currentContent.description.length - 1 && <span className="blinking-cursor"></span>}
                             </p>
                         ))}
-                        <p className="blinking-cursor"></p>
                     </div>
 
                     <div className="border-t border-green-600 p-6 text-green-400">

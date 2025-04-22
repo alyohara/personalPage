@@ -97,12 +97,12 @@ export default function Welcome() {
                         <h1 className="mb-4 text-xl font-bold text-white">C:\\{content[language].biography}&gt;</h1>
 
                         <img src="/imgs/perfil2.png" alt="Perfil" className="mt-6 mb-4 h-32 w-32 rounded-full border-4 border-green-400 shadow-lg" />
-                        {content[language].description.map((paragraph, index) => (
-                            <p key={index} className="mt-4 text-left" style={{ textAlign: 'left' }}>
+                        {currentContent.description.map((paragraph, index) => (
+                            <p key={index} className="mt-4 text-left">
                                 {paragraph}
+                                {index === currentContent.description.length - 1 && <span className="blinking-cursor"></span>}
                             </p>
                         ))}
-                        <p className="blinking-cursor"></p>
                     </div>
 
                     {/* Footer */}
