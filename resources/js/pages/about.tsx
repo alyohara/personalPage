@@ -164,22 +164,17 @@ export default function About() {
                             <Briefcase size={20} /> {currentContent.experience}
                         </h2>
                         <ul className="list-disc pl-6">
-                            <li>Software Analyst & Full Stack Developer – UNaB</li>
-                            <li>Adjunct Professor – UNaB</li>
-                            <li>Freelance Web Developer & QA Engineer</li>
-                            <li>Software Developer & Analyst (Freelance) – 01/2017 - Present</li>
-                            <li>Full Stack Developer – 01/2017 - Present</li>
-                            <ul className="list-disc pl-8">
-                                <li>SOSMA (La Plata, AR) – 01/2017 - 03/2022</li>
-                                <li>Ministerio de Desarrollo Productivo (La Plata, AR) – 08/2021 - 01/2022</li>
-                                <li>Withmenetworks SL (Argentina & Spain) – 08/2017 - 11/2018</li>
-                            </ul>
-                            <li>Other Relevant Experience</li>
-                            <ul className="list-disc pl-8">
-                                <li>Universidad Nacional Guillermo Brown (UNaB) – 02/2022 - Present</li>
-                                <li>FEMEBA (La Plata, AR) – 01/2011 - Present</li>
-                                <li>Previous Freelance Work – 01/2015 - 12/2016</li>
-                            </ul>
+                            <li>Desarrollador y Analista de Software (Freelance) | Software Developer & Analyst (Freelance)</li>
+                            <li>Desarrollador Full Stack – SOSMA / Ministerio de Desarrollo Productivo / Withmenetworks SL | Full Stack Developer</li>
+                            <li>Analista Desarrollador – FEMEBA | Developer Analyst – FEMEBA</li>
+                            <li>Líder de equipo y responsable de soporte – FEMEBA | Team Leader & Help Desk Manager – FEMEBA</li>
+                            <li>Analista de soporte y testing – FEMEBA | Help Desk Analyst & Tester – FEMEBA</li>
+                            <li>
+                                Profesor Adjunto y Ayudante (Algotimos y Estructuras de Datos) – UNaB | Adjunct Professor & Teaching Fellow
+                                (Algorithms & Data Structures)– UNaB
+                            </li>
+                            <li>Profesor (Informática & NTICS) – ISF | Professor (Informatics & NTICS) – ISF</li>
+                            <li>Desarrollador Web Freelance y QA Engineer | Freelance Web Developer & QA Engineer</li>
                         </ul>
                     </div>
 
