@@ -103,7 +103,6 @@ export default function Welcome() {
                                 {index === content[language].description.length - 1 && <span className="blinking-cursor"></span>}
                             </p>
                         ))}
-                        <p className="blinking-cursor"></p>
                     </div>
 
                     {/* Footer */}

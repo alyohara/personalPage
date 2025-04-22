@@ -119,7 +119,45 @@ export default function About() {
                         <h2 className="mb-2 flex items-center gap-2 text-lg font-bold text-white">
                             <Code size={20} /> {currentContent.skills}
                         </h2>
-                        <p>Laravel, JavaScript, React, MySQL, RESTful APIs, Git, HTML, CSS, C++, Python</p>
+                        {/*<p>Laravel, JavaScript, React, MySQL, RESTful APIs, Git, HTML, CSS, C++, Python</p>*/}
+                        <h2 className="text-2xl font-bold text-white">{language === 'en' ? 'Skills' : 'Habilidades'}</h2>
+                        <ul className="mt-4 list-disc pl-6">
+                            <li>
+                                <strong>{language === 'en' ? 'Programming Languages' : 'Lenguajes de Programación'}:</strong> PHP (Laravel, Zend
+                                Framework, Drupal), C++, Java, Python, Spoon
+                            </li>
+                            <li>
+                                <strong>{language === 'en' ? 'Databases' : 'Bases de Datos'}:</strong> MySQL, PostgreSQL, MongoDB, SQLite, Microsoft
+                                SQL Server, Redis
+                            </li>
+                            <li>
+                                <strong>{language === 'en' ? 'Web Development' : 'Desarrollo Web'}:</strong> HTML5, CSS3, JavaScript (jQuery, React),
+                                PHP, RESTful APIs, AJAX
+                            </li>
+                            <li>
+                                <strong>{language === 'en' ? 'Frameworks & CMS' : 'Frameworks y CMS'}:</strong> Laravel, CodeIgniter, Drupal, Moodle,
+                                WordPress
+                            </li>
+                            <li>
+                                <strong>{language === 'en' ? 'DevOps & Tools' : 'DevOps y Herramientas'}:</strong> Git, Docker, Jenkins, CI/CD,
+                                FLUIGsoftware
+                            </li>
+                            <li>
+                                <strong>{language === 'en' ? 'Cloud Services' : 'Servicios en la Nube'}:</strong> AWS (EC2, S3), Azure, Google Cloud
+                                Platform (GCP)
+                            </li>
+                            <li>
+                                <strong>{language === 'en' ? 'Version Control' : 'Control de Versiones'}:</strong> Git, GitHub, GitLab, Bitbucket
+                            </li>
+                            <li>
+                                <strong>{language === 'en' ? 'Testing & Debugging Tools' : 'Herramientas de Pruebas y Depuración'}:</strong> PHPUnit,
+                                Selenium, Postman, Chrome DevTools
+                            </li>
+                            <li>
+                                <strong>{language === 'en' ? 'Other' : 'Otros'}:</strong> Leaflet (interactive maps), API integration, Agile/Scrum
+                                methodologies, Software Documentation
+                            </li>
+                        </ul>
                     </div>
 
                     <div className="border-t border-green-600 p-6 text-green-400">
