@@ -198,8 +198,13 @@ export default function About() {
                             <GraduationCap size={20} /> {currentContent.education}
                         </h2>
                         <ul className="list-disc pl-6">
-                            <li>Bachelor’s in Systems Engineering – UNLP (in progress)</li>
-                            <li>Professional Certifications in Web Development & QA</li>
+                            <li>{language === 'en' ? 'Bachelor’s in Systems – UNLP (in progress)' : 'Licenciatura en Sistemas – UNLP (en curso)'}</li>
+                            <li>{language === 'en' ? 'Analist University Programer Degree– UNLP' : 'Analista Programador Universitario – UNLP'}</li>
+                            <li>
+                                {language === 'en'
+                                    ? 'Professional Certifications in Web Development & QA'
+                                    : 'Certificaciones Profesionales en Desarrollo Web y QA'}
+                            </li>
                         </ul>
                     </div>
                     {/* Footer */}
