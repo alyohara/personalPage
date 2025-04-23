@@ -90,18 +90,37 @@ export default function About() {
                         </div>
                     </div>
 
+                    {/* Navigation */}
                     <nav className="flex justify-center gap-6 border-b border-green-600 bg-black py-2 text-sm">
-                        <Link href={route('about')} className="text-green-400 hover:text-white">
-                            [{currentContent.about}]
+                        <Link
+                            href={route('home')}
+                            className={`text-green-400 hover:text-white ${route().current('home') ? 'font-bold text-white' : ''}`}
+                        >
+                            [Home]
                         </Link>
-                        <Link href={route('projects')} className="text-green-400 hover:text-white">
-                            [{currentContent.projects}]
+                        <Link
+                            href={route('about')}
+                            className={`text-green-400 hover:text-white ${route().current('about') ? 'font-bold text-white' : ''}`}
+                        >
+                            [{content[language].about}]
                         </Link>
-                        <Link href={route('blog')} className="text-green-400 hover:text-white">
-                            [{currentContent.blog}]
+                        <Link
+                            href={route('projects')}
+                            className={`text-green-400 hover:text-white ${route().current('projects') ? 'font-bold text-white' : ''}`}
+                        >
+                            [{content[language].projects}]
                         </Link>
-                        <Link href={route('contact')} className="text-green-400 hover:text-white">
-                            [{currentContent.contact}]
+                        <Link
+                            href={route('blog')}
+                            className={`text-green-400 hover:text-white ${route().current('blog') ? 'font-bold text-white' : ''}`}
+                        >
+                            [{content[language].blog}]
+                        </Link>
+                        <Link
+                            href={route('contact')}
+                            className={`text-green-400 hover:text-white ${route().current('contact') ? 'font-bold text-white' : ''}`}
+                        >
+                            [{content[language].contact}]
                         </Link>
                     </nav>
 
@@ -154,7 +173,7 @@ export default function About() {
                             </li>
                             <li>
                                 <strong>{language === 'en' ? 'Other' : 'Otros'}:</strong> Leaflet (interactive maps), API integration, Agile/Scrum
-                                methodologies, Software Documentation
+                                methodologies, Software Documentation <span className="blinking-cursor"></span>
                             </li>
                         </ul>
                     </div>
@@ -205,6 +224,7 @@ export default function About() {
                                     ? 'Professional Certifications in Web Development & QA'
                                     : 'Certificaciones Profesionales en Desarrollo Web y QA'}
                             </li>
+                            <span className="blinking-cursor"></span>
                         </ul>
                     </div>
                     {/* Footer */}
