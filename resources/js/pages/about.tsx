@@ -1,5 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import { Briefcase, Code, DocumentText, GraduationCap } from 'lucide-react';
+import { Briefcase, Code, GraduationCap, NotebookText } from 'lucide-react';
 import { useState } from 'react';
 
 export default function About() {
@@ -233,7 +233,7 @@ export default function About() {
                     {/* Resume Section */}
                     <div className="border-t border-green-600 p-6 text-green-400">
                         <h2 className="mb-2 text-lg font-bold text-white">
-                            <DocumentText size={20} /> {language === 'en' ? 'Resume' : 'Currículum'}
+                            <NotebookText size={20} /> {language === 'en' ? 'Resume' : 'Currículum'}
                         </h2>
                         <p className="mb-4">
                             {language === 'en'
