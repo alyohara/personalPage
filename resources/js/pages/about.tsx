@@ -229,6 +229,19 @@ export default function About() {
                             </li>
                         </ul>
                     </div>
+
+                    {/* Resume Section */}
+                    <div className="border-t border-green-600 p-6 text-green-400">
+                        <h2 className="mb-2 text-lg font-bold text-white">{language === 'en' ? 'Resume' : 'Currículum'}</h2>
+                        <p className="mb-4">
+                            {language === 'en'
+                                ? 'You can download my resume by clicking the button below:'
+                                : 'Puedes descargar mi currículum haciendo clic en el botón a continuación:'}
+                        </p>
+                        <a href="/docs/resume.pdf" download className="inline-block rounded bg-green-600 px-4 py-2 text-white hover:bg-green-500">
+                            {language === 'en' ? 'Download Resume' : 'Descargar Currículum'}
+                        </a>
+                    </div>
                     {/* Footer */}
                     <footer className="border-t border-green-600 bg-black px-6 py-4 text-center font-mono text-sm text-green-400">
                         <p className="font-bold text-white">Angel Leonardo Bianco</p>
