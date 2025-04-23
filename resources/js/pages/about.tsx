@@ -1,5 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import { Briefcase, Code, GraduationCap } from 'lucide-react';
+import { Briefcase, Code, DocumentText, GraduationCap } from 'lucide-react';
 import { useState } from 'react';
 
 export default function About() {
