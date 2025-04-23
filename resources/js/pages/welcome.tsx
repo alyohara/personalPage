@@ -78,16 +78,34 @@ export default function Welcome() {
 
                     {/* Navigation */}
                     <nav className="flex justify-center gap-6 border-b border-green-600 bg-black py-2 text-sm">
-                        <Link href={route('about')} className="text-green-400 hover:text-white">
+                        <Link
+                            href={route('welcome')}
+                            className={`text-green-400 hover:text-white ${route().current('welcome') ? 'font-bold text-white' : ''}`}
+                        >
+                            [Home]
+                        </Link>
+                        <Link
+                            href={route('about')}
+                            className={`text-green-400 hover:text-white ${route().current('about') ? 'font-bold text-white' : ''}`}
+                        >
                             [{content[language].about}]
                         </Link>
-                        <Link href={route('projects')} className="text-green-400 hover:text-white">
+                        <Link
+                            href={route('projects')}
+                            className={`text-green-400 hover:text-white ${route().current('projects') ? 'font-bold text-white' : ''}`}
+                        >
                             [{content[language].projects}]
                         </Link>
-                        <Link href={route('blog')} className="text-green-400 hover:text-white">
+                        <Link
+                            href={route('blog')}
+                            className={`text-green-400 hover:text-white ${route().current('blog') ? 'font-bold text-white' : ''}`}
+                        >
                             [{content[language].blog}]
                         </Link>
-                        <Link href={route('contact')} className="text-green-400 hover:text-white">
+                        <Link
+                            href={route('contact')}
+                            className={`text-green-400 hover:text-white ${route().current('contact') ? 'font-bold text-white' : ''}`}
+                        >
                             [{content[language].contact}]
                         </Link>
                     </nav>
