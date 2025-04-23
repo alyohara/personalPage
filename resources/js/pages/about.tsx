@@ -232,7 +232,9 @@ export default function About() {
 
                     {/* Resume Section */}
                     <div className="border-t border-green-600 p-6 text-green-400">
-                        <h2 className="mb-2 text-lg font-bold text-white"><Download size={20} /> language === 'en' ? 'Resume' : 'Currículum'}</h2>
+                        <h2 className="mb-2 text-lg font-bold text-white">
+                            <Download size={20} /> {language === 'en' ? 'Resume' : 'Currículum'}
+                        </h2>
                         <p className="mb-4">
                             {language === 'en'
                                 ? 'You can download my resume by clicking the button below:'
