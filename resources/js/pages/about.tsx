@@ -208,7 +208,10 @@ export default function About() {
                                     : 'Adjunct Professor & Teaching Fellow (Algorithms & Data Structures)– UNaB'}
                             </li>
                             <li>{language === 'sp' ? 'Profesor (Informática & NTICS) – ISF' : 'Professor (Informatics & NTICS) – ISF'}</li>
-                            <li>{language === 'sp' ? 'Desarrollador Web Freelance y QA Engineer' : 'Freelance Web Developer & QA Engineer'}</li>
+                            <li>
+                                {language === 'sp' ? 'Desarrollador Web Freelance y QA Engineer' : 'Freelance Web Developer & QA Engineer'}
+                                <span className="blinking-cursor"></span>
+                            </li>
                         </ul>
                     </div>
 
@@ -224,7 +227,6 @@ export default function About() {
                                     ? 'Professional Certifications in Web Development & QA'
                                     : 'Certificaciones Profesionales en Desarrollo Web y QA'}
                             </li>
-                            <span className="blinking-cursor"></span>
                         </ul>
                     </div>
                     {/* Footer */}
