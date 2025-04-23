@@ -232,7 +232,7 @@ export default function About() {
 
                     {/* Resume Section */}
                     <div className="border-t border-green-600 p-6 text-green-400">
-                        <h2 className="mb-2 text-lg font-bold text-white">
+                        <h2 className="mb-2 flex items-center gap-2 text-lg font-bold text-white">
                             <NotebookText size={20} /> {language === 'en' ? 'Resume' : 'Currículum'}
                         </h2>
                         <p className="mb-4">
