@@ -176,18 +176,20 @@ export default function About() {
                             <li>{language === 'sp' ? 'Analista Desarrollador – FEMEBA' : 'Developer Analyst – FEMEBA'}</li>
                             <li>
                                 {language === 'sp'
-                                    ? 'Desarrollador Web – Universidad Nacional Guillermo Brown'
-                                    : 'Web Developer – National University Guillermo Brown'}
+                                    ? 'Desarrollador FullStack Laravel– Universidad Nacional Guillermo Brown'
+                                    : 'FullStack Laravel Developer – National University Guillermo Brown'}
                             </li>
-
-                            <li>Líder de equipo y responsable de soporte – FEMEBA | Team Leader & Help Desk Manager – FEMEBA</li>
-                            <li>Analista de soporte y testing – FEMEBA | Help Desk Analyst & Tester – FEMEBA</li>
                             <li>
-                                Profesor Adjunto y Ayudante (Algotimos y Estructuras de Datos) – UNaB | Adjunct Professor & Teaching Fellow
-                                (Algorithms & Data Structures)– UNaB
+                                {language === 'sp' ? 'Líder de equipo y responsable de soporte – FEMEBA' : 'Team Leader & Help Desk Manager – FEMEBA'}
                             </li>
-                            <li>Profesor (Informática & NTICS) – ISF | Professor (Informatics & NTICS) – ISF</li>
-                            <li>Desarrollador Web Freelance y QA Engineer | Freelance Web Developer & QA Engineer</li>
+                            <li>{language === 'sp' ? 'Analista de soporte y testing – FEMEBA' : 'Help Desk Analyst & Tester – FEMEBA'}</li>
+                            <li>
+                                {language === 'sp'
+                                    ? 'Profesor Adjunto y Ayudante (Algotimos y Estructuras de Datos) – UNaB'
+                                    : 'Adjunct Professor & Teaching Fellow (Algorithms & Data Structures)– UNaB'}
+                            </li>
+                            <li>{language === 'sp' ? 'Profesor (Informática & NTICS) – ISF' : 'Professor (Informatics & NTICS) – ISF'}</li>
+                            <li>{language === 'sp' ? 'Desarrollador Web Freelance y QA Engineer' : 'Freelance Web Developer & QA Engineer'}</li>
                         </ul>
                     </div>
 
