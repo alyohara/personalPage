@@ -79,7 +79,7 @@ export default function Welcome() {
                     {/* Navigation */}
                     <nav className="flex justify-center gap-6 border-b border-green-600 bg-black py-2 text-sm">
                         <Link
-                            href={route('welcome')}
+                            href={route('Welcome')}
                             className={`text-green-400 hover:text-white ${route().current('welcome') ? 'font-bold text-white' : ''}`}
                         >
                             [Home]
