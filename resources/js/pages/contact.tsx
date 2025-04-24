@@ -160,7 +160,7 @@ export default function Contact() {
                                 </button>
                             </form>
                             {status && (
-                                <p className={`mt-4 text-sm ${statusType === 'success' ? 'text-green-400' : 'text-red-400'}`}>{status}</p>
+                                <p className={`mt-4 text-sm ${statusType === 'success' ? 'text-green-400' : 'text-green-400'}`}>{status}</p>
                             )}{' '}
                         </div>
                     </div>
