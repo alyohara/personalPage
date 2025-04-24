@@ -37,7 +37,7 @@ export default function Contact() {
 
     return (
         <>
-            <Head title={currentContent.title}>
+            <Head title={content.title}>
                 <link rel="preconnect" href="https://fonts.bunny.net" />
                 <link rel="icon" type="image/png" href="/imgs/perfil2.png" />
                 <style>
