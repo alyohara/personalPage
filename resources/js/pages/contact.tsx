@@ -148,49 +148,49 @@ export default function Contact() {
                             {status && <p className="mt-4 text-sm">{status}</p>}
                         </div>
                     </div>
-                </div>
 
-                {/* Footer */}
-                <footer className="border-t border-green-600 bg-black px-6 py-4 text-center font-mono text-sm text-green-400">
-                    <p className="font-bold text-white">Angel Leonardo Bianco</p>
-                    <p className="mt-2">
-                        Emails:
-                        <a href="mailto:angel.leonardo.bianco@gmail.com" className="ml-1 text-green-300 underline hover:text-white">
-                            angel.leonardo.bianco@gmail.com
-                        </a>
-                        ,{' '}
-                        <a href="mailto:angelleonardobianco@outlook.com" className="text-green-300 underline hover:text-white">
-                            angelleonardobianco@outlook.com
-                        </a>
-                        ,{' '}
-                        <a href="mailto:angel.bianco@unab.edu.ar" className="text-green-300 underline hover:text-white">
-                            angel.bianco@unab.edu.ar
-                        </a>
-                    </p>
-                    <p className="mt-2">
-                        LinkedIn:
-                        <a
-                            href="https://www.linkedin.com/in/angel-leonardo-bianco/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="ml-1 text-green-300 underline hover:text-white"
-                        >
-                            https://www.linkedin.com/in/angel-leonardo-bianco/
-                        </a>
-                    </p>
-                    <p className="mt-2">
-                        GitHub:
-                        <a
-                            href="https://github.com/alyohara"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="ml-1 text-green-300 underline hover:text-white"
-                        >
-                            https://github.com/alyohara
-                        </a>
-                    </p>
-                    <p className="mt-4 text-xs text-green-600">&copy; {new Date().getFullYear()} Angel Leonardo Bianco</p>
-                </footer>
+                    {/* Footer */}
+                    <footer className="border-t border-green-600 bg-black px-6 py-4 text-center font-mono text-sm text-green-400">
+                        <p className="font-bold text-white">Angel Leonardo Bianco</p>
+                        <p className="mt-2">
+                            Emails:
+                            <a href="mailto:angel.leonardo.bianco@gmail.com" className="ml-1 text-green-300 underline hover:text-white">
+                                angel.leonardo.bianco@gmail.com
+                            </a>
+                            ,{' '}
+                            <a href="mailto:angelleonardobianco@outlook.com" className="text-green-300 underline hover:text-white">
+                                angelleonardobianco@outlook.com
+                            </a>
+                            ,{' '}
+                            <a href="mailto:angel.bianco@unab.edu.ar" className="text-green-300 underline hover:text-white">
+                                angel.bianco@unab.edu.ar
+                            </a>
+                        </p>
+                        <p className="mt-2">
+                            LinkedIn:
+                            <a
+                                href="https://www.linkedin.com/in/angel-leonardo-bianco/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="ml-1 text-green-300 underline hover:text-white"
+                            >
+                                https://www.linkedin.com/in/angel-leonardo-bianco/
+                            </a>
+                        </p>
+                        <p className="mt-2">
+                            GitHub:
+                            <a
+                                href="https://github.com/alyohara"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="ml-1 text-green-300 underline hover:text-white"
+                            >
+                                https://github.com/alyohara
+                            </a>
+                        </p>
+                        <p className="mt-4 text-xs text-green-600">&copy; {new Date().getFullYear()} Angel Leonardo Bianco</p>
+                    </footer>
+                </div>
             </div>
             <style>
                 {`
