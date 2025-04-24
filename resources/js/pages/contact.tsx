@@ -13,15 +13,15 @@ export default function Contact() {
             name: 'Name',
             email: 'Email',
             message: 'Message',
-            send: 'Send'
+            send: 'Send',
         },
         es: {
             title: 'Contáctame',
             name: 'Nombre',
             email: 'Correo Electrónico',
             message: 'Mensaje',
-            send: 'Enviar'
-        }
+            send: 'Enviar',
+        },
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -48,19 +48,15 @@ export default function Contact() {
                     `}
                 </style>
             </Head>
-
             <div className="flex min-h-screen items-center justify-center bg-black">
                 <div className="w-full max-w-4xl rounded-2xl border border-green-600 bg-black shadow-lg">
-                    <div
-                        className="flex w-full items-center justify-between border-b border-green-600 bg-black px-4 py-2 text-sm font-bold text-green-400">
+                    <div className="flex w-full items-center justify-between border-b border-green-600 bg-black px-4 py-2 text-sm font-bold text-green-400">
                         <span>Bianco(R) Angel Leonardo</span>
                         <div className="flex gap-1">
-                            <button className="text-green-400 hover:text-white"
-                                    onClick={() => handleLanguageChange('en')}>
+                            <button className="text-green-400 hover:text-white" onClick={() => handleLanguageChange('en')}>
                                 [En]
                             </button>
-                            <button className="text-green-400 hover:text-white"
-                                    onClick={() => handleLanguageChange('es')}>
+                            <button className="text-green-400 hover:text-white" onClick={() => handleLanguageChange('es')}>
                                 [Sp]
                             </button>
                         </div>
@@ -100,12 +96,10 @@ export default function Contact() {
                         </Link>
                     </nav>
 
-                    <div
-                        className="mx-auto flex flex-col items-center justify-center px-6 py-8 font-mono text-sm leading-relaxed text-green-400">
+                    <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 font-mono text-sm leading-relaxed text-green-400">
                         <div className="mx-auto max-w-4xl p-6">
                             <h1 className="text-2xl font-bold text-white">{content[language].title}</h1>
                             <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-
                                 <div>
                                     <label className="block text-sm">{content[language].name}</label>
                                     <input
@@ -135,31 +129,25 @@ export default function Contact() {
                                         required
                                     />
                                 </div>
-                                <button type="submit"
-                                        className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-500">
+                                <button type="submit" className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-500">
                                     {content[language].send}
                                 </button>
                             </form>
                             {status && <p className="mt-4 text-sm">{status}</p>}
                         </div>
                     </div>
-                </>
-                );
-                }
+                </div>
 
                 {/* Footer */}
-                <footer
-                    className="border-t border-green-600 bg-black px-6 py-4 text-center font-mono text-sm text-green-400">
+                <footer className="border-t border-green-600 bg-black px-6 py-4 text-center font-mono text-sm text-green-400">
                     <p className="font-bold text-white">Angel Leonardo Bianco</p>
                     <p className="mt-2">
                         Emails:
-                        <a href="mailto:angel.leonardo.bianco@gmail.com"
-                           className="ml-1 text-green-300 underline hover:text-white">
+                        <a href="mailto:angel.leonardo.bianco@gmail.com" className="ml-1 text-green-300 underline hover:text-white">
                             angel.leonardo.bianco@gmail.com
                         </a>
                         ,{' '}
-                        <a href="mailto:angelleonardobianco@outlook.com"
-                           className="text-green-300 underline hover:text-white">
+                        <a href="mailto:angelleonardobianco@outlook.com" className="text-green-300 underline hover:text-white">
                             angelleonardobianco@outlook.com
                         </a>
                         ,{' '}
@@ -189,11 +177,9 @@ export default function Contact() {
                             https://github.com/alyohara
                         </a>
                     </p>
-                    <p className="mt-4 text-xs text-green-600">&copy; {new Date().getFullYear()} Angel Leonardo
-                        Bianco</p>
+                    <p className="mt-4 text-xs text-green-600">&copy; {new Date().getFullYear()} Angel Leonardo Bianco</p>
                 </footer>
             </div>
-
             <style>
                 {`
                     .blinking-cursor {
@@ -212,6 +198,5 @@ export default function Contact() {
             </style>
             ;
         </>
-    )
-        ;
+    );
 }
