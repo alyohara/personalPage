@@ -1,11 +1,12 @@
 import { Head, Link } from '@inertiajs/react';
 import axios from 'axios';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
 export default function Contact() {
     const [language, setLanguage] = useState<'en' | 'es'>('en');
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [status, setStatus] = useState('');
+    const [statusType, setStatusType] = useState<'success' | 'error' | ''>('');
 
     const content = {
         en: {
@@ -18,6 +19,8 @@ export default function Contact() {
             projects: 'Projects',
             blog: 'Blog',
             contact: 'Contact',
+            statusSuccess: 'Message sent successfully!',
+            statusError: 'Failed to send the message.',
         },
         es: {
             title: 'Contáctame',
@@ -29,6 +32,8 @@ export default function Contact() {
             projects: 'Proyectos',
             blog: 'Blog',
             contact: 'Contacto',
+            statusSuccess: '¡Mensaje enviado con éxito!',
+            statusError: 'No se pudo enviar el mensaje.',
         },
     };
 
@@ -46,6 +51,15 @@ export default function Contact() {
             setStatus(language === 'es' ? 'No se pudo enviar el mensaje.' : 'Failed to send the message.');
         }
     };
+    useEffect(() => {
+        if (status) {
+            const timer = setTimeout(() => {
+                setStatus('');
+                setStatusType('');
+            }, 4000);
+            return () => clearTimeout(timer);
+        }
+    }, [status]);
 
     return (
         <>
@@ -145,7 +159,9 @@ export default function Contact() {
                                     {content[language].send}
                                 </button>
                             </form>
-                            {status && <p className="mt-4 text-sm">{status}</p>}
+                            {status && (
+                                <p className={`mt-4 text-sm ${statusType === 'success' ? 'text-green-400' : 'text-red-400'}`}>{status}</p>
+                            )}{' '}
                         </div>
                     </div>
 
