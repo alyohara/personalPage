@@ -65,66 +65,118 @@ export default function Projects() {
     };
     const projects = [
         {
-            title: 'FEMEBA – CRM y Sistemas Internos',
-            role: 'Analista y Desarrollador',
-            tech: ['Laravel', 'PHP', 'ZendFramework', 'BBDD'],
-            description: 'Desarrollo e implementación de soluciones personalizadas para FEMEBA.',
+            title: {
+                en: 'FEMEBA – CRM and Internal Systems',
+                es: 'FEMEBA – CRM y Sistemas Internos',
+            },
+            role: {
+                en: 'Analyst and Developer',
+                es: 'Analista y Desarrollador',
+            },
+            tech: ['Laravel', 'PHP', 'ZendFramework', 'BBDD', 'API REST', 'MySQL', 'HTML5', 'CSS3', 'Javascript', 'JQuery'],
+            description: {
+                en: 'Development and implementation of customized solutions for FEMEBA.',
+                es: 'Desarrollo e implementación de soluciones personalizadas para FEMEBA.',
+            },
             url: null,
         },
         {
-            title: 'Sistema de Gestión Docente – UNaB',
-            role: 'Full Stack Developer',
-            tech: ['Laravel', 'Vue.js', 'BBDD'],
-            description: 'Sistema institucional de gestión docente y asistencias.',
+            title: {
+                en: 'Teacher Management System – UNaB',
+                es: 'Sistema de Gestión Docente – UNaB',
+            },
+            role: {
+                en: 'Full Stack Developer',
+                es: 'Desarrollador Full Stack',
+            },
+            tech: ['Laravel', 'Vue.js', 'MariaDB', 'HTML5', 'CSS3', 'Javascript', 'JQuery', 'API REST'],
+            description: {
+                en: 'Institutional system for teacher management and attendance.',
+                es: 'Sistema institucional de gestión docente y asistencias.',
+            },
             url: 'https://gestion.unab.edu.ar',
         },
         {
-            title: 'Prospectiva.site',
-            role: 'Full Stack Developer',
-            tech: ['Laravel', 'Procesamiento de Datos'],
-            description: 'Plataforma de análisis y visualización de grandes volúmenes de datos.',
+            title: {
+                en: 'Prospectiva.site',
+                es: 'Prospectiva.site',
+            },
+            role: {
+                en: 'Full Stack Developer',
+                es: 'Desarrollador Full Stack',
+            },
+            tech: ['Laravel', 'Data Processing', 'API REST', 'MySQL', 'HTML5', 'CSS3', 'Javascript', 'JQuery', 'Chart.js', 'Bootstrap', 'Vue.js'],
+            description: {
+                en: 'Platform for analyzing and visualizing large volumes of data.',
+                es: 'Plataforma de análisis y visualización de grandes volúmenes de datos.',
+            },
             url: 'https://prospectiva.site',
         },
+
         {
             title: 'SOSMA',
             role: 'Full Stack Developer',
             tech: ['PHP', 'CodeIgniter', 'Laravel', 'Moodle'],
-            description: 'Desarrollo de sistemas internos, landing page y campus virtual.',
+            description: {
+                en: 'Development of internal systems, landing page, and virtual campus.',
+                es: 'Desarrollo de sistemas internos, landing page y campus virtual.',
+            },
             url: 'http://www.sosma.com.ar',
         },
         {
-            title: 'Ministerio de Turismo y Deportes',
+            title: {
+                en: 'Ministerio de Turismo y Deportes - Argentina',
+                es: 'Ministerio de Turismo y Deportes',
+            },
             role: 'Frontend Developer',
-            tech: ['Laravel', 'Blade', 'Jetstream'],
-            description: 'Sistema de datos estadísticos y PUNA.',
+            tech: ['Laravel', 'Blade', 'Jetstream', 'leaflet', 'HTML5', 'CSS3', 'Javascript', 'JQuery'],
+            description: {
+                en: 'System for managing tourism data and statistics and PUNA',
+                es: 'Sistema de gestión de datos turísticos y estadísticas; y PUNA',
+            },
             url: null,
         },
         {
-            title: 'Ministerio de Desarrollo Productivo',
+            title: {
+                en: 'Ministerio de Desarrollo Productivo - Argentina',
+                es: 'Ministerio de Desarrollo Productivo',
+            },
             role: 'Full Stack Developer',
             tech: ['Laravel', 'Leaflet', 'PDF Export'],
-            description: 'Sistema con geolocalización y reglas de negocio.',
+            description: {
+                en: 'System for managing geolocation and business rules.',
+                es: 'Sistema con geolocalización y reglas de negocio.',
+            },
             url: null,
         },
         {
             title: 'Withmenetwork SL',
             role: 'Full Stack Developer',
             tech: ['CodeIgniter', 'PHP', 'HTML5'],
-            description: 'Desarrollo de múltiples sitios web comerciales.',
+            description: {
+                en: 'Development of a web platform for managing and selling products.',
+                es: 'Desarrollo de una plataforma web para la gestión y venta de productos.',
+            },
             url: null,
         },
         {
             title: 'TOTVS',
             role: 'Frontend Developer',
             tech: ['Javascript', 'FLUIG'],
-            description: 'Implementación de firma digital.',
+            description: {
+                en: 'Development of a web platform inside the company for the implementation of digital signature with ENCORE.',
+                es: 'Desarrollo de una plataforma web dentro de la empresa para la implemenatción de firma digital junto a ENCORE.',
+            },
             url: null,
         },
         {
             title: 'AiVONi',
             role: 'Frontend Developer',
             tech: ['WordPress', 'HTML5', 'CSS'],
-            description: 'Desarrollo de sitios inmobiliarios en Francia.',
+            description: {
+                en: 'Development of a web sites for a real estate companies in France.',
+                es: 'Desarrollo de sitios inmobiliarios en Francia.',
+            },
             url: 'https://agence-du-midi.com',
         },
     ];
@@ -201,7 +253,7 @@ export default function Projects() {
                                         <p className="text-sm text-green-400">{project.role}</p>
                                         <div className="mt-2 flex flex-wrap gap-1">
                                             {project.tech.map((tech, idx) => (
-                                                <Badge key={idx} variant="outline">
+                                                <Badge key={idx} variant="outline" className="text-green-200">
                                                     {tech}
                                                 </Badge>
                                             ))}
@@ -209,7 +261,12 @@ export default function Projects() {
                                         <p className="mt-2 text-sm text-green-300">{project.description}</p>
                                         {project.url && (
                                             <Button asChild variant="link" className="mt-4 h-auto p-0">
-                                                <a href={project.url} target="_blank" rel="noopener noreferrer">
+                                                <a
+                                                    href={project.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-green-400 hover:text-white"
+                                                >
                                                     Visit Project ↗
                                                 </a>
                                             </Button>
