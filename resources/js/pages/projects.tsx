@@ -90,7 +90,10 @@ export default function Projects() {
         },
 
         {
-            title: 'SOSMA',
+            title: {
+                en: 'SOSMA - SIS Integrated System',
+                es: 'SOSMA - Sistema de Gestión de Proyectos',
+            },
             role: 'Full Stack Developer',
             tech: ['PHP', 'CodeIgniter', 'Laravel', 'Moodle'],
             description: {
@@ -126,17 +129,23 @@ export default function Projects() {
             url: null,
         },
         {
-            title: 'Withmenetwork SL',
+            title: {
+                en: 'Withmenetwork SL',
+                es: 'Withmenetwork SL',
+            },
             role: 'Full Stack Developer',
             tech: ['CodeIgniter', 'PHP', 'HTML5'],
             description: {
-                en: 'Development of a web platform for managing and selling products.',
-                es: 'Desarrollo de una plataforma web para la gestión y venta de productos.',
+                en: 'Development of a web platform for managing and selling courses.',
+                es: 'Desarrollo de una plataforma web para la gestión y venta de cursos.',
             },
             url: null,
         },
         {
-            title: 'TOTVS',
+            title: {
+                en: 'TOTVS - Fluig',
+                es: 'TOTVS - Fluig',
+            },
             role: 'Frontend Developer',
             tech: ['Javascript', 'FLUIG'],
             description: {
@@ -146,7 +155,10 @@ export default function Projects() {
             url: null,
         },
         {
-            title: 'AiVONi',
+            title: {
+                en: 'AiVONi Agence du Midi - France',
+                es: 'AiVONi Agence du Midi - Francia',
+            },
             role: 'Frontend Developer',
             tech: ['WordPress', 'HTML5', 'CSS'],
             description: {
