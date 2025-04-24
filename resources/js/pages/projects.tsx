@@ -128,11 +128,6 @@ export default function Projects() {
             url: 'https://agence-du-midi.com',
         },
     ];
-    const currentContent = content[language] || content[fallbackLanguage];
-
-    const handleLanguageChange = (lang) => {
-        setLanguage(content[lang] ? lang : fallbackLanguage);
-    };
 
     return (
         <>
