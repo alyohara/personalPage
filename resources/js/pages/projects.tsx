@@ -87,10 +87,7 @@ export default function Projects() {
             {/* Header */}
             <div className="flex min-h-screen flex-col bg-black text-green-400">
                 <nav className="flex justify-center gap-6 border-b border-green-600 bg-black py-2 text-sm">
-                    <Link
-                        href={route('welcome')}
-                        className={`text-green-400 hover:text-white ${route().current('welcome') ? 'font-bold text-white' : ''}`}
-                    >
+                    <Link href={route('home')} className={`text-green-400 hover:text-white ${route().current('home') ? 'font-bold text-white' : ''}`}>
                         [Home]
                     </Link>
                     <Link
