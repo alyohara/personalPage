@@ -1,9 +1,9 @@
 import { Head, Link } from '@inertiajs/react';
 import axios from 'axios';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 export default function Contact() {
-    const [language, setLanguage] = useState('en');
+    const [language, setLanguage] = useState<'en' | 'es'>('en');
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [status, setStatus] = useState('');
 
@@ -14,6 +14,10 @@ export default function Contact() {
             email: 'Email',
             message: 'Message',
             send: 'Send',
+            about: 'About',
+            projects: 'Projects',
+            blog: 'Blog',
+            contact: 'Contact',
         },
         es: {
             title: 'Contáctame',
@@ -21,23 +25,31 @@ export default function Contact() {
             email: 'Correo Electrónico',
             message: 'Mensaje',
             send: 'Enviar',
+            about: 'Sobre mí',
+            projects: 'Proyectos',
+            blog: 'Blog',
+            contact: 'Contacto',
         },
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleLanguageChange = (lang: 'en' | 'es') => {
+        setLanguage(lang);
+    };
+
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         try {
             await axios.post('/messages', formData);
-            setStatus('Message sent successfully!');
+            setStatus(language === 'es' ? 'Mensaje enviado correctamente.' : 'Message sent successfully!');
             setFormData({ name: '', email: '', message: '' });
         } catch (error) {
-            setStatus('Failed to send the message.');
+            setStatus(language === 'es' ? 'No se pudo enviar el mensaje.' : 'Failed to send the message.');
         }
     };
 
     return (
         <>
-            <Head title={content.title}>
+            <Head title={content[language].title}>
                 <link rel="preconnect" href="https://fonts.bunny.net" />
                 <link rel="icon" type="image/png" href="/imgs/perfil2.png" />
                 <style>
@@ -196,7 +208,6 @@ export default function Contact() {
                     }
                 `}
             </style>
-            ;
         </>
     );
 }
