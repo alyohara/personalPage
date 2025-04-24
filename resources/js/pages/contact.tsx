@@ -111,7 +111,7 @@ export default function Contact() {
                     <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 font-mono text-sm leading-relaxed text-green-400">
                         <div className="mx-auto max-w-4xl p-6">
                             <h1 className="text-2xl font-bold text-white">{content[language].title}</h1>
-                            <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+                            <form onSubmit={handleSubmit} className="mt-6 w-full space-y-4">
                                 <div>
                                     <label className="block text-sm">{content[language].name}</label>
                                     <input
