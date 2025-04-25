@@ -14,6 +14,7 @@ interface Message {
     name: string;
     email: string;
     message: string;
+    is_read: boolean;
     created_at: string;
 }
 
@@ -54,6 +55,7 @@ export default function Messages({ messages }: Props) {
                                     <th className="border border-gray-300 px-4 py-2">Nombre</th>
                                     <th className="border border-gray-300 px-4 py-2">Correo Electrónico</th>
                                     <th className="border border-gray-300 px-4 py-2">Mensaje</th>
+                                    <th className="border border-gray-300 px-4 py-2">Leído</th>
                                     <th className="border border-gray-300 px-4 py-2">Fecha</th>
                                 </tr>
                             </thead>
@@ -63,21 +65,14 @@ export default function Messages({ messages }: Props) {
                                         <td className="border border-gray-300 px-4 py-2">{message.name}</td>
                                         <td className="border border-gray-300 px-4 py-2">{message.email}</td>
                                         <td className="border border-gray-300 px-4 py-2">{message.message}</td>
+                                        <td className="border border-gray-300 px-4 py-2 text-center">
+                                            <input type="checkbox" checked={message.is_read} onChange={() => toggleReadStatus(message.id)} />
+                                        </td>
                                         <td className="border border-gray-300 px-4 py-2">{new Date(message.created_at).toLocaleString()}</td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
-                        <div className="mt-4 flex justify-center space-x-2">
-                            {messages.links.map((link, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => handlePageChange(link.url)}
-                                    className={`rounded-lg border px-4 py-2 ${link.active ? 'bg-sidebar-border text-white' : 'text-sidebar-border bg-white'}`}
-                                    dangerouslySetInnerHTML={{ __html: link.label }}
-                                />
-                            ))}
-                        </div>
                     </div>
                 </div>
             </div>

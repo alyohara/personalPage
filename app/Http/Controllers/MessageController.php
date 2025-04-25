@@ -30,4 +30,12 @@ class MessageController extends Controller
             'messages' => $messages,
         ]);
     }
+
+    public function toggleReadStatus(Request $request, Message $message)
+    {
+        $message->is_read = !$message->is_read;
+        $message->save();
+
+        return response()->json(['success' => true, 'is_read' => $message->is_read]);
+    }
 }
