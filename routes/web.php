@@ -32,7 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 Route::post('/messages', [MessageController::class, 'store']);
 Route::get('/dashboard/messages', [MessageController::class, 'index'])->name('dashboard.messages');
-Route::post('/messages/{id}/toggle-read', [MessageController::class, 'toggleReadStatus']);
+//Route::post('/messages/{id}/toggle-read', [MessageController::class, 'toggleReadStatus']);
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
