@@ -38,17 +38,36 @@ export default function Messages({ messages }: Props) {
     const [localMessages, setLocalMessages] = useState(messages.data);
 
     const toggleReadStatus = (id: number) => {
-        setLocalMessages((prevMessages) =>
-            prevMessages.map((msg) =>
-                msg.id === id
-                    ? {
-                          ...msg,
-                          is_read: !msg.is_read,
-                      }
-                    : msg,
-            ),
-        );
-        console.log(`Toggled read status for message ID ${id}`);
+        try {
+            // Actualizar en el backend
+            const response = await fetch(`/api/messages/${id}/toggle-read`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al actualizar el estado en el servidor');
+            }
+
+            // Actualizar en el estado local solo si la solicitud fue exitosa
+            setLocalMessages((prevMessages) =>
+                prevMessages.map((msg) =>
+                    msg.id === id
+                        ? {
+                              ...msg,
+                              is_read: !msg.is_read,
+                          }
+                        : msg,
+                ),
+            );
+
+            console.log(`Estado de lectura actualizado para el mensaje con ID ${id}`);
+        } catch (error) {
+            console.error('Error al actualizar el estado de lectura:', error);
+        }
     };
 
     const handlePageChange = (url: string | null) => {

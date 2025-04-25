@@ -31,8 +31,9 @@ class MessageController extends Controller
         ]);
     }
 
-    public function toggleReadStatus(Request $request, Message $message)
+    public function toggleReadStatus($id)
     {
+        $message = Message::findOrFail($id);
         $message->is_read = !$message->is_read;
         $message->save();
 
