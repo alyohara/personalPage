@@ -80,6 +80,7 @@ export default function Messages({ messages }: Props) {
         <AppLayout breadcrumbs={breadcrumbs}>
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="p-6">
+                    <meta name="csrf-token" content="{{ csrf_token() }}" />
                     <h1 className="mb-4 text-2xl font-bold">Mensajes</h1>
                     <table className="w-full table-auto border-collapse border border-gray-300">
                         <thead>
