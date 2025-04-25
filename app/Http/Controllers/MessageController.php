@@ -20,4 +20,12 @@ class MessageController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Message sent successfully!']);
     }
+
+    public function index()
+    {
+        $messages = Message::paginate(10);
+        return Inertia::render('dashboard/messages', [
+            'messages' => $messages,
+        ]);
+    }
 }
