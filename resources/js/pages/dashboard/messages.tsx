@@ -1,7 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Inertia } from '@inertiajs/inertia';
-import { Head } from '@inertiajs/react';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -35,30 +34,21 @@ interface Props {
 }
 
 export default function Messages({ messages }: Props) {
+    const [localMessages, setLocalMessages] = useState(messages.data);
+
     const toggleReadStatus = (id: number) => {
-        Inertia.patch(
-            `/messages/${id}/toggle-read`,
-            {},
-            {
-                onSuccess: () => {
-                    console.log(`Estado de lectura del mensaje con ID ${id} actualizado.`);
-                },
-                onError: (error) => {
-                    console.error('Error al actualizar el estado de lectura:', error);
-                },
-            },
-        );
+        setLocalMessages((prevMessages) => prevMessages.map((msg) => (msg.id === id ? { ...msg, is_read: !msg.is_read } : msg)));
+        console.log(`Toggled read status for message ID ${id}`);
     };
 
     const handlePageChange = (url: string | null) => {
         if (url) {
-            Inertia.get(url);
+            window.location.href = url; // fallback for no-Inertia navigation
         }
     };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Dashboard" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="p-6">
                     <h1 className="mb-4 text-2xl font-bold">Mensajes</h1>
@@ -73,7 +63,7 @@ export default function Messages({ messages }: Props) {
                             </tr>
                         </thead>
                         <tbody>
-                            {messages.data.map((message) => (
+                            {localMessages.map((message) => (
                                 <tr key={message.id} className={message.is_read ? 'text-black' : 'text-red-500'}>
                                     <td className="border border-gray-300 px-4 py-2">{message.name}</td>
                                     <td className="border border-gray-300 px-4 py-2">{message.email}</td>
@@ -92,7 +82,9 @@ export default function Messages({ messages }: Props) {
                             <button
                                 key={index}
                                 onClick={() => handlePageChange(link.url)}
-                                className={`rounded-lg border px-4 py-2 ${link.active ? 'bg-sidebar-border text-white' : 'text-sidebar-border bg-white'}`}
+                                className={`rounded-lg border px-4 py-2 ${
+                                    link.active ? 'bg-sidebar-border text-white' : 'text-sidebar-border bg-white'
+                                }`}
                                 dangerouslySetInnerHTML={{ __html: link.label }}
                             />
                         ))}
