@@ -37,7 +37,16 @@ export default function Messages({ messages }: Props) {
     const [localMessages, setLocalMessages] = useState(messages.data);
 
     const toggleReadStatus = (id: number) => {
-        setLocalMessages((prevMessages) => prevMessages.map((msg) => (msg.id === id ? { ...msg, is_read: !msg.is_read } : msg)));
+        setLocalMessages((prevMessages) =>
+            prevMessages.map((msg) =>
+                msg.id === id
+                    ? {
+                          ...msg,
+                          is_read: !msg.is_read,
+                      }
+                    : msg,
+            ),
+        );
         console.log(`Toggled read status for message ID ${id}`);
     };
 
@@ -64,12 +73,16 @@ export default function Messages({ messages }: Props) {
                         </thead>
                         <tbody>
                             {localMessages.map((message) => (
-                                <tr key={message.id} className={message.is_read ? 'text-black' : 'text-red-500'}>
+                                <tr key={message.id} className={message.is_read ? 'text-white' : 'text-red-500'}>
                                     <td className="border border-gray-300 px-4 py-2">{message.name}</td>
                                     <td className="border border-gray-300 px-4 py-2">{message.email}</td>
                                     <td className="border border-gray-300 px-4 py-2">{message.message}</td>
                                     <td className="border border-gray-300 px-4 py-2 text-center">
-                                        <input type="checkbox" checked={message.is_read} onChange={() => toggleReadStatus(message.id)} />
+                                        <i
+                                            className={!message.is_read ? 'fas fa-envelope text-red-500' : 'fas fa-envelope-open text-green-500'}
+                                            onClick={() => toggleReadStatus(message.id)}
+                                            style={{ cursor: 'pointer' }}
+                                        ></i>
                                     </td>
                                     <td className="border border-gray-300 px-4 py-2">{new Date(message.created_at).toLocaleString()}</td>
                                 </tr>
