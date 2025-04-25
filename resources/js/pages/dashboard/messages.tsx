@@ -37,7 +37,7 @@ interface Props {
 export default function Messages({ messages }: Props) {
     const [localMessages, setLocalMessages] = useState(messages.data);
 
-    const toggleReadStatus = (id: number) => {
+    const toggleReadStatus = async (id: number) => {
         try {
             // Actualizar en el backend
             const response = await fetch(`/api/messages/${id}/toggle-read`, {
