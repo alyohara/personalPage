@@ -1,5 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
+import { Mail, MailOpen } from 'lucide-react';
 import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -78,11 +79,11 @@ export default function Messages({ messages }: Props) {
                                     <td className="border border-gray-300 px-4 py-2">{message.email}</td>
                                     <td className="border border-gray-300 px-4 py-2">{message.message}</td>
                                     <td className="border border-gray-300 px-4 py-2 text-center">
-                                        <i
-                                            className={!message.is_read ? 'fas fa-envelope text-red-500' : 'fas fa-envelope-open text-green-500'}
-                                            onClick={() => toggleReadStatus(message.id)}
-                                            style={{ cursor: 'pointer' }}
-                                        ></i>
+                                        {message.is_read ? (
+                                            <MailOpen className="cursor-pointer text-green-500" onClick={() => toggleReadStatus(message.id)} />
+                                        ) : (
+                                            <Mail className="cursor-pointer text-red-500" onClick={() => toggleReadStatus(message.id)} />
+                                        )}
                                     </td>
                                     <td className="border border-gray-300 px-4 py-2">{new Date(message.created_at).toLocaleString()}</td>
                                 </tr>
