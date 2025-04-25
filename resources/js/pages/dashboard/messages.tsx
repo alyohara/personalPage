@@ -40,7 +40,7 @@ export default function Messages({ messages }: Props) {
     const toggleReadStatus = async (id: number) => {
         try {
             // Actualizar en el backend
-            const response = await fetch(`/api/messages/${id}/toggle-read`, {
+            const response = await fetch(`/messages/${id}/toggle-read`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
