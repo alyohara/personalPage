@@ -1,5 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
+import { Inertia } from '@inertiajs/inertia';
 import { Head } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
