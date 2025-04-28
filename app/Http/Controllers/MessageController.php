@@ -50,7 +50,10 @@ class MessageController extends Controller
             $message->save();
         }
 
-        return inertia('MessageView', [
+//        return inertia('MessageView', [
+//            'message' => $message,
+//        ]);
+        return Inertia::render('dashboard/messages-view', [
             'message' => $message,
         ]);
     }
