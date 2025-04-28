@@ -31,7 +31,7 @@ export default function PostCreate() {
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Contenido</label>
                         <Editor
-                            apiKey="TU_API_KEY"
+                            apiKey="8g1rfig0ilfv0bkpciq81y6oc3rlwnh0ikz52jt69b8sf2bv"
                             value={data.content}
                             onEditorChange={(content) => setData('content', content)}
                             init={{
