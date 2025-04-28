@@ -1,7 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Mail, MailOpen } from 'lucide-react';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -35,39 +34,10 @@ interface Props {
 }
 
 export default function Messages({ messages }: Props) {
-    const [localMessages, setLocalMessages] = useState(messages.data);
+    const navigate = useNavigate();
 
-    const toggleReadStatus = async (id: number) => {
-        try {
-            // Actualizar en el backend
-            const response = await fetch(`/api/messages/${id}/toggle-read`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
-                },
-            });
-
-            if (!response.ok) {
-                throw new Error('Error al actualizar el estado en el servidor');
-            }
-
-            // Actualizar en el estado local solo si la solicitud fue exitosa
-            setLocalMessages((prevMessages) =>
-                prevMessages.map((msg) =>
-                    msg.id === id
-                        ? {
-                              ...msg,
-                              is_read: !msg.is_read,
-                          }
-                        : msg,
-                ),
-            );
-
-            console.log(`Estado de lectura actualizado para el mensaje con ID ${id}`);
-        } catch (error) {
-            console.error('Error al actualizar el estado de lectura:', error);
-        }
+    const viewMessage = (id: number) => {
+        navigate(`/dashboard/messages/${id}`);
     };
 
     const handlePageChange = (url: string | null) => {
@@ -80,7 +50,6 @@ export default function Messages({ messages }: Props) {
         <AppLayout breadcrumbs={breadcrumbs}>
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="p-6">
-                    <meta name="csrf-token" content="{{ csrf_token() }}" />
                     <h1 className="mb-4 text-2xl font-bold">Mensajes</h1>
                     <table className="w-full table-auto border-collapse border border-gray-300">
                         <thead>
@@ -88,24 +57,25 @@ export default function Messages({ messages }: Props) {
                                 <th className="border border-gray-300 px-4 py-2">Nombre</th>
                                 <th className="border border-gray-300 px-4 py-2">Correo Electrónico</th>
                                 <th className="border border-gray-300 px-4 py-2">Mensaje</th>
-                                <th className="border border-gray-300 px-4 py-2">Leído</th>
                                 <th className="border border-gray-300 px-4 py-2">Fecha</th>
+                                <th className="border border-gray-300 px-4 py-2">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {localMessages.map((message) => (
-                                <tr key={message.id} className={message.is_read ? 'text-white' : 'text-red-500'}>
+                            {messages.data.map((message) => (
+                                <tr key={message.id} className={message.is_read ? 'text-gray-500' : 'text-black'}>
                                     <td className="border border-gray-300 px-4 py-2">{message.name}</td>
                                     <td className="border border-gray-300 px-4 py-2">{message.email}</td>
                                     <td className="border border-gray-300 px-4 py-2">{message.message}</td>
-                                    <td className="border border-gray-300 px-4 py-2 text-center">
-                                        {message.is_read ? (
-                                            <MailOpen className="cursor-pointer text-green-500" onClick={() => toggleReadStatus(message.id)} />
-                                        ) : (
-                                            <Mail className="cursor-pointer text-red-500" onClick={() => toggleReadStatus(message.id)} />
-                                        )}
-                                    </td>
                                     <td className="border border-gray-300 px-4 py-2">{new Date(message.created_at).toLocaleString()}</td>
+                                    <td className="border border-gray-300 px-4 py-2 text-center">
+                                        <button
+                                            onClick={() => viewMessage(message.id)}
+                                            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
+                                        >
+                                            Ver mensaje
+                                        </button>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

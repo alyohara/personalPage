@@ -39,4 +39,19 @@ class MessageController extends Controller
 
         return response()->json(['success' => true, 'is_read' => $message->is_read]);
     }
+
+    public function show($id)
+    {
+        $message = Message::findOrFail($id);
+
+        // Marcar el mensaje como leído
+        if (!$message->is_read) {
+            $message->is_read = true;
+            $message->save();
+        }
+
+        return inertia('MessageView', [
+            'message' => $message,
+        ]);
+    }
 }
