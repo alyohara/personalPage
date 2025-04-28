@@ -36,6 +36,19 @@ Route::get('/dashboard/messages', [MessageController::class, 'index'])->name('da
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/messages/{id}', [MessageController::class, 'show'])->name('dashboard.messages.show');
 });
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard/posts', [PostController::class, 'index'])->name('posts.index');
+    Route::get('/dashboard/posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::post('/dashboard/posts', [PostController::class, 'store'])->name('posts.store');
+    Route::get('/dashboard/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+    Route::put('/dashboard/posts/{post}', [PostController::class, 'update'])->name('posts.update');
+    Route::delete('/dashboard/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+    Route::post('/dashboard/posts/{post}/publish', [PostController::class, 'publish'])->name('posts.publish');
+});
+
+
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
 
