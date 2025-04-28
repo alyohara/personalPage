@@ -49,11 +49,32 @@ export default function PostEdit({ post }: Props) {
                                     'advlist autolink lists link image charmap print preview anchor',
                                     'searchreplace visualblocks code fullscreen',
                                     'insertdatetime media table paste code help wordcount',
+                                    'image media link codesample',
                                 ],
                                 toolbar:
                                     'undo redo | formatselect | bold italic backcolor | \
                                     alignleft aligncenter alignright alignjustify | \
-                                    bullist numlist outdent indent | removeformat | help',
+                                    bullist numlist outdent indent | removeformat | help | \
+                                    link image media codesample',
+                                image_title: true,
+                                automatic_uploads: true,
+                                file_picker_types: 'image',
+                                file_picker_callback: (callback, value, meta) => {
+                                    if (meta.filetype === 'image') {
+                                        const input = document.createElement('input');
+                                        input.setAttribute('type', 'file');
+                                        input.setAttribute('accept', 'image/*');
+                                        input.onchange = function () {
+                                            const file = this.files[0];
+                                            const reader = new FileReader();
+                                            reader.onload = function () {
+                                                callback(reader.result, { alt: file.name });
+                                            };
+                                            reader.readAsDataURL(file);
+                                        };
+                                        input.click();
+                                    }
+                                },
                             }}
                         />
                     </div>
