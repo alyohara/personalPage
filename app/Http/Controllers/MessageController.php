@@ -53,7 +53,7 @@ class MessageController extends Controller
 //        return inertia('MessageView', [
 //            'message' => $message,
 //        ]);
-        return Inertia::render('dashboard/messages-view', [
+        return Inertia::render('dashboard/message-view', [
             'message' => $message,
         ]);
     }
