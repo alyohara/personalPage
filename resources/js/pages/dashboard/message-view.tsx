@@ -1,6 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Link } from 'react-router-dom';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -43,9 +42,9 @@ export default function MessageView({ message }: Props) {
                         <strong>Fecha:</strong> {new Date(message.created_at).toLocaleString()}
                     </p>
                     <div className="mt-4">
-                        <Link to="/dashboard/messages" className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-700">
+                        <a href="/dashboard/messages" className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-700">
                             Volver al listado
-                        </Link>
+                        </a>
                     </div>
                 </div>
             </div>
