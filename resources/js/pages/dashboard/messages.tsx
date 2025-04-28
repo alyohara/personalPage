@@ -1,6 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { useNavigate } from 'react-router-dom';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -34,12 +33,6 @@ interface Props {
 }
 
 export default function Messages({ messages }: Props) {
-    const navigate = useNavigate();
-
-    const viewMessage = (id: number) => {
-        navigate(`/dashboard/messages/${id}`);
-    };
-
     const handlePageChange = (url: string | null) => {
         if (url) {
             window.location.href = url; // fallback for no-Inertia navigation
@@ -69,12 +62,12 @@ export default function Messages({ messages }: Props) {
                                     <td className="border border-gray-300 px-4 py-2">{message.message}</td>
                                     <td className="border border-gray-300 px-4 py-2">{new Date(message.created_at).toLocaleString()}</td>
                                     <td className="border border-gray-300 px-4 py-2 text-center">
-                                        <button
-                                            onClick={() => viewMessage(message.id)}
+                                        <a
+                                            href={`/dashboard/messages/${message.id}`}
                                             className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
                                         >
                                             Ver mensaje
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                             ))}
