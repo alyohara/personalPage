@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+
+// Importar la clase Route
+
 
 class AppServiceProvider extends ServiceProvider
 {
