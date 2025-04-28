@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, Inbox, LayoutGrid } from 'lucide-react';
+import { BookOpen, Folder, Inbox, LayoutGrid, Newspaper } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -18,6 +18,21 @@ const mainNavItems: NavItem[] = [
         url: '/dashboard/messages',
         icon: Inbox,
     },
+    {
+        title: 'Posts',
+        url: '/dashboard/posts',
+        icon: Newspaper,
+    },
+    // {
+    //     title: 'Users',
+    //     url: '/dashboard/users',
+    //     icon: LayoutGrid,
+    // },
+    // {
+    //     title: 'Settings',
+    //     url: '/dashboard/settings',
+    //     icon: LayoutGrid,
+    //},
 ];
 
 const footerNavItems: NavItem[] = [
