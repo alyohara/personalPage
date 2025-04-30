@@ -1,5 +1,3 @@
-import AppLayout from '@/layouts/app-layout';
-
 interface Post {
     id: number;
     title: string;
