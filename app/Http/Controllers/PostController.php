@@ -16,10 +16,22 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $$validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
+            'slug' => 'required|string|unique:posts,slug',
+            'published_at' => 'nullable|date',
+            'author' => 'required|string|max:255',
+            'featured_image' => 'nullable|image|max:2048',
+            'meta_description' => 'nullable|string|max:255',
         ]);
+
+        // Generar resumen con las primeras 100 palabras
+        $validated['summary'] = implode(' ', array_slice(explode(' ', strip_tags($validated['content'])), 0, 100));
+
+        if ($request->hasFile('featured_image')) {
+            $validated['featured_image'] = $request->file('featured_image')->store('images');
+        }
 
         Post::create($validated);
 

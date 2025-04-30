@@ -29,6 +29,41 @@ export default function PostCreate() {
                         />
                     </div>
                     <div className="mb-4">
+                        <label className="block text-sm font-medium">Slug</label>
+                        <input
+                            type="text"
+                            value={data.slug}
+                            onChange={(e) => setData('slug', e.target.value)}
+                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Fecha de publicación</label>
+                        <input
+                            type="datetime-local"
+                            value={data.published_at}
+                            onChange={(e) => setData('published_at', e.target.value)}
+                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Autor</label>
+                        <input
+                            type="text"
+                            value={data.author}
+                            onChange={(e) => setData('author', e.target.value)}
+                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Imagen destacada</label>
+                        <input
+                            type="file"
+                            onChange={(e) => setData('featured_image', e.target.files[0])}
+                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                        />
+                    </div>
+                    <div className="mb-4">
                         <label className="block text-sm font-medium">Contenido</label>
                         <Editor
                             apiKey="8g1rfig0ilfv0bkpciq81y6oc3rlwnh0ikz52jt69b8sf2bv"
