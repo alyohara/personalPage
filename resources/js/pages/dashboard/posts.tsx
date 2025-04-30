@@ -43,12 +43,14 @@ export default function Posts({ posts }: Props) {
                                     </Link>
                                     {post.is_published ? (
                                         <form method="POST" action={`/dashboard/posts/${post.id}/unpublish`} className="inline">
+                                            <meta name="csrf-token" content="{{ csrf_token() }}" />
                                             <button type="submit" className="mr-2 rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-700">
                                                 Despublicar
                                             </button>
                                         </form>
                                     ) : (
                                         <form method="POST" action={`/dashboard/posts/${post.id}/publish`} className="inline">
+                                            <meta name="csrf-token" content="{{ csrf_token() }}" />
                                             <button type="submit" className="mr-2 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-700">
                                                 Publicar
                                             </button>
