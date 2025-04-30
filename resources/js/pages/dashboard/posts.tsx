@@ -42,21 +42,21 @@ export default function Posts({ posts }: Props) {
                                         Editar
                                     </Link>
                                     {post.is_published ? (
-                                        <form method="POST" action={`/dashboard/posts/${post.id}/unpublish`} className="inline">
+                                        <form method="POST" action={`/posts/${post.id}/unpublish`} className="inline">
                                             <meta name="csrf-token" content="{{ csrf_token() }}" />
                                             <button type="submit" className="mr-2 rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-700">
                                                 Despublicar
                                             </button>
                                         </form>
                                     ) : (
-                                        <form method="POST" action={`/dashboard/posts/${post.id}/publish`} className="inline">
+                                        <form method="POST" action={'/posts/' + post.id + '/publish'} className="inline">
                                             <meta name="csrf-token" content="{{ csrf_token() }}" />
                                             <button type="submit" className="mr-2 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-700">
                                                 Publicar
                                             </button>
                                         </form>
                                     )}
-                                    <form method="POST" action={`/dashboard/posts/${post.id}`} className="inline">
+                                    <form method="DELETE" action={`/dashboard/posts/${post.id}`} className="inline">
                                         <input type="hidden" name="_method" value="DELETE" />
                                         <button type="submit" className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-700">
                                             Eliminar
