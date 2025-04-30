@@ -66,6 +66,11 @@ export default function Posts({ posts }: Props) {
                                     )}
                                     <form method="POST" action={`/dashboard/posts/${post.id}`} className="inline">
                                         <input type="hidden" name="_method" value="DELETE" />
+                                        <input
+                                            type="hidden"
+                                            name="_token"
+                                            value={document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''}
+                                        />
                                         <button type="submit" className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-700">
                                             Eliminar
                                         </button>
