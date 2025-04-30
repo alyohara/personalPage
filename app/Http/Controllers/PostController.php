@@ -55,11 +55,28 @@ class PostController extends Controller
         return redirect()->route('posts.index')->with('success', 'Post eliminado correctamente.');
     }
 
+//    public function publish(Post $post)
+//    {
+//        $post->update(['is_published' => true]);
+//
+//        return redirect()->route('posts.index')->with('success', 'Post publicado correctamente.');
+//    }
+
+    public function indexPublic()
+    {
+        $posts = Post::where('status', 'published')
+            ->orderBy('published_at', 'desc')
+            ->get();
+
+        return inertia('blog', [
+            'posts' => $posts,
+        ]);
+    }
+
     public function publish(Post $post)
     {
         $post->update(['is_published' => true]);
-
-        return redirect()->route('posts.index')->with('success', 'Post publicado correctamente.');
+        return redirect()->back()->with('success', 'El post ha sido publicado.');
     }
 
     public function update(Request $request, Post $post)
@@ -74,14 +91,9 @@ class PostController extends Controller
         return redirect()->route('posts.index')->with('success', 'Post actualizado correctamente.');
     }
 
-    public function indexPublic()
+    public function unpublish(Post $post)
     {
-        $posts = Post::where('status', 'published')
-            ->orderBy('published_at', 'desc')
-            ->get();
-
-        return inertia('blog', [
-            'posts' => $posts,
-        ]);
+        $post->update(['is_published' => false]);
+        return redirect()->back()->with('success', 'El post ha sido despublicado.');
     }
 }

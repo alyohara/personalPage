@@ -47,6 +47,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/dashboard/posts/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('/dashboard/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
     Route::post('/dashboard/posts/{post}/publish', [PostController::class, 'publish'])->name('posts.publish');
+    
+    Route::post('/dashboard/posts/{post}/unpublish', [PostController::class, 'unpublish'])->name('posts.unpublish');
 });
 Route::get('/blog', [PostController::class, 'indexPublic'])->name('blog');
 
