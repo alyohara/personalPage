@@ -16,7 +16,7 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        $$validated = $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'slug' => 'required|string|unique:posts,slug',
