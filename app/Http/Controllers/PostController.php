@@ -64,7 +64,7 @@ class PostController extends Controller
 
     public function indexPublic()
     {
-        $posts = Post::where('status', 'published')
+        $posts = Post::where('is_published', true)
             ->orderBy('published_at', 'desc')
             ->get();
 
