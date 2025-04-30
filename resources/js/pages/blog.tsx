@@ -1,4 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
+import axios from 'axios';
+import { FormEvent, useEffect, useState } from 'react';
 
 interface Post {
     id: number;
@@ -13,6 +15,63 @@ interface Props {
 }
 
 export default function Blog({ posts }: Props) {
+    const [language, setLanguage] = useState<'en' | 'es'>('en');
+    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+    const [status, setStatus] = useState('');
+    const [statusType, setStatusType] = useState<'success' | 'error' | ''>('');
+
+    const content = {
+        en: {
+            title: 'Contact Me',
+            name: 'Name',
+            email: 'Email',
+            message: 'Message',
+            send: 'Send',
+            about: 'About',
+            projects: 'Projects',
+            blog: 'Blog',
+            contact: 'Contact',
+            statusSuccess: 'Message sent successfully!',
+            statusError: 'Failed to send the message.',
+        },
+        es: {
+            title: 'Contáctame',
+            name: 'Nombre',
+            email: 'Correo Electrónico',
+            message: 'Mensaje',
+            send: 'Enviar',
+            about: 'Sobre mí',
+            projects: 'Proyectos',
+            blog: 'Blog',
+            contact: 'Contacto',
+            statusSuccess: '¡Mensaje enviado con éxito!',
+            statusError: 'No se pudo enviar el mensaje.',
+        },
+    };
+
+    const handleLanguageChange = (lang: 'en' | 'es') => {
+        setLanguage(lang);
+    };
+
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+        try {
+            await axios.post('/messages', formData);
+            setStatus(language === 'es' ? 'Mensaje enviado correctamente.' : 'Message sent successfully!');
+            setFormData({ name: '', email: '', message: '' });
+        } catch (error) {
+            setStatus(language === 'es' ? 'No se pudo enviar el mensaje.' : 'Failed to send the message.');
+        }
+    };
+    useEffect(() => {
+        if (status) {
+            const timer = setTimeout(() => {
+                setStatus('');
+                setStatusType('');
+            }, 4000);
+            return () => clearTimeout(timer);
+        }
+    }, [status]);
     return (
         <AppLayout>
             <div className="p-6">
