@@ -64,7 +64,7 @@ export default function Posts({ posts }: Props) {
                                             </button>
                                         </form>
                                     )}
-                                    <form method="DELETE" action={`/dashboard/posts/${post.id}`} className="inline">
+                                    <form method="POST" action={`/dashboard/posts/${post.id}`} className="inline">
                                         <input type="hidden" name="_method" value="DELETE" />
                                         <button type="submit" className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-700">
                                             Eliminar
