@@ -61,4 +61,15 @@ class PostController extends Controller
 
         return redirect()->route('posts.index')->with('success', 'Post actualizado correctamente.');
     }
+
+    public function indexPublic()
+    {
+        $posts = Post::where('status', 'published')
+            ->orderBy('published_at', 'desc')
+            ->get();
+
+        return inertia('blog', [
+            'posts' => $posts,
+        ]);
+    }
 }

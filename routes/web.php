@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/dashboard/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
     Route::post('/dashboard/posts/{post}/publish', [PostController::class, 'publish'])->name('posts.publish');
 });
+Route::get('/blog', [PostController::class, 'indexPublic'])->name('blog');
 
 
 require __DIR__.'/settings.php';
