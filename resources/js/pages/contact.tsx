@@ -15,7 +15,7 @@ export default function Contact() {
             email: 'Email',
             message: 'Message',
             send: 'Send',
-            about: 'About',
+            about: 'About Me',
             projects: 'Projects',
             blog: 'Blog',
             contact: 'Contact',
