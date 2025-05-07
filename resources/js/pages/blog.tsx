@@ -8,6 +8,7 @@ interface Post {
     summary: string;
     slug: string;
     published_at: string;
+    featured_image: string | null;
 }
 
 interface Props {

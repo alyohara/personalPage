@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dashboard/posts/{post}/unpublish', [PostController::class, 'unpublish'])->name('posts.unpublish');
 });
 Route::get('/blog', [PostController::class, 'indexPublic'])->name('blog');
+Route::get('/blog/{post:slug}', [PostController::class, 'show'])->name('blog.show');
 
 
 require __DIR__.'/settings.php';

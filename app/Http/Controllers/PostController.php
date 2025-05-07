@@ -96,4 +96,15 @@ class PostController extends Controller
         $post->update(['is_published' => false]);
         return redirect()->back()->with('success', 'El post ha sido despublicado.');
     }
+
+    public function show(Post $post)
+    {
+        if (!$post->is_published) {
+            abort(404);
+        }
+
+        return inertia('blog/show', [
+            'post' => $post
+        ]);
+    }
 }
