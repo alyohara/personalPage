@@ -11,8 +11,19 @@ interface Post {
     featured_image: string | null;
 }
 
+interface PaginationLinks {
+    url: string | null;
+    label: string;
+    active: boolean;
+}
+
 interface Props {
-    posts: Post[];
+    posts: {
+        data: Post[];
+        current_page: number;
+        last_page: number;
+        links: PaginationLinks[];
+    };
 }
 
 export default function Blog({ posts }: Props) {
@@ -41,6 +52,12 @@ export default function Blog({ posts }: Props) {
         setLanguage(content[lang] ? lang : 'en');
     };
 
+    const handlePageChange = (url: string | null) => {
+        if (url) {
+            window.location.href = url;
+        }
+    };
+
     return (
         <>
             <Head title={t.title}>
@@ -56,7 +73,7 @@ export default function Blog({ posts }: Props) {
             </Head>
 
             <div className="flex min-h-screen items-center justify-center bg-black">
-                <div className="w-full max-w-4xl rounded-2xl border border-green-600 bg-black shadow-lg">
+                <div className="w-full max-w-4xl border border-green-600 bg-black">
                     <div className="flex w-full items-center justify-between border-b border-green-600 bg-black px-4 py-2 text-sm font-bold text-green-400">
                         <span>Bianco(R) Angel Leonardo</span>
                         <div className="flex gap-1">
@@ -105,7 +122,7 @@ export default function Blog({ posts }: Props) {
                     <div className="mx-auto px-6 py-8 font-mono text-sm text-green-400">
                         <h1 className="mb-4 text-xl font-bold text-white">C:\{t.blog}&gt;</h1>
                         <div className="space-y-6">
-                            {posts.map((post, i) => (
+                            {posts.data.map((post, i) => (
                                 <motion.div
                                     key={post.id}
                                     initial={{ opacity: 0, y: 20 }}
@@ -113,14 +130,43 @@ export default function Blog({ posts }: Props) {
                                     transition={{ delay: i * 0.1 }}
                                     className="rounded-lg border border-green-600 bg-black p-4 shadow-md"
                                 >
-                                    <h2 className="text-lg font-semibold text-white">
-                                        <Link href={`/blog/${post.slug}`} className="text-green-400 hover:underline">
-                                            {post.title}
-                                        </Link>
-                                    </h2>
-                                    <p className="text-green-300">{post.summary}</p>
-                                    <p className="text-xs text-green-500">Publicado el {new Date(post.published_at).toLocaleDateString()}</p>
+                                    <div className="flex gap-4">
+                                        <div className="h-32 w-32 flex-shrink-0 overflow-hidden rounded-lg border border-green-600">
+                                            <img
+                                                src={post.featured_image || '/imgs/perfil2.png'}
+                                                alt={post.title}
+                                                className="h-full w-full object-cover"
+                                            />
+                                        </div>
+                                        <div className="flex flex-1 flex-col">
+                                            <h2 className="text-lg font-semibold text-white">
+                                                <Link href={`/blog/${post.slug}`} className="text-green-400 hover:underline">
+                                                    {post.title}
+                                                </Link>
+                                            </h2>
+                                            <p className="mt-2 flex-1 text-green-300">{post.summary}</p>
+                                            <p className="mt-2 text-xs text-green-500">
+                                                Publicado el {new Date(post.published_at).toLocaleDateString()}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </motion.div>
+                            ))}
+                        </div>
+
+                        {/* Pagination */}
+                        <div className="mt-8 flex justify-center space-x-2">
+                            {posts.links.map((link, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => handlePageChange(link.url)}
+                                    className={`rounded-lg border border-green-600 px-4 py-2 ${
+                                        link.active
+                                            ? 'bg-green-600 text-white'
+                                            : 'text-green-400 hover:bg-green-600 hover:text-white'
+                                    }`}
+                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                />
                             ))}
                         </div>
                     </div>
@@ -128,9 +174,28 @@ export default function Blog({ posts }: Props) {
                     <footer className="border-t border-green-600 bg-black px-6 py-4 text-center font-mono text-sm text-green-400">
                         <p className="font-bold text-white">Angel Leonardo Bianco</p>
                         <p className="mt-2">
-                            Email:
+                            Emails:
                             <a href="mailto:angel.leonardo.bianco@gmail.com" className="ml-1 text-green-300 underline hover:text-white">
                                 angel.leonardo.bianco@gmail.com
+                            </a>
+                            ,{' '}
+                            <a href="mailto:angelleonardobianco@outlook.com" className="text-green-300 underline hover:text-white">
+                                angelleonardobianco@outlook.com
+                            </a>
+                            ,{' '}
+                            <a href="mailto:angel.bianco@unab.edu.ar" className="text-green-300 underline hover:text-white">
+                                angel.bianco@unab.edu.ar
+                            </a>
+                        </p>
+                        <p className="mt-2">
+                            LinkedIn:
+                            <a
+                                href="https://www.linkedin.com/in/angel-leonardo-bianco/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="ml-1 text-green-300 underline hover:text-white"
+                            >
+                                https://www.linkedin.com/in/angel-leonardo-bianco/
                             </a>
                         </p>
                         <p className="mt-2">
@@ -141,13 +206,30 @@ export default function Blog({ posts }: Props) {
                                 rel="noopener noreferrer"
                                 className="ml-1 text-green-300 underline hover:text-white"
                             >
-                                github.com/alyohara
+                                https://github.com/alyohara
                             </a>
                         </p>
                         <p className="mt-4 text-xs text-green-600">&copy; {new Date().getFullYear()} Angel Leonardo Bianco</p>
                     </footer>
                 </div>
             </div>
+
+            <style>
+                {`
+                    .blinking-cursor {
+                        display: inline-block;
+                        width: 10px;
+                        height: 1rem;
+                        background-color: white;
+                        margin-left: 5px;
+                        animation: blink 1s steps(1) infinite;
+                    }
+
+                    @keyframes blink {
+                        50% { opacity: 0; }
+                    }
+                `}
+            </style>
         </>
     );
 }
