@@ -153,7 +153,7 @@ export default function Blog({ posts }: Props) {
                                     <div className="flex gap-4">
                                         <div className="h-32 w-32 flex-shrink-0 overflow-hidden rounded-lg border border-green-600">
                                             <img
-                                                src={post.featured_image || '/imgs/perfil2.png'}
+                                                src={post.featured_image ? `/storage/${post.featured_image}` : '/imgs/perfil2.png'}
                                                 alt={post.title}
                                                 className="h-full w-full object-cover"
                                             />
