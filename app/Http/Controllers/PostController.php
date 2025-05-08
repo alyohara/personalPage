@@ -33,6 +33,8 @@ class PostController extends Controller
             $path = $request->file('featured_image')->store('images', 'public');
             $validated['featured_image'] = $path;
         }
+        dd($request->file('featured_image'));
+
 
         Post::create($validated);
 
