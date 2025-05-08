@@ -66,7 +66,14 @@ export default function PostCreate() {
                         <label className="block text-sm font-medium">Imagen destacada</label>
                         <input
                             type="file"
-                            onChange={(e) => setData('featured_image', e.target.files[0])}
+                            name="featured_image"
+                            accept="image/*"
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                    setData('featured_image', file);
+                                }
+                            }}
                             className="mt-1 block w-full rounded border-gray-300 shadow-sm"
                         />
                     </div>
