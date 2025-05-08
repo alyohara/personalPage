@@ -31,6 +31,7 @@ class PostController extends Controller
 
         if ($request->hasFile('featured_image')) {
             $path = $request->file('featured_image')->store('images', 'public');
+            dd($path); // Verifica la ruta generada
             $validated['featured_image'] = $path;
         }
 
