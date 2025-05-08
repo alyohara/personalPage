@@ -17,13 +17,15 @@ interface PaginationLinks {
     active: boolean;
 }
 
+interface PaginatedPosts {
+    data: Post[];
+    current_page: number;
+    last_page: number;
+    links: PaginationLinks[];
+}
+
 interface Props {
-    posts: {
-        data: Post[];
-        current_page: number;
-        last_page: number;
-        links: PaginationLinks[];
-    };
+    posts: Post[] | PaginatedPosts;
 }
 
 export default function Blog({ posts }: Props) {
@@ -57,6 +59,24 @@ export default function Blog({ posts }: Props) {
             window.location.href = url;
         }
     };
+
+    // Helper function to get posts array and pagination data
+    const getPostsData = () => {
+        if (Array.isArray(posts)) {
+            return {
+                posts: posts,
+                links: [],
+                hasPagination: false
+            };
+        }
+        return {
+            posts: posts.data,
+            links: posts.links,
+            hasPagination: true
+        };
+    };
+
+    const { posts: postsList, links, hasPagination } = getPostsData();
 
     return (
         <>
@@ -122,7 +142,7 @@ export default function Blog({ posts }: Props) {
                     <div className="mx-auto px-6 py-8 font-mono text-sm text-green-400">
                         <h1 className="mb-4 text-xl font-bold text-white">C:\{t.blog}&gt;</h1>
                         <div className="space-y-6">
-                            {posts.data.map((post, i) => (
+                            {postsList.map((post, i) => (
                                 <motion.div
                                     key={post.id}
                                     initial={{ opacity: 0, y: 20 }}
@@ -155,20 +175,22 @@ export default function Blog({ posts }: Props) {
                         </div>
 
                         {/* Pagination */}
-                        <div className="mt-8 flex justify-center space-x-2">
-                            {posts.links.map((link, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => handlePageChange(link.url)}
-                                    className={`rounded-lg border border-green-600 px-4 py-2 ${
-                                        link.active
-                                            ? 'bg-green-600 text-white'
-                                            : 'text-green-400 hover:bg-green-600 hover:text-white'
-                                    }`}
-                                    dangerouslySetInnerHTML={{ __html: link.label }}
-                                />
-                            ))}
-                        </div>
+                        {hasPagination && links.length > 0 && (
+                            <div className="mt-8 flex justify-center space-x-2">
+                                {links.map((link, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => handlePageChange(link.url)}
+                                        className={`rounded-lg border border-green-600 px-4 py-2 ${
+                                            link.active
+                                                ? 'bg-green-600 text-white'
+                                                : 'text-green-400 hover:bg-green-600 hover:text-white'
+                                        }`}
+                                        dangerouslySetInnerHTML={{ __html: link.label }}
+                                    />
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                     <footer className="border-t border-green-600 bg-black px-6 py-4 text-center font-mono text-sm text-green-400">

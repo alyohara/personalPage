@@ -66,7 +66,7 @@ class PostController extends Controller
     {
         $posts = Post::where('is_published', true)
             ->orderBy('published_at', 'desc')
-            ->get();
+            ->paginate(10);
 
         return inertia('blog', [
             'posts' => $posts,
