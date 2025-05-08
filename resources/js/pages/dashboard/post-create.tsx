@@ -7,18 +7,25 @@ export default function PostCreate() {
     const { data, setData, post, processing } = useForm({
         title: '',
         content: '',
+        slug: '',
+        published_at: '',
+        author: '',
+        featured_image: null as File | null,
+        meta_description: '',
     });
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        post('/dashboard/posts');
+        post('/dashboard/posts', {
+            forceFormData: true,
+        });
     };
 
     return (
         <AppLayout>
             <div className="p-6">
                 <h1 className="text-2xl font-bold">Crear Nuevo Post</h1>
-                <form onSubmit={handleSubmit} className="mt-4">
+                <form onSubmit={handleSubmit} className="mt-4" encType="multipart/form-data">
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Título</label>
                         <input

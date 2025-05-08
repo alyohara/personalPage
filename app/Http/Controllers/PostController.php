@@ -30,7 +30,7 @@ class PostController extends Controller
         $validated['summary'] = implode(' ', array_slice(explode(' ', strip_tags($validated['content'])), 0, 100));
 
         if ($request->hasFile('featured_image')) {
-            $validated['featured_image'] = $request->file('featured_image')->store('images');
+            $validated['featured_image'] = $request->file('featured_image')->store('images', 'public');
         }
 
         Post::create($validated);
