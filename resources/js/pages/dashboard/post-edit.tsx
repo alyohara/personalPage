@@ -31,9 +31,23 @@ export default function PostEdit({ post }: Props) {
     });
 
     const handleSubmit = (e: React.FormEvent) => {
+        console.log('Form submission started');
         e.preventDefault();
-        console.log('Submitting form with data:', data);
+        console.log('Prevent default completed');
+        console.log('Form data state:', data);
+        
         const formData = new FormData();
+        console.log('FormData object created');
+        
+        // Log each field before appending
+        console.log('Title:', data.title);
+        console.log('Content:', data.content);
+        console.log('Slug:', data.slug);
+        console.log('Author:', data.author);
+        console.log('Summary:', data.summary);
+        console.log('Meta Description:', data.meta_description);
+        console.log('Featured Image:', data.featured_image);
+        
         formData.append('title', data.title);
         formData.append('content', data.content);
         formData.append('slug', data.slug);
@@ -49,11 +63,17 @@ export default function PostEdit({ post }: Props) {
             formData.append('featured_image', data.featured_image);
         }
 
+        console.log('FormData prepared, sending request...');
+        
         put(`/dashboard/posts/${post.id}`, {
             forceFormData: true,
             data: formData,
             onSuccess: () => {
+                console.log('Update successful');
                 window.location.href = '/dashboard/posts';
+            },
+            onError: (errors) => {
+                console.error('Update failed:', errors);
             }
         });
     };
