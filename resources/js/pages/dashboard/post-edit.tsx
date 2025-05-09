@@ -31,9 +31,16 @@ export default function PostEdit({ post }: Props) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(data); // Verifica los datos enviados
+        console.log('Submitting form with data:', data);
         put(`/dashboard/posts/${post.id}`, {
             forceFormData: true,
+            onSuccess: () => {
+                console.log('Update successful');
+                window.location.href = '/dashboard/posts';
+            },
+            onError: (errors) => {
+                console.error('Update failed:', errors);
+            }
         });
     };
 

@@ -52,29 +52,30 @@ class PostController extends Controller
 
     public function update(Request $request, Post $post)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'slug' => 'required|string|unique:posts,slug,'.$post->id,
-            'published_at' => 'nullable|date_format:Y-m-d H:i:s',
-            'author' => 'required|string|max:255',
-            'featured_image' => 'nullable|image|max:2048',
-            'meta_description' => 'nullable|string|max:255',
-            'summary' => 'required|string|max:500',
-        ]);
-        dd($validated);
+        try {
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'content' => 'required|string',
+                'slug' => 'required|string|unique:posts,slug,' . $post->id,
+                'published_at' => 'nullable|date',
+                'author' => 'required|string|max:255',
+                'featured_image' => 'nullable|image|max:2048',
+                'meta_description' => 'nullable|string|max:255',
+                'summary' => 'required|string|max:500',
+            ]);
 
-        if ($request->hasFile('featured_image')) {
-            $path = $request->file('featured_image')->store('images', 'public');
-            $validated['featured_image'] = $path;
+            if ($request->hasFile('featured_image')) {
+                $path = $request->file('featured_image')->store('images', 'public');
+                $validated['featured_image'] = $path;
+            }
+
+            $post->update($validated);
+
+            return redirect()->route('posts.index')->with('success', 'Post actualizado correctamente.');
+        } catch (\Exception $e) {
+            \Log::error('Error updating post: ' . $e->getMessage());
+            return back()->withErrors(['error' => 'Error al actualizar el post: ' . $e->getMessage()]);
         }
-        if ($request->filled('published_at')) {
-            $validated['published_at'] = date('Y-m-d H:i:s', strtotime($request->input('published_at')));
-        }
-
-        $post->update($validated);
-
-        return redirect()->route('posts.index')->with('success', 'Post actualizado correctamente.');
     }
 
     public function store(Request $request)
