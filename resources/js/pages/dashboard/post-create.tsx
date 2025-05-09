@@ -27,7 +27,9 @@ export default function PostCreate() {
         formData.append('meta_description', data.meta_description);
         
         if (data.published_at) {
-            formData.append('published_at', data.published_at);
+            const date = new Date(data.published_at);
+            const formattedDate = date.toISOString().slice(0, 19).replace('T', ' ');
+            formData.append('published_at', formattedDate);
         }
         
         if (data.featured_image) {
