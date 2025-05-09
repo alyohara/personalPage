@@ -31,7 +31,7 @@ export default function PostEdit({ post }: Props) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-    
+        console.log('Data to be submitted:', data); // 👈🏼 Log del contenido del formulario
         put(`/dashboard/posts/${post.id}`, {
             forceFormData: true,
             onSuccess: () => {
