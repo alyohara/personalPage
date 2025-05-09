@@ -62,6 +62,7 @@ class PostController extends Controller
             'meta_description' => 'nullable|string|max:255',
             'summary' => 'required|string|max:500',
         ]);
+        dd($validated);
 
         if ($request->hasFile('featured_image')) {
             $path = $request->file('featured_image')->store('images', 'public');
