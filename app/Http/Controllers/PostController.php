@@ -55,16 +55,30 @@ class PostController extends Controller
         try {
             \Log::info('Update request data:', $request->all());
             
-            $validated = $request->validate([
+            // Validate required fields first
+            $request->validate([
                 'title' => 'required|string|max:255',
                 'content' => 'required|string',
                 'slug' => 'required|string|unique:posts,slug,' . $post->id,
-                'published_at' => 'nullable|date',
                 'author' => 'required|string|max:255',
-                'featured_image' => 'nullable|image|max:2048',
-                'meta_description' => 'nullable|string|max:255',
                 'summary' => 'required|string|max:500',
             ]);
+
+            // Then validate optional fields
+            $validated = $request->validate([
+                'published_at' => 'nullable|date',
+                'featured_image' => 'nullable|image|max:2048',
+                'meta_description' => 'nullable|string|max:255',
+            ]);
+
+            // Merge the validated data
+            $validated = array_merge($request->only([
+                'title',
+                'content',
+                'slug',
+                'author',
+                'summary'
+            ]), $validated);
 
             \Log::info('Validated data:', $validated);
 
