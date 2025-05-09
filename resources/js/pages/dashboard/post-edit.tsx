@@ -30,201 +30,161 @@ export default function PostEdit({ post }: Props) {
         summary: post.summary,
     });
 
-    useEffect(() => {
-        console.log('Component mounted');
-        console.log('Initial data:', data);
-    }, []);
-
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         
-        // Log the entire data object
-        console.log('Form data before submission:', {
-            title: data.title,
-            content: data.content,
-            slug: data.slug,
-            published_at: data.published_at,
-            author: data.author,
-            featured_image: data.featured_image,
-            meta_description: data.meta_description,
-            summary: data.summary
-        });
-
-        // Create FormData for file upload
         const formData = new FormData();
-        Object.entries(data).forEach(([key, value]) => {
-            if (value !== null) {
-                formData.append(key, value);
-            }
-        });
-
-        // Log FormData contents
-        for (let [key, value] of formData.entries()) {
-            console.log(`${key}:`, value);
+        formData.append('title', data.title);
+        formData.append('content', data.content);
+        formData.append('slug', data.slug);
+        formData.append('author', data.author);
+        formData.append('summary', data.summary);
+        formData.append('meta_description', data.meta_description);
+        
+        if (data.published_at) {
+            formData.append('published_at', data.published_at);
+        }
+        
+        if (data.featured_image) {
+            formData.append('featured_image', data.featured_image);
         }
 
         put(`/dashboard/posts/${post.id}`, {
             forceFormData: true,
             data: formData,
             onSuccess: () => {
-                console.log('Update successful');
                 window.location.href = '/dashboard/posts';
-            },
-            onError: (errors) => {
-                console.error('Update failed:', errors);
-                // Log the current form state
-                console.log('Current form state:', data);
             }
         });
     };
-    
 
     return (
         <AppLayout>
             <div className="p-6">
-                <h1 className="text-2xl font-bold">Editar Post</h1>
-                <form onSubmit={handleSubmit} className="mt-4" encType="multipart/form-data">
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Título</label>
+                <h1 className="text-2xl font-bold mb-6">Editar Post</h1>
+                
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Title */}
+                    <div>
+                        <label className="block text-sm font-medium mb-2">Título</label>
                         <input
                             type="text"
                             value={data.title}
-                            onChange={(e) => setData('title', e.target.value)}
-                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                            onChange={e => setData('title', e.target.value)}
+                            className="w-full rounded border-gray-300 shadow-sm"
+                            required
                         />
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Slug</label>
+
+                    {/* Slug (read-only) */}
+                    <div>
+                        <label className="block text-sm font-medium mb-2">Slug</label>
                         <input
                             type="text"
                             value={data.slug}
-                            onChange={(e) => setData('slug', e.target.value)}
-                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                            className="w-full rounded border-gray-300 shadow-sm bg-gray-100"
+                            readOnly
                         />
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Fecha de publicación</label>
-                        <input
-                            type="datetime-local"
-                            value={data.published_at}
-                            onChange={(e) => setData('published_at', e.target.value)}
-                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Autor</label>
+
+                    {/* Author */}
+                    <div>
+                        <label className="block text-sm font-medium mb-2">Autor</label>
                         <input
                             type="text"
                             value={data.author}
-                            onChange={(e) => setData('author', e.target.value)}
-                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                            onChange={e => setData('author', e.target.value)}
+                            className="w-full rounded border-gray-300 shadow-sm"
+                            required
                         />
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Resumen</label>
+
+                    {/* Summary */}
+                    <div>
+                        <label className="block text-sm font-medium mb-2">Resumen</label>
                         <textarea
                             value={data.summary}
-                            onChange={(e) => setData('summary', e.target.value)}
-                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                            onChange={e => setData('summary', e.target.value)}
+                            className="w-full rounded border-gray-300 shadow-sm"
                             rows={4}
                             maxLength={500}
-                            placeholder="Escribe un resumen del post (máximo 500 caracteres)"
+                            required
                         />
                         <p className="mt-1 text-sm text-gray-500">{data.summary.length}/500 caracteres</p>
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Imagen destacada</label>
+
+                    {/* Featured Image */}
+                    <div>
+                        <label className="block text-sm font-medium mb-2">Imagen destacada</label>
                         {post.featured_image && (
                             <div className="mb-2">
-                                <img src={`/storage/${post.featured_image}`} alt="Imagen actual" className="h-32 w-32 rounded object-cover" />
+                                <img 
+                                    src={`/storage/${post.featured_image}`} 
+                                    alt="Imagen actual" 
+                                    className="h-32 w-32 rounded object-cover"
+                                />
                             </div>
                         )}
                         <input
                             type="file"
-                            name="featured_image"
                             accept="image/*"
-                            onChange={(e) => {
+                            onChange={e => {
                                 const file = e.target.files?.[0];
-                                if (file) {
-                                    setData('featured_image', file);
-                                }
+                                if (file) setData('featured_image', file);
                             }}
-                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                            className="w-full"
                         />
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Descripción meta</label>
+
+                    {/* Meta Description */}
+                    <div>
+                        <label className="block text-sm font-medium mb-2">Descripción meta</label>
                         <input
                             type="text"
                             value={data.meta_description}
-                            onChange={(e) => setData('meta_description', e.target.value)}
-                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                            onChange={e => setData('meta_description', e.target.value)}
+                            className="w-full rounded border-gray-300 shadow-sm"
                             maxLength={255}
                         />
                         <p className="mt-1 text-sm text-gray-500">{data.meta_description.length}/255 caracteres</p>
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Contenido</label>
+
+                    {/* Content */}
+                    <div>
+                        <label className="block text-sm font-medium mb-2">Contenido</label>
                         <Editor
                             apiKey="8g1rfig0ilfv0bkpciq81y6oc3rlwnh0ikz52jt69b8sf2bv"
                             value={data.content}
-                            onEditorChange={(content) => setData('content', content)}
+                            onEditorChange={content => setData('content', content)}
                             init={{
                                 height: 500,
                                 menubar: true,
                                 plugins: [
-                                    'advlist',
-                                    'autolink',
-                                    'lists',
-                                    'link',
-                                    'image',
-                                    'charmap',
-                                    'preview',
-                                    'anchor',
-                                    'searchreplace',
-                                    'visualblocks',
-                                    'code',
-                                    'fullscreen',
-                                    'insertdatetime',
-                                    'media',
-                                    'table',
-                                    'code',
-                                    'help',
-                                    'wordcount',
+                                    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
+                                    'preview', 'anchor', 'searchreplace', 'visualblocks', 'code',
+                                    'fullscreen', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
                                 ],
-                                toolbar:
-                                    'undo redo | formatselect | bold italic backcolor | \
+                                toolbar: 'undo redo | formatselect | bold italic backcolor | \
                                     alignleft aligncenter alignright alignjustify | \
-                                    bullist numlist outdent indent | removeformat | help | \
-                                    link image media codesample',
-                                image_title: true,
-                                automatic_uploads: true,
-                                file_picker_types: 'image',
-                                file_picker_callback: (callback, value, meta) => {
-                                    if (meta.filetype === 'image') {
-                                        const input = document.createElement('input');
-                                        input.setAttribute('type', 'file');
-                                        input.setAttribute('accept', 'image/*');
-                                        input.onchange = function () {
-                                            const file = this.files[0];
-                                            const reader = new FileReader();
-                                            reader.onload = function () {
-                                                callback(reader.result, { alt: file.name });
-                                            };
-                                            reader.readAsDataURL(file);
-                                        };
-                                        input.click();
-                                    }
-                                },
+                                    bullist numlist outdent indent | removeformat | help'
                             }}
                         />
                     </div>
+
+                    {/* Buttons */}
                     <div className="flex space-x-4">
-                        <button type="submit" className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700" disabled={processing}>
-                            Guardar
+                        <button
+                            type="submit"
+                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+                            disabled={processing}
+                        >
+                            Guardar cambios
                         </button>
-                        <a href="/dashboard/posts" className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-700">
-                            Volver
+                        <a
+                            href="/dashboard/posts"
+                            className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700"
+                        >
+                            Cancelar
                         </a>
                     </div>
                 </form>
