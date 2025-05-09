@@ -178,11 +178,11 @@ export default function PostEdit({ post }: Props) {
                                 plugins: [
                                     'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
                                     'preview', 'anchor', 'searchreplace', 'visualblocks', 'code',
-                                    'fullscreen', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+                                    'fullscreen', 'insertdatetime', 'media', 'table', 'help', 'wordcount', 'codesample'
                                 ],
                                 toolbar: 'undo redo | formatselect | bold italic backcolor | \
                                     alignleft aligncenter alignright alignjustify | \
-                                    bullist numlist outdent indent | removeformat | help'
+                                    bullist numlist outdent indent | removeformat | help | codesample | link image media'
                             }}
                         />
                     </div>
