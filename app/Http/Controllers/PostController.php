@@ -10,7 +10,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::orderBy('created_at', 'desc')->get();
         return Inertia::render('dashboard/posts', ['posts' => $posts]);
     }
 
@@ -22,7 +22,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-
         return redirect()->route('posts.index')->with('success', 'Post eliminado correctamente.');
     }
 
@@ -39,22 +38,16 @@ class PostController extends Controller
 
     public function publish(Post $post)
     {
-        $post->update(['is_published' => true]);
+        $post->update([
+            'is_published' => true,
+            'published_at' => now()
+        ]);
         return redirect()->back()->with('success', 'El post ha sido publicado.');
     }
-
-//    public function publish(Post $post)
-//    {
-//        $post->update(['is_published' => true]);
-//
-//        return redirect()->route('posts.index')->with('success', 'Post publicado correctamente.');
-//    }
 
     public function update(Request $request, Post $post)
     {
         try {
-            \Log::info('Update request data:', $request->all());
-            
             // Validate required fields first
             $request->validate([
                 'title' => 'required|string|max:255',
@@ -66,7 +59,6 @@ class PostController extends Controller
 
             // Then validate optional fields
             $validated = $request->validate([
-                'published_at' => 'nullable|date',
                 'featured_image' => 'nullable|image|max:2048',
                 'meta_description' => 'nullable|string|max:255',
             ]);
@@ -79,8 +71,6 @@ class PostController extends Controller
                 'author',
                 'summary'
             ]), $validated);
-
-            \Log::info('Validated data:', $validated);
 
             if ($request->hasFile('featured_image')) {
                 $path = $request->file('featured_image')->store('images', 'public');
@@ -103,7 +93,7 @@ class PostController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'slug' => 'required|string|unique:posts,slug',
-            'published_at' => 'nullable|date_format:Y-m-d H:i:s', 'author' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
             'featured_image' => 'nullable|image|max:2048',
             'meta_description' => 'nullable|string|max:255',
             'summary' => 'required|string|max:500',
@@ -112,9 +102,6 @@ class PostController extends Controller
         if ($request->hasFile('featured_image')) {
             $path = $request->file('featured_image')->store('images', 'public');
             $validated['featured_image'] = $path;
-        }
-        if ($request->filled('published_at')) {
-            $validated['published_at'] = date('Y-m-d H:i:s', strtotime($request->input('published_at')));
         }
 
         Post::create($validated);
@@ -129,7 +116,10 @@ class PostController extends Controller
 
     public function unpublish(Post $post)
     {
-        $post->update(['is_published' => false]);
+        $post->update([
+            'is_published' => false,
+            'published_at' => null
+        ]);
         return redirect()->back()->with('success', 'El post ha sido despublicado.');
     }
 

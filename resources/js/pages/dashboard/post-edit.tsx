@@ -2,7 +2,6 @@
 import AppLayout from '@/layouts/app-layout';
 import { useForm } from '@inertiajs/react';
 import { Editor } from '@tinymce/tinymce-react';
-import { useEffect } from 'react';
 
 interface Props {
     post: {
@@ -15,6 +14,7 @@ interface Props {
         featured_image: string | null;
         meta_description: string;
         summary: string;
+        is_published: boolean;
     };
 }
 
@@ -23,7 +23,6 @@ export default function PostEdit({ post }: Props) {
         title: post.title,
         content: post.content,
         slug: post.slug,
-        published_at: post.published_at,
         author: post.author,
         featured_image: null as File | null,
         meta_description: post.meta_description,
@@ -32,7 +31,6 @@ export default function PostEdit({ post }: Props) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Form submission started');
         
         const formData = new FormData();
         formData.append('title', data.title);
@@ -43,33 +41,19 @@ export default function PostEdit({ post }: Props) {
         formData.append('meta_description', data.meta_description);
         formData.append('_method', 'PUT');
         
-        if (data.published_at) {
-            formData.append('published_at', data.published_at);
-        }
-        
         if (data.featured_image) {
             formData.append('featured_image', data.featured_image);
         }
 
-        console.log('Sending request to:', `/dashboard/posts/${post.id}`);
-        
         submitPost(`/dashboard/posts/${post.id}`, {
             forceFormData: true,
             data: formData,
             preserveScroll: true,
-            onSuccess: (page) => {
-                console.log('Update successful, response:', page);
+            onSuccess: () => {
                 window.location.href = '/dashboard/posts';
             },
             onError: (errors) => {
-                console.error('Update failed with errors:', errors);
-                // Log each error field
-                Object.entries(errors).forEach(([field, message]) => {
-                    console.error(`${field}: ${message}`);
-                });
-            },
-            onFinish: () => {
-                console.log('Request finished');
+                console.error('Error updating post:', errors);
             }
         });
     };
@@ -200,25 +184,25 @@ export default function PostEdit({ post }: Props) {
                                     alignleft aligncenter alignright alignjustify | \
                                     bullist numlist outdent indent | removeformat | help | \
                                     link image media codesample',
-                                    image_title: true,
-                                    automatic_uploads: true,
-                                    file_picker_types: 'image',
-                                    file_picker_callback: (callback, value, meta) => {
-                                        if (meta.filetype === 'image') {
-                                            const input = document.createElement('input');
-                                            input.setAttribute('type', 'file');
-                                            input.setAttribute('accept', 'image/*');
-                                            input.onchange = function () {
-                                                const file = this.files[0];
-                                                const reader = new FileReader();
-                                                reader.onload = function () {
-                                                    callback(reader.result, { alt: file.name });
-                                                };
-                                                reader.readAsDataURL(file);
+                                image_title: true,
+                                automatic_uploads: true,
+                                file_picker_types: 'image',
+                                file_picker_callback: (callback, value, meta) => {
+                                    if (meta.filetype === 'image') {
+                                        const input = document.createElement('input');
+                                        input.setAttribute('type', 'file');
+                                        input.setAttribute('accept', 'image/*');
+                                        input.onchange = function () {
+                                            const file = this.files[0];
+                                            const reader = new FileReader();
+                                            reader.onload = function () {
+                                                callback(reader.result, { alt: file.name });
                                             };
-                                            input.click();
-                                        }
-                                    },
+                                            reader.readAsDataURL(file);
+                                        };
+                                        input.click();
+                                    }
+                                },
                             }}
                         />
                     </div>

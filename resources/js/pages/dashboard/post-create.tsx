@@ -8,7 +8,6 @@ export default function PostCreate() {
         title: '',
         content: '',
         slug: '',
-        published_at: '',
         author: '',
         featured_image: null as File | null,
         meta_description: '',
@@ -25,11 +24,6 @@ export default function PostCreate() {
         formData.append('author', data.author);
         formData.append('summary', data.summary);
         formData.append('meta_description', data.meta_description);
-        
-        if (data.published_at) {
-            const formattedDate = data.published_at.replace('T', ' ') + ':00';
-            formData.append('published_at', formattedDate);
-        }
         
         if (data.featured_image) {
             formData.append('featured_image', data.featured_image);
@@ -68,15 +62,6 @@ export default function PostCreate() {
                             type="text"
                             value={data.slug}
                             onChange={(e) => setData('slug', e.target.value)}
-                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Fecha de publicación</label>
-                        <input
-                            type="datetime-local"
-                            value={data.published_at}
-                            onChange={(e) => setData('published_at', e.target.value)}
                             className="mt-1 block w-full rounded border-gray-300 shadow-sm"
                         />
                     </div>
