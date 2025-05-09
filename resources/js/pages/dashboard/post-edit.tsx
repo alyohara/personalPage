@@ -31,50 +31,19 @@ export default function PostEdit({ post }: Props) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Submitting form with data:', data);
-        
-        // Create FormData object for file upload
-        const formData = new FormData();
-        
-        // Add all form fields to FormData
-        formData.append('title', data.title);
-        formData.append('content', data.content);
-        formData.append('slug', data.slug);
-        formData.append('author', data.author);
-        formData.append('summary', data.summary);
-        formData.append('meta_description', data.meta_description);
-        
-        // Only append published_at if it exists
-        if (data.published_at) {
-            formData.append('published_at', data.published_at);
-        }
-        
-        // Only append featured_image if it exists
-        if (data.featured_image) {
-            formData.append('featured_image', data.featured_image);
-        }
-
-        // Log the FormData contents
-        for (let pair of formData.entries()) {
-            console.log(pair[0] + ': ' + pair[1]);
-        }
-
+    
         put(`/dashboard/posts/${post.id}`, {
             forceFormData: true,
-            data: formData,
             onSuccess: () => {
                 console.log('Update successful');
                 window.location.href = '/dashboard/posts';
             },
             onError: (errors) => {
                 console.error('Update failed:', errors);
-                // Log each field's value to help debug
-                Object.keys(data).forEach(key => {
-                    console.log(`${key}:`, data[key]);
-                });
             }
         });
     };
+    
 
     return (
         <AppLayout>
