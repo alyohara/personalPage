@@ -17,8 +17,33 @@ export default function PostCreate() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        
+        const formData = new FormData();
+        formData.append('title', data.title);
+        formData.append('content', data.content);
+        formData.append('slug', data.slug);
+        formData.append('author', data.author);
+        formData.append('summary', data.summary);
+        formData.append('meta_description', data.meta_description);
+        
+        if (data.published_at) {
+            formData.append('published_at', data.published_at);
+        }
+        
+        if (data.featured_image) {
+            formData.append('featured_image', data.featured_image);
+        }
+
         post('/dashboard/posts', {
             forceFormData: true,
+            data: formData,
+            preserveScroll: true,
+            onSuccess: () => {
+                window.location.href = '/dashboard/posts';
+            },
+            onError: (errors) => {
+                console.error('Error creating post:', errors);
+            }
         });
     };
 
