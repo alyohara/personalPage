@@ -19,7 +19,7 @@ interface Props {
 }
 
 export default function PostEdit({ post }: Props) {
-    const { data, setData, put, processing } = useForm({
+    const { data, setData, post, processing } = useForm({
         title: post.title,
         content: post.content,
         slug: post.slug,
@@ -41,6 +41,7 @@ export default function PostEdit({ post }: Props) {
         formData.append('author', data.author);
         formData.append('summary', data.summary);
         formData.append('meta_description', data.meta_description);
+        formData.append('_method', 'PUT');
         
         if (data.published_at) {
             formData.append('published_at', data.published_at);
@@ -52,7 +53,7 @@ export default function PostEdit({ post }: Props) {
 
         console.log('Sending request to:', `/dashboard/posts/${post.id}`);
         
-        put(`/dashboard/posts/${post.id}`, {
+        post(`/dashboard/posts/${post.id}`, {
             forceFormData: true,
             data: formData,
             preserveScroll: true,
