@@ -8,6 +8,12 @@ interface Props {
         id: number;
         title: string;
         content: string;
+        slug: string;
+        published_at: string;
+        author: string;
+        featured_image: string | null;
+        meta_description: string;
+        summary: string;
     };
 }
 
@@ -15,18 +21,26 @@ export default function PostEdit({ post }: Props) {
     const { data, setData, put, processing } = useForm({
         title: post.title,
         content: post.content,
+        slug: post.slug,
+        published_at: post.published_at,
+        author: post.author,
+        featured_image: null as File | null,
+        meta_description: post.meta_description,
+        summary: post.summary,
     });
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        put(`/dashboard/posts/${post.id}`);
+        put(`/dashboard/posts/${post.id}`, {
+            forceFormData: true,
+        });
     };
 
     return (
         <AppLayout>
             <div className="p-6">
                 <h1 className="text-2xl font-bold">Editar Post</h1>
-                <form onSubmit={handleSubmit} className="mt-4">
+                <form onSubmit={handleSubmit} className="mt-4" encType="multipart/form-data">
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Título</label>
                         <input
@@ -35,6 +49,80 @@ export default function PostEdit({ post }: Props) {
                             onChange={(e) => setData('title', e.target.value)}
                             className="mt-1 block w-full rounded border-gray-300 shadow-sm"
                         />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Slug</label>
+                        <input
+                            type="text"
+                            value={data.slug}
+                            onChange={(e) => setData('slug', e.target.value)}
+                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Fecha de publicación</label>
+                        <input
+                            type="datetime-local"
+                            value={data.published_at}
+                            onChange={(e) => setData('published_at', e.target.value)}
+                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Autor</label>
+                        <input
+                            type="text"
+                            value={data.author}
+                            onChange={(e) => setData('author', e.target.value)}
+                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Resumen</label>
+                        <textarea
+                            value={data.summary}
+                            onChange={(e) => setData('summary', e.target.value)}
+                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                            rows={4}
+                            maxLength={500}
+                            placeholder="Escribe un resumen del post (máximo 500 caracteres)"
+                        />
+                        <p className="mt-1 text-sm text-gray-500">{data.summary.length}/500 caracteres</p>
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Imagen destacada</label>
+                        {post.featured_image && (
+                            <div className="mb-2">
+                                <img
+                                    src={`/storage/${post.featured_image}`}
+                                    alt="Imagen actual"
+                                    className="h-32 w-32 object-cover rounded"
+                                />
+                            </div>
+                        )}
+                        <input
+                            type="file"
+                            name="featured_image"
+                            accept="image/*"
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                    setData('featured_image', file);
+                                }
+                            }}
+                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Descripción meta</label>
+                        <input
+                            type="text"
+                            value={data.meta_description}
+                            onChange={(e) => setData('meta_description', e.target.value)}
+                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                            maxLength={255}
+                        />
+                        <p className="mt-1 text-sm text-gray-500">{data.meta_description.length}/255 caracteres</p>
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Contenido</label>

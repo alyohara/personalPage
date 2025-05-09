@@ -12,6 +12,7 @@ export default function PostCreate() {
         author: '',
         featured_image: null as File | null,
         meta_description: '',
+        summary: '',
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -63,6 +64,18 @@ export default function PostCreate() {
                         />
                     </div>
                     <div className="mb-4">
+                        <label className="block text-sm font-medium">Resumen</label>
+                        <textarea
+                            value={data.summary}
+                            onChange={(e) => setData('summary', e.target.value)}
+                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                            rows={4}
+                            maxLength={500}
+                            placeholder="Escribe un resumen del post (máximo 500 caracteres)"
+                        />
+                        <p className="mt-1 text-sm text-gray-500">{data.summary.length}/500 caracteres</p>
+                    </div>
+                    <div className="mb-4">
                         <label className="block text-sm font-medium">Imagen destacada</label>
                         <input
                             type="file"
@@ -76,6 +89,17 @@ export default function PostCreate() {
                             }}
                             className="mt-1 block w-full rounded border-gray-300 shadow-sm"
                         />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Descripción meta</label>
+                        <input
+                            type="text"
+                            value={data.meta_description}
+                            onChange={(e) => setData('meta_description', e.target.value)}
+                            className="mt-1 block w-full rounded border-gray-300 shadow-sm"
+                            maxLength={255}
+                        />
+                        <p className="mt-1 text-sm text-gray-500">{data.meta_description.length}/255 caracteres</p>
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Contenido</label>

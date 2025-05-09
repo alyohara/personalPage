@@ -24,16 +24,13 @@ class PostController extends Controller
             'author' => 'required|string|max:255',
             'featured_image' => 'nullable|image|max:2048',
             'meta_description' => 'nullable|string|max:255',
+            'summary' => 'required|string|max:500',
         ]);
-
-        // Generar resumen con las primeras 100 palabras
-        $validated['summary'] = implode(' ', array_slice(explode(' ', strip_tags($validated['content'])), 0, 100));
 
         if ($request->hasFile('featured_image')) {
             $path = $request->file('featured_image')->store('images', 'public');
             $validated['featured_image'] = $path;
         }
-
 
         Post::create($validated);
 
@@ -86,7 +83,18 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
+            'slug' => 'required|string|unique:posts,slug,' . $post->id,
+            'published_at' => 'nullable|date',
+            'author' => 'required|string|max:255',
+            'featured_image' => 'nullable|image|max:2048',
+            'meta_description' => 'nullable|string|max:255',
+            'summary' => 'required|string|max:500',
         ]);
+
+        if ($request->hasFile('featured_image')) {
+            $path = $request->file('featured_image')->store('images', 'public');
+            $validated['featured_image'] = $path;
+        }
 
         $post->update($validated);
 
