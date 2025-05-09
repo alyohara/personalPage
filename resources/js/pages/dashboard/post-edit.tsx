@@ -3,6 +3,7 @@ import AppLayout from '@/layouts/app-layout';
 import { useForm } from '@inertiajs/react';
 import { Editor } from '@tinymce/tinymce-react';
 import { useEffect } from 'react';
+import { useRouter } from 'react';
 
 interface Props {
     post: {
@@ -30,6 +31,8 @@ export default function PostEdit({ post }: Props) {
         summary: post.summary,
     });
 
+    const router = useRouter();
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log('Form submission started');
@@ -53,9 +56,8 @@ export default function PostEdit({ post }: Props) {
 
         console.log('Sending request to:', `/dashboard/posts/${post.id}`);
         
-        post(`/dashboard/posts/${post.id}`, {
+        router.post(`/dashboard/posts/${post.id}`, formData, {
             forceFormData: true,
-            data: formData,
             preserveScroll: true,
             onSuccess: (page) => {
                 console.log('Update successful, response:', page);
