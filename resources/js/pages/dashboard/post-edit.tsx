@@ -32,14 +32,28 @@ export default function PostEdit({ post }: Props) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log('Submitting form with data:', data);
+        
+        // Create FormData object for file upload
+        const formData = new FormData();
+        Object.keys(data).forEach(key => {
+            if (data[key] !== null) {
+                formData.append(key, data[key]);
+            }
+        });
+
         put(`/dashboard/posts/${post.id}`, {
             forceFormData: true,
+            data: formData,
             onSuccess: () => {
                 console.log('Update successful');
                 window.location.href = '/dashboard/posts';
             },
             onError: (errors) => {
                 console.error('Update failed:', errors);
+                // Log each field's value to help debug
+                Object.keys(data).forEach(key => {
+                    console.log(`${key}:`, data[key]);
+                });
             }
         });
     };

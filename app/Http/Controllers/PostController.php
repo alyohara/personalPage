@@ -53,6 +53,8 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         try {
+            \Log::info('Update request data:', $request->all());
+            
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
                 'content' => 'required|string',
@@ -64,6 +66,8 @@ class PostController extends Controller
                 'summary' => 'required|string|max:500',
             ]);
 
+            \Log::info('Validated data:', $validated);
+
             if ($request->hasFile('featured_image')) {
                 $path = $request->file('featured_image')->store('images', 'public');
                 $validated['featured_image'] = $path;
@@ -74,6 +78,7 @@ class PostController extends Controller
             return redirect()->route('posts.index')->with('success', 'Post actualizado correctamente.');
         } catch (\Exception $e) {
             \Log::error('Error updating post: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
             return back()->withErrors(['error' => 'Error al actualizar el post: ' . $e->getMessage()]);
         }
     }
