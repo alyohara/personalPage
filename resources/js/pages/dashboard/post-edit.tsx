@@ -19,7 +19,7 @@ interface Props {
 }
 
 export default function PostEdit({ post }: Props) {
-    const { data, setData, post, processing } = useForm({
+    const { data, setData, processing } = useForm({
         title: post.title,
         content: post.content,
         slug: post.slug,
