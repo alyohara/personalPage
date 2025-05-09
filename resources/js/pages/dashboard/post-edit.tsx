@@ -2,6 +2,7 @@
 import AppLayout from '@/layouts/app-layout';
 import { useForm } from '@inertiajs/react';
 import { Editor } from '@tinymce/tinymce-react';
+import { useEffect } from 'react';
 
 interface Props {
     post: {
@@ -29,17 +30,50 @@ export default function PostEdit({ post }: Props) {
         summary: post.summary,
     });
 
+    useEffect(() => {
+        console.log('Component mounted');
+        console.log('Initial data:', data);
+    }, []);
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Data to be submitted:', data); // 👈🏼 Log del contenido del formulario
+        
+        // Log the entire data object
+        console.log('Form data before submission:', {
+            title: data.title,
+            content: data.content,
+            slug: data.slug,
+            published_at: data.published_at,
+            author: data.author,
+            featured_image: data.featured_image,
+            meta_description: data.meta_description,
+            summary: data.summary
+        });
+
+        // Create FormData for file upload
+        const formData = new FormData();
+        Object.entries(data).forEach(([key, value]) => {
+            if (value !== null) {
+                formData.append(key, value);
+            }
+        });
+
+        // Log FormData contents
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+
         put(`/dashboard/posts/${post.id}`, {
             forceFormData: true,
+            data: formData,
             onSuccess: () => {
                 console.log('Update successful');
                 window.location.href = '/dashboard/posts';
             },
             onError: (errors) => {
                 console.error('Update failed:', errors);
+                // Log the current form state
+                console.log('Current form state:', data);
             }
         });
     };
