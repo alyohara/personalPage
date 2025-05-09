@@ -31,6 +31,7 @@ export default function PostEdit({ post }: Props) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        console.log(data); // Verifica los datos enviados
         put(`/dashboard/posts/${post.id}`, {
             forceFormData: true,
         });
@@ -93,11 +94,7 @@ export default function PostEdit({ post }: Props) {
                         <label className="block text-sm font-medium">Imagen destacada</label>
                         {post.featured_image && (
                             <div className="mb-2">
-                                <img
-                                    src={`/storage/${post.featured_image}`}
-                                    alt="Imagen actual"
-                                    className="h-32 w-32 object-cover rounded"
-                                />
+                                <img src={`/storage/${post.featured_image}`} alt="Imagen actual" className="h-32 w-32 rounded object-cover" />
                             </div>
                         )}
                         <input

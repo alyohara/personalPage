@@ -14,34 +14,6 @@ class PostController extends Controller
         return Inertia::render('dashboard/posts', ['posts' => $posts]);
     }
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'slug' => 'required|string|unique:posts,slug',
-            'published_at' => 'nullable|date',
-            'author' => 'required|string|max:255',
-            'featured_image' => 'nullable|image|max:2048',
-            'meta_description' => 'nullable|string|max:255',
-            'summary' => 'required|string|max:500',
-        ]);
-
-        if ($request->hasFile('featured_image')) {
-            $path = $request->file('featured_image')->store('images', 'public');
-            $validated['featured_image'] = $path;
-        }
-
-        Post::create($validated);
-
-        return redirect()->route('posts.index')->with('success', 'Post guardado correctamente.');
-    }
-
-    public function create()
-    {
-        return Inertia::render('dashboard/post-create');
-    }
-
     public function edit(Post $post)
     {
         return Inertia::render('dashboard/post-edit', ['post' => $post]);
@@ -53,13 +25,6 @@ class PostController extends Controller
 
         return redirect()->route('posts.index')->with('success', 'Post eliminado correctamente.');
     }
-
-//    public function publish(Post $post)
-//    {
-//        $post->update(['is_published' => true]);
-//
-//        return redirect()->route('posts.index')->with('success', 'Post publicado correctamente.');
-//    }
 
     public function indexPublic()
     {
@@ -78,13 +43,20 @@ class PostController extends Controller
         return redirect()->back()->with('success', 'El post ha sido publicado.');
     }
 
+//    public function publish(Post $post)
+//    {
+//        $post->update(['is_published' => true]);
+//
+//        return redirect()->route('posts.index')->with('success', 'Post publicado correctamente.');
+//    }
+
     public function update(Request $request, Post $post)
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'slug' => 'required|string|unique:posts,slug,' . $post->id,
-            'published_at' => 'nullable|date',
+            'slug' => 'required|string|unique:posts,slug,'.$post->id,
+            'published_at' => 'nullable|date_format:Y-m-d H:i:s',
             'author' => 'required|string|max:255',
             'featured_image' => 'nullable|image|max:2048',
             'meta_description' => 'nullable|string|max:255',
@@ -95,10 +67,43 @@ class PostController extends Controller
             $path = $request->file('featured_image')->store('images', 'public');
             $validated['featured_image'] = $path;
         }
+        if ($request->filled('published_at')) {
+            $validated['published_at'] = date('Y-m-d H:i:s', strtotime($request->input('published_at')));
+        }
 
         $post->update($validated);
 
         return redirect()->route('posts.index')->with('success', 'Post actualizado correctamente.');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'slug' => 'required|string|unique:posts,slug',
+            'published_at' => 'nullable|date_format:Y-m-d H:i:s', 'author' => 'required|string|max:255',
+            'featured_image' => 'nullable|image|max:2048',
+            'meta_description' => 'nullable|string|max:255',
+            'summary' => 'required|string|max:500',
+        ]);
+
+        if ($request->hasFile('featured_image')) {
+            $path = $request->file('featured_image')->store('images', 'public');
+            $validated['featured_image'] = $path;
+        }
+        if ($request->filled('published_at')) {
+            $validated['published_at'] = date('Y-m-d H:i:s', strtotime($request->input('published_at')));
+        }
+
+        Post::create($validated);
+
+        return redirect()->route('posts.index')->with('success', 'Post guardado correctamente.');
+    }
+
+    public function create()
+    {
+        return Inertia::render('dashboard/post-create');
     }
 
     public function unpublish(Post $post)
