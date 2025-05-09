@@ -44,7 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('/dashboard/posts', [PostController::class, 'store'])->name('posts.store');
     Route::get('/dashboard/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
-    Route::put('/dashboard/posts/{post}', [PostController::class, 'update'])->name('posts.update');
+    Route::post('/dashboard/posts/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('/dashboard/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
     Route::post('/dashboard/posts/{post}/publish', [PostController::class, 'publish'])->name('posts.publish');
     Route::post('/dashboard/posts/{post}/unpublish', [PostController::class, 'unpublish'])->name('posts.unpublish');
