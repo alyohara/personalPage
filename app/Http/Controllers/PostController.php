@@ -25,14 +25,30 @@ class PostController extends Controller
         return redirect()->route('posts.index')->with('success', 'Post eliminado correctamente.');
     }
 
-    public function indexPublic()
+    public function indexPublic(Request $request)
     {
-        $posts = Post::where('is_published', true)
-            ->orderBy('published_at', 'desc')
-            ->paginate(10);
+        $query = Post::where('is_published', true);
+
+        // Handle search
+        if ($request->has('search')) {
+            $searchTerm = $request->get('search');
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('title', 'like', "%{$searchTerm}%")
+                  ->orWhere('summary', 'like', "%{$searchTerm}%")
+                  ->orWhere('content', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        // Handle sorting
+        $sortOrder = $request->get('sort', 'newest');
+        $query->orderBy('published_at', $sortOrder === 'newest' ? 'desc' : 'asc');
+
+        $posts = $query->paginate(10);
 
         return inertia('blog', [
             'posts' => $posts,
+            'search' => $request->get('search', ''),
+            'sort' => $sortOrder
         ]);
     }
 

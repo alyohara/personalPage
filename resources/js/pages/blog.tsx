@@ -1,6 +1,7 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import debounce from 'lodash/debounce';
 
 interface Post {
     id: number;
@@ -9,6 +10,7 @@ interface Post {
     slug: string;
     published_at: string;
     featured_image: string | null;
+    content: string;
 }
 
 interface PaginationLinks {
@@ -26,10 +28,14 @@ interface PaginatedPosts {
 
 interface Props {
     posts: Post[] | PaginatedPosts;
+    search: string;
+    sort: 'newest' | 'oldest';
 }
 
-export default function Blog({ posts }: Props) {
+export default function Blog({ posts, search: initialSearch, sort: initialSort }: Props) {
     const [language, setLanguage] = useState<'en' | 'es'>('es');
+    const [searchQuery, setSearchQuery] = useState(initialSearch);
+    const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>(initialSort);
 
     const content = {
         en: {
@@ -38,6 +44,10 @@ export default function Blog({ posts }: Props) {
             projects: 'Projects',
             blog: 'Blog',
             contact: 'Contact',
+            sortNewest: 'Sort by Newest',
+            sortOldest: 'Sort by Oldest',
+            searchPlaceholder: 'Search posts...',
+            noResults: 'No posts found matching your search.',
         },
         es: {
             title: 'Blog',
@@ -45,6 +55,10 @@ export default function Blog({ posts }: Props) {
             projects: 'Proyectos',
             blog: 'Blog',
             contact: 'Contacto',
+            sortNewest: 'Ordenar más recientes',
+            sortOldest: 'Ordenar más antiguos',
+            searchPlaceholder: 'Buscar posts...',
+            noResults: 'No se encontraron posts que coincidan con tu búsqueda.',
         },
     };
 
@@ -77,6 +91,32 @@ export default function Blog({ posts }: Props) {
     };
 
     const { posts: postsList, links, hasPagination } = getPostsData();
+
+    // Debounced search function
+    const debouncedSearch = debounce((value: string) => {
+        router.get(
+            route('blog'),
+            { search: value, sort: sortOrder },
+            { preserveState: true, preserveScroll: true }
+        );
+    }, 300);
+
+    // Handle search input change
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setSearchQuery(value);
+        debouncedSearch(value);
+    };
+
+    // Handle sort order change
+    const handleSortChange = (order: 'newest' | 'oldest') => {
+        setSortOrder(order);
+        router.get(
+            route('blog'),
+            { search: searchQuery, sort: order },
+            { preserveState: true, preserveScroll: true }
+        );
+    };
 
     return (
         <>
@@ -125,12 +165,6 @@ export default function Blog({ posts }: Props) {
                         >
                             [{t.projects}]
                         </Link>
-                        {/*<Link*/}
-                        {/*    href={route('blog')}*/}
-                        {/*    className={`text-green-400 hover:text-white ${route().current('blog') ? 'font-bold text-white' : ''}`}*/}
-                        {/*>*/}
-                        {/*    [{t.blog}]*/}
-                        {/*</Link>*/}
                         <Link
                             href={route('contact')}
                             className={`text-green-400 hover:text-white ${route().current('contact') ? 'font-bold text-white' : ''}`}
@@ -140,38 +174,76 @@ export default function Blog({ posts }: Props) {
                     </nav>
 
                     <div className="mx-auto px-6 py-8 font-mono text-sm text-green-400">
-                        <h1 className="mb-4 text-xl font-bold text-white">C:\{t.blog}&gt;</h1>
-                        <div className="space-y-6">
-                            {postsList.map((post, i) => (
-                                <motion.div
-                                    key={post.id}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: i * 0.1 }}
-                                    className="rounded-lg border border-green-600 bg-black p-4 shadow-md"
+                        <div className="mb-4 flex items-center justify-between">
+                            <h1 className="text-xl font-bold text-white">C:\{t.blog}&gt;</h1>
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => handleSortChange('newest')}
+                                    className={`rounded border border-green-600 px-3 py-1 ${
+                                        sortOrder === 'newest' ? 'bg-green-600 text-white' : 'text-green-400 hover:bg-green-600 hover:text-white'
+                                    }`}
                                 >
-                                    <div className="flex gap-4">
-                                        <div className="h-32 w-32 flex-shrink-0 overflow-hidden rounded-lg border border-green-600">
-                                            <img
-                                                src={post.featured_image ? `/storage/${post.featured_image}` : '/imgs/perfil2.png'}
-                                                alt={post.title}
-                                                className="h-full w-full object-cover"
-                                            />
+                                    {t.sortNewest}
+                                </button>
+                                <button
+                                    onClick={() => handleSortChange('oldest')}
+                                    className={`rounded border border-green-600 px-3 py-1 ${
+                                        sortOrder === 'oldest' ? 'bg-green-600 text-white' : 'text-green-400 hover:bg-green-600 hover:text-white'
+                                    }`}
+                                >
+                                    {t.sortOldest}
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Search Bar */}
+                        <div className="mb-6">
+                            <input
+                                type="text"
+                                value={searchQuery}
+                                onChange={handleSearchChange}
+                                placeholder={t.searchPlaceholder}
+                                className="w-full rounded border border-green-600 bg-black px-4 py-2 text-green-400 placeholder-green-600 focus:border-green-500 focus:outline-none"
+                            />
+                        </div>
+
+                        <div className="space-y-6">
+                            {postsList.length > 0 ? (
+                                postsList.map((post, i) => (
+                                    <motion.div
+                                        key={post.id}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: i * 0.1 }}
+                                        className="rounded-lg border border-green-600 bg-black p-4 shadow-md"
+                                    >
+                                        <div className="flex gap-4">
+                                            <div className="h-32 w-32 flex-shrink-0 overflow-hidden rounded-lg border border-green-600">
+                                                <img
+                                                    src={post.featured_image ? `/storage/${post.featured_image}` : '/imgs/perfil2.png'}
+                                                    alt={post.title}
+                                                    className="h-full w-full object-cover"
+                                                />
+                                            </div>
+                                            <div className="flex flex-1 flex-col">
+                                                <h2 className="text-lg font-semibold text-white">
+                                                    <Link href={`/blog/${post.slug}`} className="text-green-400 hover:underline">
+                                                        {post.title}
+                                                    </Link>
+                                                </h2>
+                                                <p className="mt-2 flex-1 text-green-300">{post.summary}</p>
+                                                <p className="mt-2 text-xs text-green-500">
+                                                    Publicado el {new Date(post.published_at).toLocaleDateString()}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div className="flex flex-1 flex-col">
-                                            <h2 className="text-lg font-semibold text-white">
-                                                <Link href={`/blog/${post.slug}`} className="text-green-400 hover:underline">
-                                                    {post.title}
-                                                </Link>
-                                            </h2>
-                                            <p className="mt-2 flex-1 text-green-300">{post.summary}</p>
-                                            <p className="mt-2 text-xs text-green-500">
-                                                Publicado el {new Date(post.published_at).toLocaleDateString()}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            ))}
+                                    </motion.div>
+                                ))
+                            ) : (
+                                <div className="rounded-lg border border-green-600 bg-black p-4 text-center text-green-400">
+                                    {t.noResults}
+                                </div>
+                            )}
                         </div>
 
                         {/* Pagination */}
