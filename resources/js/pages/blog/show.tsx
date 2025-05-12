@@ -106,6 +106,12 @@ export default function Show({ post }: Props) {
                     </nav>
 
                     <div className="mx-auto px-6 py-8 font-mono text-sm text-green-400">
+                        <Link
+                            href={route('blog')}
+                            className="inline-block mb-6 text-green-400 hover:text-white border border-green-600 px-4 py-2 rounded hover:bg-green-600 transition-colors"
+                        >
+                            ← Back to Blog
+                        </Link>
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
