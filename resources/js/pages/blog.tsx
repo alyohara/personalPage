@@ -166,6 +166,12 @@ export default function Blog({ posts, search: initialSearch, sort: initialSort }
                             [{t.projects}]
                         </Link>
                         <Link
+                            href={route('blog')}
+                            className={`text-green-400 hover:text-white ${route().current('blog') ? 'font-bold text-white' : ''}`}
+                        >
+                            [{t.blog}]
+                        </Link>
+                        <Link
                             href={route('contact')}
                             className={`text-green-400 hover:text-white ${route().current('contact') ? 'font-bold text-white' : ''}`}
                         >

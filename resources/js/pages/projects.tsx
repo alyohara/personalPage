@@ -217,12 +217,12 @@ export default function Projects() {
                         >
                             [{content[language].projects}]
                         </Link>
-                        {/*<Link*/}
-                        {/*    href={route('blog')}*/}
-                        {/*    className={`text-green-400 hover:text-white ${route().current('blog') ? 'font-bold text-white' : ''}`}*/}
-                        {/*>*/}
-                        {/*    [{content[language].blog}]*/}
-                        {/*</Link>*/}
+                        <Link
+                            href={route('blog')}
+                            className={`text-green-400 hover:text-white ${route().current('blog') ? 'font-bold text-white' : ''}`}
+                        >
+                            [{content[language].blog}]
+                        </Link>
                         <Link
                             href={route('contact')}
                             className={`text-green-400 hover:text-white ${route().current('contact') ? 'font-bold text-white' : ''}`}
