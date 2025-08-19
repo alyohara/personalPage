@@ -1,3 +1,21 @@
+use Laravel\Socialite\Facades\Socialite;
+// Google Auth
+Route::get('/auth/google', function () {
+    return Socialite::driver('google')->redirect();
+})->name('google.login');
+
+Route::get('/auth/google/callback', function () {
+    $googleUser = Socialite::driver('google')->stateless()->user();
+    // Aquí puedes manejar el login o registro del usuario
+    // Por simplicidad, puedes guardar los datos en sesión y redirigir
+    session([
+        'google_user' => [
+            'email' => $googleUser->getEmail(),
+            'name' => $googleUser->getName(),
+        ]
+    ]);
+    return redirect()->route('attendance.form');
+});
 <?php
 
 use App\Http\Controllers\MessageController;
@@ -5,6 +23,8 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+use App\Http\Controllers\AttendanceController;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -30,6 +50,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+    // Rutas de asistencia
+    Route::get('/attendance', [AttendanceController::class, 'showForm'])->name('attendance.form');
+    Route::post('/attendance', [AttendanceController::class, 'submit'])->name('attendance.submit');
 });
 Route::post('/messages', [MessageController::class, 'store']);
 Route::get('/dashboard/messages', [MessageController::class, 'index'])->name('dashboard.messages');
