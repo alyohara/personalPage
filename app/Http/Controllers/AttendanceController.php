@@ -1,20 +1,10 @@
-    public function adminIndex()
-    {
-        $this->middleware('auth');
-        $attendances = \App\Models\Attendance::orderByDesc('attended_at')->paginate(30);
-        return inertia('Attendance/AdminIndex', [
-            'attendances' => $attendances,
-        ]);
-    }
-<?php
 
+<?php
 
 namespace App\Http\Controllers;
 use App\Models\Attendance;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
 
