@@ -1,8 +1,9 @@
+
+<?php
 // Panel de asistencias solo para admin autenticado
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/attendances', [\App\Http\Controllers\AttendanceController::class, 'adminIndex'])->name('admin.attendances');
 });
-<?php
 
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\MessageController;
