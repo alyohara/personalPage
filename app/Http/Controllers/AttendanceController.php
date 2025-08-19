@@ -109,3 +109,83 @@ class AttendanceController extends Controller
 
 // ¡IMPORTANTE! Elimina la definición de rutas de aquí.
 // Las rutas deben ir en routes/web.php, no en el controlador.
+
+import React from "react";
+import { PageProps } from "@/types";
+
+interface Attendance {
+  id: number;
+  name: string;
+  email: string;
+  subject: string;
+  attended_at: string;
+}
+
+interface Props extends PageProps {
+  attendances: Attendance[];
+}
+
+export default function Attendances({ attendances }: Props) {
+  return (
+    <div style={{ maxWidth: 900, margin: "2rem auto" }}>
+      <h1>Asistencias registradas</h1>
+      <a
+        href={route("admin.attendances.export")}
+        className="btn btn-primary"
+        style={{ marginBottom: 16, display: "inline-block" }}
+      >
+        Exportar a CSV
+      </a>
+      <table className="table table-bordered" style={{ width: "100%", background: "#fff" }}>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Materia</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          {attendances.map((a) => (
+            <tr key={a.id}>
+              <td>{a.id}</td>
+              <td>{a.name}</td>
+              <td>{a.email}</td>
+              <td>{a.subject}</td>
+              <td>{a.attended_at}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+// Ejemplo de cómo agregar accesos en el menú lateral del dashboard
+// filepath: resources/js/Layouts/AdminLayout.tsx
+import { Link } from '@inertiajs/react';
+
+export default function AdminLayout({ children }) {
+  return (
+    <div className="admin-layout">
+      <aside className="sidebar">
+        <nav>
+          <ul>
+            <li>
+              <Link href={route('dashboard')}>Dashboard</Link>
+            </li>
+            <li>
+              <Link href={route('admin.attendances')}>Asistencias</Link>
+            </li>
+            <li>
+              <a href={route('admin.attendances.export')}>Exportar Asistencias</a>
+            </li>
+            {/* ...otros accesos... */}
+          </ul>
+        </nav>
+      </aside>
+      <main>{children}</main>
+    </div>
+  );
+}
