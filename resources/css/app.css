@@ -1,3 +1,8 @@
+/* Fuente retro pixelada */
+.pixel-font {
+    font-family: 'Press Start 2P', monospace !important;
+    letter-spacing: 1px;
+}
 @import 'tailwindcss';
 
 @plugin 'tailwindcss-animate';
