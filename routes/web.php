@@ -16,7 +16,6 @@ Route::get('/auth/google/callback', function () {
     ]);
     return redirect()->route('attendance.form');
 });
-<?php
 
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PageController;
