@@ -6,10 +6,11 @@
             'attendances' => $attendances,
         ]);
     }
-use App\Models\Attendance;
 <?php
 
+
 namespace App\Http\Controllers;
+use App\Models\Attendance;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,16 +63,5 @@ class AttendanceController extends Controller
         ]);
 
         return redirect()->route('attendance.form')->with('success', '¡Asistencia registrada!');
-            $email = $userData['email'];
-            $name = $userData['name'];
-        } else {
-            $user = Auth::user();
-            $email = $user ? $user->email : 'anonimo';
-            $name = $user ? $user->name : 'anonimo';
-        }
-        $line = $email . "," . $name . "," . $request->subject . "," . $date . "," . $time . "\n";
-        Storage::disk('local')->append($filename, $line);
-
-        return redirect()->back()->with('success', 'Asistencia registrada correctamente.');
     }
 }
