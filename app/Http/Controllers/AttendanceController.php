@@ -93,6 +93,18 @@ class AttendanceController extends Controller
     {
         return Attendance::orderByDesc('attended_at')->limit($limit)->get();
     }
+
+    /**
+     * Muestra la lista de asistencias en el panel admin
+     */
+    public function adminIndex()
+    {
+        $attendances = Attendance::orderByDesc('attended_at')->get();
+
+        return Inertia::render('Admin/Attendances', [
+            'attendances' => $attendances,
+        ]);
+    }
 }
 
 // ¡IMPORTANTE! Elimina la definición de rutas de aquí.
