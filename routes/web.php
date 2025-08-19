@@ -1,4 +1,12 @@
+<?php
+
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PostController;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
+
 // Google Auth
 Route::get('/auth/google', function () {
     return Socialite::driver('google')->redirect();
@@ -17,32 +25,20 @@ Route::get('/auth/google/callback', function () {
     return redirect()->route('attendance.form');
 });
 
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\PostController;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-
-use App\Http\Controllers\AttendanceController;
-
 Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
 Route::get('/about', function () {
-    return inertia('about');
+    return Inertia::render('about');
 })->name('about');
 
 Route::get('/projects', function () {
-    return inertia('projects');
+    return Inertia::render('projects');
 })->name('projects');
 
-Route::get('/blog', function () {
-    return inertia('blog');
-})->name('blog');
-
 Route::get('/contact', function () {
-    return inertia('contact');
+    return Inertia::render('contact');
 })->name('contact');
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -61,7 +57,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/messages/{id}', [MessageController::class, 'show'])->name('dashboard.messages.show');
 });
 
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/posts', [PostController::class, 'index'])->name('posts.index');
     Route::get('/dashboard/posts/create', [PostController::class, 'create'])->name('posts.create');
@@ -72,12 +67,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dashboard/posts/{post}/publish', [PostController::class, 'publish'])->name('posts.publish');
     Route::post('/dashboard/posts/{post}/unpublish', [PostController::class, 'unpublish'])->name('posts.unpublish');
 });
+
 Route::get('/blog', [PostController::class, 'indexPublic'])->name('blog');
 Route::get('/blog/{post:slug}', [PostController::class, 'show'])->name('blog.show');
-
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
 
 // routes/web.php
-Route::get('/deploy', 'DeployController@deploy');
+Route::get('/deploy', [App\Http\Controllers\DeployController::class, 'deploy']);
