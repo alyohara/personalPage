@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Storage;
 
 class AttendanceController extends Controller
 {
-
     public function showForm()
     {
         $subjects = ['AyED', 'ED', 'PC'];
