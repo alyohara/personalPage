@@ -7,7 +7,7 @@ interface AttendanceFormProps {
   user?: { name: string; email: string } | null;
 }
 
-const AttendanceForm: React.FC<AttendanceFormProps> = ({ subjects, googleUser, user }) => {
+const Form: React.FC<AttendanceFormProps> = ({ subjects, googleUser, user }) => {
   const { data, setData, post, processing, errors } = useForm({
     subject: '',
   });
@@ -56,4 +56,4 @@ const AttendanceForm: React.FC<AttendanceFormProps> = ({ subjects, googleUser, u
   );
 };
 
-export default AttendanceForm;
+export default Form;
