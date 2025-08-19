@@ -50,10 +50,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
-    // Rutas de asistencia
-    Route::get('/attendance', [AttendanceController::class, 'showForm'])->name('attendance.form');
-    Route::post('/attendance', [AttendanceController::class, 'submit'])->name('attendance.submit');
 });
+
+// Rutas de asistencia públicas
+Route::get('/attendance', [AttendanceController::class, 'showForm'])->name('attendance.form');
+Route::post('/attendance', [AttendanceController::class, 'submit'])->name('attendance.submit');
 Route::post('/messages', [MessageController::class, 'store']);
 Route::get('/dashboard/messages', [MessageController::class, 'index'])->name('dashboard.messages');
 //Route::post('/messages/{id}/toggle-read', [MessageController::class, 'toggleReadStatus']);
