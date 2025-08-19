@@ -1,11 +1,4 @@
-// Exportar asistencias a CSV (solo admin autenticado)
-Route::middleware(['auth'])->get('/admin/attendances/export', [\App\Http\Controllers\AttendanceController::class, 'exportCsv'])->name('admin.attendances.export');
-
 <?php
-// Panel de asistencias solo para admin autenticado
-Route::middleware(['auth'])->group(function () {
-    Route::get('/admin/attendances', [\App\Http\Controllers\AttendanceController::class, 'adminIndex'])->name('admin.attendances');
-});
 
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\MessageController;
@@ -32,6 +25,7 @@ Route::get('/auth/google/callback', function () {
     return redirect()->route('attendance.form');
 });
 
+// Rutas públicas
 Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
@@ -48,25 +42,31 @@ Route::get('/contact', function () {
     return Inertia::render('contact');
 })->name('contact');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        $attendances = \App\Http\Controllers\AttendanceController::getLatestAttendances(10);
-        return Inertia::render('dashboard', [
-            'attendances' => $attendances,
-        ]);
-    })->middleware(['auth', 'verified'])->name('dashboard');
-});
-
 // Rutas de asistencia públicas
 Route::get('/attendance', [AttendanceController::class, 'showForm'])->name('attendance.form');
 Route::post('/attendance', [AttendanceController::class, 'submit'])->name('attendance.submit');
-Route::post('/messages', [MessageController::class, 'store']);
-Route::get('/dashboard/messages', [MessageController::class, 'index'])->name('dashboard.messages');
-//Route::post('/messages/{id}/toggle-read', [MessageController::class, 'toggleReadStatus']);
+
+// Blog routes
+Route::get('/blog', [PostController::class, 'indexPublic'])->name('blog');
+Route::get('/blog/{post:slug}', [PostController::class, 'show'])->name('blog.show');
+
+// Rutas protegidas por autenticación
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        $attendances = AttendanceController::getLatestAttendances(10);
+        return Inertia::render('dashboard', [
+            'attendances' => $attendances,
+        ]);
+    })->name('dashboard');
+    
+    Route::get('/dashboard/messages', [MessageController::class, 'index'])->name('dashboard.messages');
     Route::get('/dashboard/messages/{id}', [MessageController::class, 'show'])->name('dashboard.messages.show');
 });
 
+// Rutas de mensajes públicas
+Route::post('/messages', [MessageController::class, 'store']);
+
+// Rutas de posts (requieren autenticación)
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard/posts', [PostController::class, 'index'])->name('posts.index');
     Route::get('/dashboard/posts/create', [PostController::class, 'create'])->name('posts.create');
@@ -78,11 +78,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dashboard/posts/{post}/unpublish', [PostController::class, 'unpublish'])->name('posts.unpublish');
 });
 
-Route::get('/blog', [PostController::class, 'indexPublic'])->name('blog');
-Route::get('/blog/{post:slug}', [PostController::class, 'show'])->name('blog.show');
+// Rutas de administración de asistencias
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/attendances', [AttendanceController::class, 'adminIndex'])->name('admin.attendances');
+    Route::get('/admin/attendances/export', [AttendanceController::class, 'exportCsv'])->name('admin.attendances.export');
+});
+
+// Deploy route
+Route::get('/deploy', [App\Http\Controllers\DeployController::class, 'deploy']);
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
-
-// routes/web.php
-Route::get('/deploy', [App\Http\Controllers\DeployController::class, 'deploy']);
