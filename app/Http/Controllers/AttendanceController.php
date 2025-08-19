@@ -54,7 +54,7 @@ class AttendanceController extends Controller
             $email = null;
         }
 
-        Attendance::create([
+        \App\Models\Attendance::create([
             'name' => $name,
             'email' => $email,
             'subject' => $request->subject,
