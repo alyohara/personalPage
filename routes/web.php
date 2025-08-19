@@ -1,3 +1,5 @@
+// Exportar asistencias a CSV (solo admin autenticado)
+Route::middleware(['auth'])->get('/admin/attendances/export', [\App\Http\Controllers\AttendanceController::class, 'exportCsv'])->name('admin.attendances.export');
 
 <?php
 // Panel de asistencias solo para admin autenticado
@@ -47,9 +49,12 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', function () {
+        $attendances = \App\Http\Controllers\AttendanceController::getLatestAttendances(10);
+        return Inertia::render('dashboard', [
+            'attendances' => $attendances,
+        ]);
+    })->middleware(['auth', 'verified'])->name('dashboard');
 });
 
 // Rutas de asistencia públicas
