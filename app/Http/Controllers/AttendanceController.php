@@ -1,41 +1,3 @@
-    /**
-     * Exporta todas las asistencias a un archivo CSV
-     */
-    public function exportCsv()
-    {
-        $filename = 'attendances_' . date('Ymd_His') . '.csv';
-        $attendances = Attendance::orderByDesc('attended_at')->get();
-
-        $headers = [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => "attachment; filename=\"$filename\"",
-        ];
-
-        $callback = function () use ($attendances) {
-            $handle = fopen('php://output', 'w');
-            // Encabezados
-            fputcsv($handle, ['ID', 'Nombre', 'Email', 'Materia', 'Fecha']);
-            foreach ($attendances as $a) {
-                fputcsv($handle, [
-                    $a->id,
-                    $a->name,
-                    $a->email,
-                    $a->subject,
-                    $a->attended_at,
-                ]);
-            }
-            fclose($handle);
-        };
-
-        return response()->stream($callback, 200, $headers);
-    }
-    /**
-     * Devuelve las últimas asistencias para el dashboard
-     */
-    public static function getLatestAttendances($limit = 10)
-    {
-        return Attendance::orderByDesc('attended_at')->limit($limit)->get();
-    }
 <?php
 
 namespace App\Http\Controllers;
@@ -91,4 +53,47 @@ class AttendanceController extends Controller
 
         return redirect()->route('attendance.form')->with('success', '¡Asistencia registrada!');
     }
+
+    /**
+     * Exporta todas las asistencias a un archivo CSV
+     */
+    public function exportCsv()
+    {
+        $filename = 'attendances_' . date('Ymd_His') . '.csv';
+        $attendances = Attendance::orderByDesc('attended_at')->get();
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"$filename\"",
+        ];
+
+        $callback = function () use ($attendances) {
+            $handle = fopen('php://output', 'w');
+            // Encabezados
+            fputcsv($handle, ['ID', 'Nombre', 'Email', 'Materia', 'Fecha']);
+            foreach ($attendances as $a) {
+                fputcsv($handle, [
+                    $a->id,
+                    $a->name,
+                    $a->email,
+                    $a->subject,
+                    $a->attended_at,
+                ]);
+            }
+            fclose($handle);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    /**
+     * Devuelve las últimas asistencias para el dashboard
+     */
+    public static function getLatestAttendances($limit = 10)
+    {
+        return Attendance::orderByDesc('attended_at')->limit($limit)->get();
+    }
 }
+
+// Exportar asistencias a CSV (solo admin autenticado)
+Route::middleware(['auth'])->get('/admin/attendances/export', [\App\Http\Controllers\AttendanceController::class, 'exportCsv'])->name('admin.attendances.export');
