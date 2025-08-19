@@ -95,5 +95,5 @@ class AttendanceController extends Controller
     }
 }
 
-// Exportar asistencias a CSV (solo admin autenticado)
-Route::middleware(['auth'])->get('/admin/attendances/export', [\App\Http\Controllers\AttendanceController::class, 'exportCsv'])->name('admin.attendances.export');
+// ¡IMPORTANTE! Elimina la definición de rutas de aquí.
+// Las rutas deben ir en routes/web.php, no en el controlador.
