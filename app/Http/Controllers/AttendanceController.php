@@ -1,3 +1,12 @@
+    public function adminIndex()
+    {
+        $this->middleware('auth');
+        $attendances = \App\Models\Attendance::orderByDesc('attended_at')->paginate(30);
+        return inertia('Attendance/AdminIndex', [
+            'attendances' => $attendances,
+        ]);
+    }
+use App\Models\Attendance;
 <?php
 
 namespace App\Http\Controllers;
@@ -32,14 +41,27 @@ class AttendanceController extends Controller
             'subject' => 'required|in:AyED,ED,PC',
         ]);
 
-        $now = now();
-        $date = $now->format('Y-m-d');
-        $time = $now->format('H:i:s');
-        $filename = "attendance_{$date}.txt";
-
         // Usar datos de Google si están en sesión, si no, del usuario autenticado
         if (session()->has('google_user')) {
             $userData = session('google_user');
+            $name = $userData['name'] ?? 'Invitado';
+            $email = $userData['email'] ?? null;
+        } elseif (auth()->check()) {
+            $name = auth()->user()->name;
+            $email = auth()->user()->email;
+        } else {
+            $name = 'Invitado';
+            $email = null;
+        }
+
+        Attendance::create([
+            'name' => $name,
+            'email' => $email,
+            'subject' => $request->subject,
+            'attended_at' => now(),
+        ]);
+
+        return redirect()->route('attendance.form')->with('success', '¡Asistencia registrada!');
             $email = $userData['email'];
             $name = $userData['name'];
         } else {
