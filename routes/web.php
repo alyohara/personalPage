@@ -76,12 +76,10 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/dashboard/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
     Route::post('/dashboard/posts/{post}/publish', [PostController::class, 'publish'])->name('posts.publish');
     Route::post('/dashboard/posts/{post}/unpublish', [PostController::class, 'unpublish'])->name('posts.unpublish');
-});
-
-// Rutas de administración de asistencias
-Route::middleware(['auth'])->group(function () {
-    Route::get('/admin/attendances', [AttendanceController::class, 'adminIndex'])->name('admin.attendances');
-    Route::get('/admin/attendances/export', [AttendanceController::class, 'exportCsv'])->name('admin.attendances.export');
+    
+    // Rutas de asistencias dentro del dashboard
+    Route::get('/dashboard/attendances', [AttendanceController::class, 'index'])->name('attendances.index');
+    Route::get('/dashboard/attendances/export', [AttendanceController::class, 'exportCsv'])->name('attendances.export');
 });
 
 // Deploy route

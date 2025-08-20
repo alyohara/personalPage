@@ -94,13 +94,13 @@ class AttendanceController extends Controller
     }
 
     /**
-     * Muestra la lista de asistencias en el panel admin
+     * Muestra la lista de asistencias en el dashboard
      */
-    public function adminIndex()
+    public function index()
     {
         $attendances = Attendance::orderByDesc('attended_at')->get();
 
-        return Inertia::render('Attendance/AdminIndex', [
+        return Inertia::render('dashboard/attendances', [
             'attendances' => $attendances,
         ]);
     }
