@@ -3,6 +3,8 @@
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PostController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
@@ -24,6 +26,22 @@ Route::get('/auth/google/callback', function () {
     ]);
     return redirect()->route('attendance.form');
 });
+
+// Cerrar sesión (Google y/o Laravel auth)
+Route::post('/auth/logout-all', function (Request $request) {
+    if (session()->has('google_user')) {
+        session()->forget('google_user');
+    }
+
+    if (Auth::check()) {
+        Auth::guard('web')->logout();
+    }
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect()->route('attendance.form');
+})->name('logout.all');
 
 // Rutas públicas
 Route::get('/', function () {

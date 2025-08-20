@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
 
@@ -43,11 +44,31 @@ class AttendanceController extends Controller
             $email = null;
         }
 
+        // Hora de Buenos Aires (GMT-3)
+        $nowBuenosAires = now('America/Argentina/Buenos_Aires');
+
+        // Evitar duplicados por usuario (email) + materia en el mismo día (BA)
+        $alreadyExists = Attendance::query()
+            ->when($email, function ($q) use ($email) {
+                $q->where('email', $email);
+            }, function ($q) use ($name) {
+                // En caso extremo sin email, caer por nombre
+                $q->where('name', $name);
+            })
+            ->where('subject', $request->subject)
+            ->whereDate('attended_at', $nowBuenosAires->toDateString())
+            ->exists();
+
+        if ($alreadyExists) {
+            return redirect()->route('attendance.form')
+                ->withErrors(['subject' => 'Ya registraste asistencia para esta materia hoy.']);
+        }
+
         \App\Models\Attendance::create([
             'name' => $name,
             'email' => $email,
             'subject' => $request->subject,
-            'attended_at' => now(),
+            'attended_at' => $nowBuenosAires,
         ]);
 
         return redirect()->route('attendance.form')->with('success', '¡Asistencia registrada!');

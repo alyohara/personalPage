@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useForm } from '@inertiajs/react';
+import { useForm, router } from '@inertiajs/react';
 
 interface AttendanceFormProps {
   subjects: string[];
@@ -32,6 +32,10 @@ const Form: React.FC<AttendanceFormProps> = ({ subjects, googleUser, user }) => 
         reset();
       },
     });
+  };
+
+  const handleLogout = () => {
+    router.post(route('logout.all'));
   };
 
   // Estilo retro tipo pixel-art
@@ -72,6 +76,14 @@ const Form: React.FC<AttendanceFormProps> = ({ subjects, googleUser, user }) => 
               <br />
               <span className="text-sm text-[#555]">{currentUser.email}</span>
             </div>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className={retroButton}
+              style={{ background: '#222', borderColor: '#222' }}
+            >
+              Salir
+            </button>
             <label htmlFor="subject" className={retroLabel}>
               Selecciona la materia:
             </label>
@@ -100,6 +112,9 @@ const Form: React.FC<AttendanceFormProps> = ({ subjects, googleUser, user }) => 
                 {data.subject === 'PC' && 'Programación Concurrente'}
               </span>
             </div>
+            {errors.subject && (
+              <div className="text-red-600 mb-2 pixel-font text-center">{errors.subject}</div>
+            )}
             <button type="submit" className={retroButton} disabled={processing}>
               Registrar Asistencia
             </button>
