@@ -144,10 +144,7 @@ const Form: React.FC<AttendanceFormProps> = ({ subjects, googleUser, user }) => 
             {errors.subject && (
               <div className="text-red-600 mb-2 pixel-font text-center">{errors.subject}</div>
             )}
-            <button type="submit" className={retroButton} disabled={processing}>
-              Registrar Asistencia
-            </button>
-            {errors.subject && (
+            {errors.subject ? (
               <button
                 type="button"
                 onClick={handleBackToSubject}
@@ -155,6 +152,10 @@ const Form: React.FC<AttendanceFormProps> = ({ subjects, googleUser, user }) => 
                 style={{ background: '#ffbf00', borderColor: '#222' }}
               >
                 Volver
+              </button>
+            ) : (
+              <button type="submit" className={retroButton} disabled={processing}>
+                Registrar Asistencia
               </button>
             )}
           </form>
