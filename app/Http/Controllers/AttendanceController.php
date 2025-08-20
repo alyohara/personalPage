@@ -100,7 +100,7 @@ class AttendanceController extends Controller
     {
         $attendances = Attendance::orderByDesc('attended_at')->get();
 
-        return Inertia::render('Admin/Attendances', [
+        return Inertia::render('Attendance/AdminIndex', [
             'attendances' => $attendances,
         ]);
     }

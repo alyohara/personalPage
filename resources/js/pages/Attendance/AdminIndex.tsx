@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageProps } from '@inertiajs/inertia';
+import { PageProps } from '@/types';
 
 interface Attendance {
   id: number;
@@ -10,13 +10,7 @@ interface Attendance {
 }
 
 interface Props extends PageProps {
-  attendances: {
-    data: Attendance[];
-    current_page: number;
-    last_page: number;
-    per_page: number;
-    total: number;
-  };
+  attendances: Attendance[];
 }
 
 const subjectMap: Record<string, string> = {
@@ -28,7 +22,15 @@ const subjectMap: Record<string, string> = {
 const AdminIndex: React.FC<Props> = ({ attendances }) => {
   return (
     <div className="max-w-3xl mx-auto mt-12 p-6 bg-white rounded-lg shadow-lg font-mono">
-      <h1 className="text-2xl font-bold mb-6 pixel-font">Asistencias Registradas</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold pixel-font">Asistencias Registradas</h1>
+        <a
+          href="/admin/attendances/export"
+          className="bg-[#ff0080] hover:bg-[#ff5ec3] text-white font-bold py-2 px-4 rounded border-2 border-[#222] shadow-[2px_2px_0_0_#222] transition-all duration-150 text-sm pixel-font"
+        >
+          Exportar CSV
+        </a>
+      </div>
       <div className="overflow-x-auto">
         <table className="w-full border border-[#222] text-sm">
           <thead>
@@ -41,7 +43,7 @@ const AdminIndex: React.FC<Props> = ({ attendances }) => {
             </tr>
           </thead>
           <tbody>
-            {attendances.data.map((a) => (
+            {attendances.map((a) => (
               <tr key={a.id} className="odd:bg-[#fffbe6] even:bg-[#f8f8e8]">
                 <td className="border border-[#222] px-2 py-1">{a.id}</td>
                 <td className="border border-[#222] px-2 py-1">{a.name}</td>
@@ -53,10 +55,9 @@ const AdminIndex: React.FC<Props> = ({ attendances }) => {
           </tbody>
         </table>
       </div>
-      {/* Paginación simple */}
-      <div className="mt-4 flex justify-between text-xs">
-        <span>Página {attendances.current_page} de {attendances.last_page}</span>
-        <span>Total: {attendances.total}</span>
+      {/* Total de asistencias */}
+      <div className="mt-4 text-xs text-center">
+        <span>Total de asistencias: {attendances.length}</span>
       </div>
     </div>
   );
