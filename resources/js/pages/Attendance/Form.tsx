@@ -38,6 +38,11 @@ const Form: React.FC<AttendanceFormProps> = ({ subjects, googleUser, user }) => 
     router.post(route('logout.all'));
   };
 
+  const handleBackToSubject = () => {
+    setSuccess(false);
+    setStep('subject');
+  };
+
   // Estilo retro tipo pixel-art
   const retroCard =
     'bg-[#f8f8e8] border-4 border-[#222] rounded-lg p-8 max-w-md mx-auto mt-16 shadow-[8px_8px_0_0_#222] font-mono';
@@ -53,6 +58,16 @@ const Form: React.FC<AttendanceFormProps> = ({ subjects, googleUser, user }) => 
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#e0e0d0] via-[#fffbe6] to-[#e0e0d0]">
+      {currentUser && (
+        <button
+          type="button"
+          onClick={handleLogout}
+          className={retroButton + ' fixed top-4 right-4 z-10'}
+          style={{ background: '#222', borderColor: '#222' }}
+        >
+          Salir
+        </button>
+      )}
       <div className={retroCard} style={{ boxShadow: '8px 8px 0 0 #222' }}>
         <h1 className={retroTitle} style={{ fontFamily: 'monospace, "Press Start 2P", "VT323", "Courier New", Courier, monospace' }}>
           Toma de Asistencia
@@ -118,12 +133,30 @@ const Form: React.FC<AttendanceFormProps> = ({ subjects, googleUser, user }) => 
             <button type="submit" className={retroButton} disabled={processing}>
               Registrar Asistencia
             </button>
+            {errors.subject && (
+              <button
+                type="button"
+                onClick={handleBackToSubject}
+                className={retroButton}
+                style={{ background: '#ffbf00', borderColor: '#222' }}
+              >
+                Volver
+              </button>
+            )}
           </form>
         )}
 
         {step === 'done' && (
-          <div className={retroSuccess}>
-            ¡Asistencia registrada correctamente!
+          <div>
+            <div className={retroSuccess}>¡Asistencia registrada correctamente!</div>
+            <button
+              type="button"
+              onClick={handleBackToSubject}
+              className={retroButton}
+              style={{ background: '#ffbf00', borderColor: '#222' }}
+            >
+              Volver
+            </button>
           </div>
         )}
       </div>
