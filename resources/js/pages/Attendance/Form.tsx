@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm, router } from '@inertiajs/react';
 
 interface AttendanceFormProps {
@@ -9,7 +9,7 @@ interface AttendanceFormProps {
 }
 
 const Form: React.FC<AttendanceFormProps> = ({ subjects, googleUser, user }) => {
-  const { data, setData, post, processing, errors, reset } = useForm({
+  const { data, setData, post, processing, errors, reset, clearErrors } = useForm({
     subject: '',
   });
   const [step, setStep] = useState<'login' | 'subject' | 'register' | 'done'>(
@@ -18,8 +18,18 @@ const Form: React.FC<AttendanceFormProps> = ({ subjects, googleUser, user }) => 
   const currentUser = googleUser || user;
   const [success, setSuccess] = useState(false);
 
+  useEffect(() => {
+    if (!currentUser) {
+      setStep('login');
+      setData('subject', '');
+      setSuccess(false);
+      clearErrors();
+    }
+  }, [googleUser, user]);
+
   const handleSubjectSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setData('subject', e.target.value);
+    clearErrors('subject');
     if (e.target.value) setStep('register');
   };
 
@@ -30,17 +40,25 @@ const Form: React.FC<AttendanceFormProps> = ({ subjects, googleUser, user }) => 
         setSuccess(true);
         setStep('done');
         reset();
+        clearErrors();
       },
     });
   };
 
   const handleLogout = () => {
-    router.post(route('logout.all'));
+    router.post(route('logout.all'), {}, {
+      preserveState: false,
+      replace: true,
+      onFinish: () => {
+        window.location.href = route('attendance.form');
+      },
+    });
   };
 
   const handleBackToSubject = () => {
     setSuccess(false);
     setStep('subject');
+    clearErrors();
   };
 
   // Estilo retro tipo pixel-art
@@ -73,15 +91,15 @@ const Form: React.FC<AttendanceFormProps> = ({ subjects, googleUser, user }) => 
         </div>
       )}
       <div className={retroCard} style={{ boxShadow: '8px 8px 0 0 #222' }}>
-        <h1 className={retroTitle} style={{ fontFamily: 'monospace, "Press Start 2P", "VT323", "Courier New", Courier, monospace' }}>
+        <h1 className={retroTitle} style={{ fontFamily: 'monospace, \"Press Start 2P\", \"VT323\", \"Courier New\", Courier, monospace' }}>
           Toma de Asistencia
         </h1>
 
-        {step === 'login' && (
+        {!currentUser && (
           <a
             href="/auth/google"
             className={retroButton + ' flex items-center justify-center gap-2'}
-            style={{ background: '#ff0080', borderColor: '#222', fontFamily: 'monospace, "Press Start 2P", "VT323", "Courier New", Courier, monospace' }}
+            style={{ background: '#ff0080', borderColor: '#222', fontFamily: 'monospace, \"Press Start 2P\", \"VT323\", \"Courier New\", Courier, monospace' }}
           >
             <svg width="24" height="24" viewBox="0 0 48 48"><g><path fill="#4285F4" d="M24 9.5c3.54 0 6.7 1.22 9.19 3.23l6.85-6.85C35.64 2.39 30.18 0 24 0 14.82 0 6.71 5.82 2.69 14.09l7.99 6.21C12.13 13.16 17.56 9.5 24 9.5z"/><path fill="#34A853" d="M46.1 24.55c0-1.64-.15-3.22-.42-4.74H24v9.01h12.42c-.54 2.9-2.18 5.36-4.64 7.04l7.19 5.6C43.98 37.13 46.1 31.3 46.1 24.55z"/><path fill="#FBBC05" d="M9.68 28.3c-1.13-3.36-1.13-6.94 0-10.3l-7.99-6.21C-1.13 17.09-1.13 30.91 1.69 39.21l7.99-6.21z"/><path fill="#EA4335" d="M24 44c6.18 0 11.64-2.39 15.85-6.55l-7.19-5.6c-2.01 1.35-4.6 2.15-8.66 2.15-6.44 0-11.87-3.66-14.32-8.8l-7.99 6.21C6.71 42.18 14.82 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></g></svg>
             Ingresar con Google
