@@ -3,7 +3,7 @@ import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
-import { Users, MessageSquareText, CalendarDays } from 'lucide-react';
+import { Users, MessageSquareText, CalendarDays, TrendingUp } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -79,7 +79,7 @@ export default function Dashboard() {
                         </div>
                         <a href="/dashboard/messages" className="mt-3 inline-block bg-[#ff0080] hover:bg-[#ff5ec3] text-white font-bold py-2 px-3 rounded border-2 border-[#222] shadow pixel-font text-xs">Ver mensajes</a>
                     </div>
-                    {/* Accesos */}
+                    {/* Accesos */
                     <div className="relative overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border bg-white/80 p-4 flex flex-col">
                         <div className="flex items-center gap-3 mb-2">
                             <div className="bg-[#222] text-white rounded-md p-2"><Users className="size-5" /></div>
@@ -92,6 +92,40 @@ export default function Dashboard() {
                             <a href="/dashboard/attendances" className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-3 rounded border-2 border-[#222] shadow pixel-font text-xs">Ver todas</a>
                             <a href="/dashboard/attendances/export" className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-3 rounded border-2 border-[#222] shadow pixel-font text-xs">Exportar CSV</a>
                         </div>
+                    </div>
+                </div>
+                {/* Resumen últimos 7 días y Top asistentes */}
+                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+                    <div className="relative overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border bg-white/80 p-4 md:col-span-2">
+                        <div className="flex items-center gap-3 mb-3">
+                            <div className="bg-[#222] text-white rounded-md p-2"><TrendingUp className="size-5" /></div>
+                            <div>
+                                <div className="text-sm text-neutral-500">Asistencias últimos 7 días</div>
+                                <div className="text-lg font-bold">Tendencia</div>
+                            </div>
+                        </div>
+                        <div className="flex items-end gap-2 h-32">
+                            {(stats?.last7days ?? []).map((d) => (
+                                <div key={d.date} className="flex-1">
+                                    <div className="bg-[#ff0080] border-2 border-[#222]" style={{ height: Math.max(4, Math.min(100, d.total * 8)) }} />
+                                    <div className="text-[10px] text-center mt-1">{new Date(d.date).toLocaleDateString(undefined, { day: '2-digit' })}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="relative overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border bg-white/80 p-4">
+                        <div className="text-sm text-neutral-500">Top asistentes</div>
+                        <ul className="mt-2 space-y-2 text-sm">
+                            {(stats?.topAttendees ?? []).map((u: any, idx: number) => (
+                                <li key={u.user_key} className="flex items-center justify-between border border-[#222] rounded px-2 py-1 bg-[#fffbe6]">
+                                    <span className="truncate max-w-[70%]">{u.name || u.email}</span>
+                                    <span className="font-bold">{u.total}</span>
+                                </li>
+                            ))}
+                            {(!stats?.topAttendees || stats.topAttendees.length === 0) && (
+                                <li className="text-neutral-500">Sin datos suficientes.</li>
+                            )}
+                        </ul>
                     </div>
                 </div>
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min p-6 bg-white/80">

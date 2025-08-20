@@ -5,6 +5,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
@@ -80,6 +81,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
         $pcToday = \App\Models\Attendance::where('subject', 'PC')->whereDate('attended_at', $todayTz)->count();
         $unreadMessages = \App\Models\Message::where('is_read', false)->count();
 
+        // Top 5 asistentes
+        $topAttendees = \App\Models\Attendance::selectRaw("COALESCE(email, name) as user_key, name, email, COUNT(*) as total")
+            ->groupBy('user_key', 'name', 'email')
+            ->orderByDesc('total')
+            ->limit(5)
+            ->get();
+
+        // Últimos 7 días
+        $sevenDays = collect(range(0,6))->map(function($i) {
+            return now('America/Argentina/Buenos_Aires')->copy()->subDays(6 - $i)->toDateString();
+        });
+        $byDay = [];
+        foreach ($sevenDays as $d) {
+            $byDay[] = [
+                'date' => $d,
+                'total' => \App\Models\Attendance::whereDate('attended_at', $d)->count(),
+            ];
+        }
+
         return Inertia::render('dashboard', [
             'attendances' => $attendances,
             'stats' => [
@@ -90,6 +110,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     'PC' => $pcToday,
                 ],
                 'unreadMessages' => $unreadMessages,
+                'topAttendees' => $topAttendees,
+                'last7days' => $byDay,
             ],
         ]);
     })->name('dashboard');
