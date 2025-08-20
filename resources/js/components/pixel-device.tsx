@@ -33,10 +33,12 @@ export default function PixelDevice({
 	}, [deviceList, autoCycleMs]);
 
 	return (
-		<div className={className} style={{ transform: `scale(${scale})`, transformOrigin: 'top center' }}>
-			{current === 'pc' && <Pc />}
-			{current === 'laptop' && <Laptop />}
-			{current === 'phone' && <Phone />}
+		<div className={`pixel-frame ${className}`}>
+			<div style={{ transform: `scale(${scale})`, transformOrigin: 'top center' }}>
+				{current === 'pc' && <Pc />}
+				{current === 'laptop' && <Laptop />}
+				{current === 'phone' && <Phone />}
+			</div>
 		</div>
 	);
 }

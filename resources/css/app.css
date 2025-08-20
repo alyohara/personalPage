@@ -82,7 +82,7 @@
     }
 }
 
-:root {
+::root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
     --card: oklch(1 0 0);
@@ -163,6 +163,14 @@
     }
 }
 
+/* Unify device frame height */
+.pixel-frame {
+	height: 300px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 /* Pixel PC animation */
 .pixel-pc {
 	width: 280px;
@@ -180,15 +188,15 @@
 .pixel-pc .pc-bezel {
 	width: 260px;
 	height: 180px;
-	background: #2b2b2b;
-	border: 8px solid #1a1a1a;
-	box-shadow: 0 0 0 4px #000 inset, 0 6px 0 0 #000;
+	background: #3a3a3a;
+	border: 8px solid #2a2a2a;
+	box-shadow: 0 0 0 4px #111 inset, 0 6px 0 0 #111;
 }
 
 .pixel-pc .pc-screen {
 	width: 100%;
 	height: 100%;
-	background: #0b141a;
+	background: #000;
 	position: relative;
 	overflow: hidden;
 }
@@ -196,18 +204,18 @@
 .pixel-pc .pc-stand {
 	width: 90px;
 	height: 14px;
-	background: #1f1f1f;
-	border: 4px solid #000;
+	background: #2b2b2b;
+	border: 4px solid #111;
 	margin-top: 6px;
 }
 
 .pixel-pc .pc-base {
 	width: 160px;
 	height: 18px;
-	background: #2a2a2a;
-	border: 4px solid #000;
+	background: #3b3b3b;
+	border: 4px solid #111;
 	margin-top: 4px;
-	box-shadow: 0 4px 0 0 #000;
+	box-shadow: 0 4px 0 0 #111;
 }
 
 .pixel-pc .pc-scanlines {
@@ -229,12 +237,12 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	font-family: monospace;
+	font-family: 'Press Start 2P', monospace;
 	font-weight: 900;
 	letter-spacing: 2px;
 	font-size: 18px;
-	color: #ff0040;
-	text-shadow: 2px 2px 0 #000, -1px -1px 0 #000;
+	color: #00ff66;
+	text-shadow: 0 0 6px rgba(0,255,102,0.8), 2px 2px 0 #001a0f, -1px -1px 0 #001a0f;
 	animation: glitch 1s steps(2, end) infinite;
 }
 
@@ -260,19 +268,19 @@
 
 /* Laptop */
 .pixel-laptop { width: 280px; margin: 0 auto; image-rendering: pixelated; animation: pc-loop 4s steps(1,end) infinite; }
-.pixel-laptop .lap-lid { width: 260px; height: 160px; background:#2b2b2b; border:8px solid #1a1a1a; box-shadow: 0 0 0 4px #000 inset, 0 6px 0 0 #000; }
-.pixel-laptop .lap-screen { width:100%; height:100%; background:#0b141a; position:relative; overflow:hidden; }
+.pixel-laptop .lap-lid { width: 260px; height: 160px; background:#3a3a3a; border:8px solid #2a2a2a; box-shadow: 0 0 0 4px #111 inset, 0 6px 0 0 #111; }
+.pixel-laptop .lap-screen { width:100%; height:100%; background:#000; position:relative; overflow:hidden; }
 .pixel-laptop .lap-scanlines { position:absolute; inset:0; background:repeating-linear-gradient(to bottom, rgba(255,255,255,.05) 0, rgba(255,255,255,.05) 2px, transparent 2px, transparent 4px); opacity:.25; animation: scan 1.6s linear infinite; }
-.pixel-laptop .lap-error { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-family:monospace; font-weight:900; letter-spacing:2px; font-size:18px; color:#ff0040; text-shadow:2px 2px 0 #000, -1px -1px 0 #000; animation: glitch 1s steps(2,end) infinite; }
-.pixel-laptop .lap-base { width:280px; height:24px; background:#2a2a2a; border:4px solid #000; margin-top:6px; position:relative; }
+.pixel-laptop .lap-error { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-family:'Press Start 2P', monospace; font-weight:900; letter-spacing:2px; font-size:18px; color:#00ff66; text-shadow:0 0 6px rgba(0,255,102,0.8), 2px 2px 0 #001a0f, -1px -1px 0 #001a0f; animation: glitch 1s steps(2,end) infinite; }
+.pixel-laptop .lap-base { width:280px; height:24px; background:#3b3b3b; border:4px solid #111; margin-top:6px; position:relative; }
 .pixel-laptop .lap-track { position:absolute; left:50%; top:4px; transform:translateX(-50%); width:60px; height:12px; background:#1f1f1f; border:2px solid #000; }
 .pixel-laptop .lap-keys { position:absolute; left:8px; right:8px; top:4px; bottom:4px; border-top:2px dotted #000; opacity:.3; }
 
 /* Phone */
 .pixel-phone { width: 180px; margin: 0 auto; image-rendering: pixelated; animation: pc-loop 4s steps(1,end) infinite; }
-.pixel-phone .phone-body { width: 180px; height: 320px; background:#2b2b2b; border:8px solid #1a1a1a; border-radius:24px; box-shadow: 0 0 0 4px #000 inset; position:relative; }
+.pixel-phone .phone-body { width: 180px; height: 320px; background:#3a3a3a; border:8px solid #2a2a2a; border-radius:24px; box-shadow: 0 0 0 4px #111 inset; position:relative; }
 .pixel-phone .phone-notch { position:absolute; top:0; left:50%; transform:translateX(-50%); width:80px; height:16px; background:#000; border-bottom-left-radius:8px; border-bottom-right-radius:8px; }
-.pixel-phone .phone-screen { position:absolute; inset:24px 12px 28px 12px; background:#0b141a; overflow:hidden; border-radius:12px; }
+.pixel-phone .phone-screen { position:absolute; inset:24px 12px 28px 12px; background:#000; overflow:hidden; border-radius:12px; }
 .pixel-phone .phone-scanlines { position:absolute; inset:0; background:repeating-linear-gradient(to bottom, rgba(255,255,255,.05) 0, rgba(255,255,255,.05) 2px, transparent 2px, transparent 4px); opacity:.25; animation: scan 1.6s linear infinite; }
-.pixel-phone .phone-error { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-family:monospace; font-weight:900; letter-spacing:2px; font-size:16px; color:#ff0040; text-shadow:2px 2px 0 #000, -1px -1px 0 #000; animation: glitch 1s steps(2,end) infinite; }
+.pixel-phone .phone-error { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-family:'Press Start 2P', monospace; font-weight:900; letter-spacing:2px; font-size:16px; color:#00ff66; text-shadow:0 0 6px rgba(0,255,102,0.8), 2px 2px 0 #001a0f, -1px -1px 0 #001a0f; animation: glitch 1s steps(2,end) infinite; }
 .pixel-phone .phone-btn { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); width:36px; height:8px; background:#111; border-radius:4px; border:2px solid #000; }
