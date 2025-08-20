@@ -29,6 +29,8 @@ const subjectMap: Record<string, string> = {
 type Stats = {
   today: { total: number; AyED: number; ED: number; PC: number };
   unreadMessages: number;
+  topAttendees?: Array<{ user_key: string; name: string | null; email: string | null; total: number }>;
+  last7days?: Array<{ date: string; total: number }>;
 };
 
 export default function Dashboard() {
@@ -79,7 +81,7 @@ export default function Dashboard() {
                         </div>
                         <a href="/dashboard/messages" className="mt-3 inline-block bg-[#ff0080] hover:bg-[#ff5ec3] text-white font-bold py-2 px-3 rounded border-2 border-[#222] shadow pixel-font text-xs">Ver mensajes</a>
                     </div>
-                    {/* Accesos */
+                    {/* Accesos */}
                     <div className="relative overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border bg-white/80 p-4 flex flex-col">
                         <div className="flex items-center gap-3 mb-2">
                             <div className="bg-[#222] text-white rounded-md p-2"><Users className="size-5" /></div>
