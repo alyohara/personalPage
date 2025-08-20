@@ -54,12 +54,32 @@ class AttendanceController extends Controller
     }
 
     /**
-     * Exporta todas las asistencias a un archivo CSV
+     * Exporta las asistencias a un archivo CSV (respeta filtros)
      */
-    public function exportCsv()
+    public function exportCsv(Request $request)
     {
+        $query = Attendance::query();
+
+        // Aplicar los mismos filtros que en index
+        if ($request->filled('subject')) {
+            $query->where('subject', $request->subject);
+        }
+
+        if ($request->filled('date')) {
+            $query->whereDate('attended_at', $request->date);
+        }
+
+        if ($request->filled('date_from')) {
+            $query->whereDate('attended_at', '>=', $request->date_from);
+        }
+
+        if ($request->filled('date_to')) {
+            $query->whereDate('attended_at', '<=', $request->date_to);
+        }
+
+        $attendances = $query->orderByDesc('attended_at')->get();
+        
         $filename = 'attendances_' . date('Ymd_His') . '.csv';
-        $attendances = Attendance::orderByDesc('attended_at')->get();
 
         $headers = [
             'Content-Type' => 'text/csv',
@@ -96,12 +116,43 @@ class AttendanceController extends Controller
     /**
      * Muestra la lista de asistencias en el dashboard
      */
-    public function index()
+    public function index(Request $request)
     {
-        $attendances = Attendance::orderByDesc('attended_at')->get();
+        $query = Attendance::query();
+
+        // Filtro por materia
+        if ($request->filled('subject')) {
+            $query->where('subject', $request->subject);
+        }
+
+        // Filtro por fecha
+        if ($request->filled('date')) {
+            $query->whereDate('attended_at', $request->date);
+        }
+
+        // Filtro por rango de fechas
+        if ($request->filled('date_from')) {
+            $query->whereDate('attended_at', '>=', $request->date_from);
+        }
+
+        if ($request->filled('date_to')) {
+            $query->whereDate('attended_at', '<=', $request->date_to);
+        }
+
+        $attendances = $query->orderByDesc('attended_at')->get();
+
+        // Obtener lista de materias únicas para el filtro
+        $subjects = Attendance::distinct()->pluck('subject');
 
         return Inertia::render('dashboard/attendances', [
             'attendances' => $attendances,
+            'subjects' => $subjects,
+            'filters' => [
+                'subject' => $request->subject,
+                'date' => $request->date,
+                'date_from' => $request->date_from,
+                'date_to' => $request->date_to,
+            ],
         ]);
     }
 }
