@@ -72,8 +72,25 @@ Route::get('/blog/{post:slug}', [PostController::class, 'show'])->name('blog.sho
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         $attendances = AttendanceController::getLatestAttendances(10);
+
+        $todayTz = now('America/Argentina/Buenos_Aires')->toDateString();
+        $totalToday = \App\Models\Attendance::whereDate('attended_at', $todayTz)->count();
+        $ayedToday = \App\Models\Attendance::where('subject', 'AyED')->whereDate('attended_at', $todayTz)->count();
+        $edToday = \App\Models\Attendance::where('subject', 'ED')->whereDate('attended_at', $todayTz)->count();
+        $pcToday = \App\Models\Attendance::where('subject', 'PC')->whereDate('attended_at', $todayTz)->count();
+        $unreadMessages = \App\Models\Message::where('is_read', false)->count();
+
         return Inertia::render('dashboard', [
             'attendances' => $attendances,
+            'stats' => [
+                'today' => [
+                    'total' => $totalToday,
+                    'AyED' => $ayedToday,
+                    'ED' => $edToday,
+                    'PC' => $pcToday,
+                ],
+                'unreadMessages' => $unreadMessages,
+            ],
         ]);
     })->name('dashboard');
     
