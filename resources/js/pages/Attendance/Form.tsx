@@ -59,14 +59,18 @@ const Form: React.FC<AttendanceFormProps> = ({ subjects, googleUser, user }) => 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#e0e0d0] via-[#fffbe6] to-[#e0e0d0]">
       {currentUser && (
-        <button
-          type="button"
-          onClick={handleLogout}
-          className={retroButton + ' fixed top-4 right-4 z-10'}
-          style={{ background: '#222', borderColor: '#222' }}
-        >
-          Salir
-        </button>
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 w-full px-4 z-10">
+          <div className="max-w-md mx-auto flex justify-end">
+            <button
+              type="button"
+              onClick={handleLogout}
+              className={retroButton}
+              style={{ background: '#222', borderColor: '#222' }}
+            >
+              Salir
+            </button>
+          </div>
+        </div>
       )}
       <div className={retroCard} style={{ boxShadow: '8px 8px 0 0 #222' }}>
         <h1 className={retroTitle} style={{ fontFamily: 'monospace, "Press Start 2P", "VT323", "Courier New", Courier, monospace' }}>
@@ -91,14 +95,6 @@ const Form: React.FC<AttendanceFormProps> = ({ subjects, googleUser, user }) => 
               <br />
               <span className="text-sm text-[#555]">{currentUser.email}</span>
             </div>
-            <button
-              type="button"
-              onClick={handleLogout}
-              className={retroButton}
-              style={{ background: '#222', borderColor: '#222' }}
-            >
-              Salir
-            </button>
             <label htmlFor="subject" className={retroLabel}>
               Selecciona la materia:
             </label>
