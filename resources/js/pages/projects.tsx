@@ -42,6 +42,22 @@ export default function Projects() {
     const projects = [
         {
             title: {
+                en: 'WOZ.exe — Data Structures Adventure',
+                es: 'WOZ.exe — Aventura de Estructuras de Datos',
+            },
+            role: {
+                en: 'Author / Game Designer',
+                es: 'Autor / Diseñador',
+            },
+            tech: ['Python', 'pygame-ce', 'pygbag', 'WebAssembly', 'GitHub Pages'],
+            description: {
+                en: 'SCUMM-style point-and-click adventure that teaches stacks, queues, graphs, heaps and more. Playable in the browser.',
+                es: 'Aventura point-and-click estilo SCUMM que enseña pilas, colas, grafos, heaps y más. Jugable en el navegador.',
+            },
+            url: 'https://alyohara.github.io/woz-exe/',
+        },
+        {
+            title: {
                 en: 'FEMEBA – CRM and Internal Systems',
                 es: 'FEMEBA – CRM y Sistemas Internos',
             },
