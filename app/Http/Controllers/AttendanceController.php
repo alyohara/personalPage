@@ -1,12 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Attendance;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Date;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Storage;
 
 class AttendanceController extends Controller
 {
@@ -15,6 +13,7 @@ class AttendanceController extends Controller
         $subjects = ['AyED', 'ED', 'PC'];
         $googleUser = session('google_user');
         $user = auth()->user();
+
         return Inertia::render('Attendance/Form', [
             'subjects' => $subjects,
             'googleUser' => $googleUser,
@@ -31,14 +30,14 @@ class AttendanceController extends Controller
             'subject' => 'required|in:AyED,ED,PC',
         ]);
 
-        // Usar datos de Google si están en sesión, si no, del usuario autenticado
-        if (session()->has('google_user')) {
+        // Usar datos del usuario autenticado, si no, del flujo de Google en sesión
+        if (auth()->check()) {
+            $name = auth()->user()->name;
+            $email = auth()->user()->email;
+        } elseif (session()->has('google_user')) {
             $userData = session('google_user');
             $name = $userData['name'] ?? 'Invitado';
             $email = $userData['email'] ?? null;
-        } elseif (auth()->check()) {
-            $name = auth()->user()->name;
-            $email = auth()->user()->email;
         } else {
             $name = 'Invitado';
             $email = null;
@@ -64,7 +63,7 @@ class AttendanceController extends Controller
                 ->withErrors(['subject' => 'Ya registraste asistencia para esta materia hoy.']);
         }
 
-        \App\Models\Attendance::create([
+        Attendance::create([
             'name' => $name,
             'email' => $email,
             'subject' => $request->subject,
@@ -75,31 +74,14 @@ class AttendanceController extends Controller
     }
 
     /**
-     * Exporta las asistencias a un archivo CSV (respeta filtros)
+     * Exporta las asistencias a un archivo CSV (respeta filtros).
      */
     public function exportCsv(Request $request)
     {
-        $query = Attendance::query();
+        $attendances = Attendance::filtered($request->only(['subject', 'date', 'date_from', 'date_to']))
+            ->latest('attended_at')
+            ->get();
 
-        // Aplicar los mismos filtros que en index
-        if ($request->filled('subject')) {
-            $query->where('subject', $request->subject);
-        }
-
-        if ($request->filled('date')) {
-            $query->whereDate('attended_at', $request->date);
-        }
-
-        if ($request->filled('date_from')) {
-            $query->whereDate('attended_at', '>=', $request->date_from);
-        }
-
-        if ($request->filled('date_to')) {
-            $query->whereDate('attended_at', '<=', $request->date_to);
-        }
-
-        $attendances = $query->orderByDesc('attended_at')->get();
-        
         $filename = 'attendances_' . date('Ymd_His') . '.csv';
 
         $headers = [
@@ -127,40 +109,22 @@ class AttendanceController extends Controller
     }
 
     /**
-     * Devuelve las últimas asistencias para el dashboard
+     * Devuelve las últimas asistencias para el dashboard.
      */
     public static function getLatestAttendances($limit = 10)
     {
-        return Attendance::orderByDesc('attended_at')->limit($limit)->get();
+        return Attendance::latest('attended_at')->limit($limit)->get();
     }
 
     /**
-     * Muestra la lista de asistencias en el dashboard
+     * Muestra la lista de asistencias en el dashboard (paginada).
      */
     public function index(Request $request)
     {
-        $query = Attendance::query();
-
-        // Filtro por materia
-        if ($request->filled('subject')) {
-            $query->where('subject', $request->subject);
-        }
-
-        // Filtro por fecha
-        if ($request->filled('date')) {
-            $query->whereDate('attended_at', $request->date);
-        }
-
-        // Filtro por rango de fechas
-        if ($request->filled('date_from')) {
-            $query->whereDate('attended_at', '>=', $request->date_from);
-        }
-
-        if ($request->filled('date_to')) {
-            $query->whereDate('attended_at', '<=', $request->date_to);
-        }
-
-        $attendances = $query->orderByDesc('attended_at')->get();
+        $attendances = Attendance::filtered($request->only(['subject', 'date', 'date_from', 'date_to']))
+            ->latest('attended_at')
+            ->paginate(25)
+            ->withQueryString();
 
         // Obtener lista de materias únicas para el filtro
         $subjects = Attendance::distinct()->pluck('subject');

@@ -1,4 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
+import { paginationLabel } from '@/lib/sanitize';
 import { type BreadcrumbItem } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -82,8 +83,9 @@ export default function Messages({ messages }: Props) {
                                 className={`rounded-lg border px-4 py-2 ${
                                     link.active ? 'bg-sidebar-border text-white' : 'text-sidebar-border bg-white'
                                 }`}
-                                dangerouslySetInnerHTML={{ __html: link.label }}
-                            />
+                            >
+                                {paginationLabel(link.label)}
+                            </button>
                         ))}
                     </div>
                 </div>

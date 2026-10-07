@@ -18,8 +18,15 @@ interface Props {
     };
 }
 
+const tinymceApiKey = import.meta.env.VITE_TINYMCE_API_KEY as string | undefined;
+
 export default function PostEdit({ post }: Props) {
-    const { data, setData, post: submitPost, processing } = useForm({
+    const {
+        data,
+        setData,
+        post: submitPost,
+        processing,
+    } = useForm({
         title: post.title,
         content: post.content,
         slug: post.slug,
@@ -27,50 +34,37 @@ export default function PostEdit({ post }: Props) {
         featured_image: null as File | null,
         meta_description: post.meta_description,
         summary: post.summary,
+        _method: 'PUT',
     });
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        
-        const formData = new FormData();
-        formData.append('title', data.title);
-        formData.append('content', data.content);
-        formData.append('slug', data.slug);
-        formData.append('author', data.author);
-        formData.append('summary', data.summary);
-        formData.append('meta_description', data.meta_description);
-        formData.append('_method', 'PUT');
-        
-        if (data.featured_image) {
-            formData.append('featured_image', data.featured_image);
-        }
 
         submitPost(`/dashboard/posts/${post.id}`, {
             forceFormData: true,
-            data: formData,
             preserveScroll: true,
             onSuccess: () => {
                 window.location.href = '/dashboard/posts';
             },
             onError: (errors) => {
                 console.error('Error updating post:', errors);
-            }
+            },
         });
     };
 
     return (
         <AppLayout>
             <div className="p-6">
-                <h1 className="text-2xl font-bold mb-6">Editar Post</h1>
-                
+                <h1 className="mb-6 text-2xl font-bold">Editar Post</h1>
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Title */}
                     <div>
-                        <label className="block text-sm font-medium mb-2">Título</label>
+                        <label className="mb-2 block text-sm font-medium">Título</label>
                         <input
                             type="text"
                             value={data.title}
-                            onChange={e => setData('title', e.target.value)}
+                            onChange={(e) => setData('title', e.target.value)}
                             className="w-full rounded border-gray-300 shadow-sm"
                             required
                         />
@@ -78,22 +72,17 @@ export default function PostEdit({ post }: Props) {
 
                     {/* Slug (read-only) */}
                     <div>
-                        <label className="block text-sm font-medium mb-2">Slug</label>
-                        <input
-                            type="text"
-                            value={data.slug}
-                            className="w-full rounded border-gray-300 shadow-sm bg-gray-100"
-                            readOnly
-                        />
+                        <label className="mb-2 block text-sm font-medium">Slug</label>
+                        <input type="text" value={data.slug} className="w-full rounded border-gray-300 bg-gray-100 shadow-sm" readOnly />
                     </div>
 
                     {/* Author */}
                     <div>
-                        <label className="block text-sm font-medium mb-2">Autor</label>
+                        <label className="mb-2 block text-sm font-medium">Autor</label>
                         <input
                             type="text"
                             value={data.author}
-                            onChange={e => setData('author', e.target.value)}
+                            onChange={(e) => setData('author', e.target.value)}
                             className="w-full rounded border-gray-300 shadow-sm"
                             required
                         />
@@ -101,10 +90,10 @@ export default function PostEdit({ post }: Props) {
 
                     {/* Summary */}
                     <div>
-                        <label className="block text-sm font-medium mb-2">Resumen</label>
+                        <label className="mb-2 block text-sm font-medium">Resumen</label>
                         <textarea
                             value={data.summary}
-                            onChange={e => setData('summary', e.target.value)}
+                            onChange={(e) => setData('summary', e.target.value)}
                             className="w-full rounded border-gray-300 shadow-sm"
                             rows={4}
                             maxLength={500}
@@ -115,20 +104,16 @@ export default function PostEdit({ post }: Props) {
 
                     {/* Featured Image */}
                     <div>
-                        <label className="block text-sm font-medium mb-2">Imagen destacada</label>
+                        <label className="mb-2 block text-sm font-medium">Imagen destacada</label>
                         {post.featured_image && (
                             <div className="mb-2">
-                                <img 
-                                    src={`/storage/${post.featured_image}`} 
-                                    alt="Imagen actual" 
-                                    className="h-32 w-32 rounded object-cover"
-                                />
+                                <img src={`/storage/${post.featured_image}`} alt="Imagen actual" className="h-32 w-32 rounded object-cover" />
                             </div>
                         )}
                         <input
                             type="file"
                             accept="image/*"
-                            onChange={e => {
+                            onChange={(e) => {
                                 const file = e.target.files?.[0];
                                 if (file) setData('featured_image', file);
                             }}
@@ -138,11 +123,11 @@ export default function PostEdit({ post }: Props) {
 
                     {/* Meta Description */}
                     <div>
-                        <label className="block text-sm font-medium mb-2">Descripción meta</label>
+                        <label className="mb-2 block text-sm font-medium">Descripción meta</label>
                         <input
                             type="text"
                             value={data.meta_description}
-                            onChange={e => setData('meta_description', e.target.value)}
+                            onChange={(e) => setData('meta_description', e.target.value)}
                             className="w-full rounded border-gray-300 shadow-sm"
                             maxLength={255}
                         />
@@ -151,11 +136,11 @@ export default function PostEdit({ post }: Props) {
 
                     {/* Content */}
                     <div>
-                        <label className="block text-sm font-medium mb-2">Contenido</label>
+                        <label className="mb-2 block text-sm font-medium">Contenido</label>
                         <Editor
-                            apiKey="8g1rfig0ilfv0bkpciq81y6oc3rlwnh0ikz52jt69b8sf2bv"
+                            apiKey={tinymceApiKey}
                             value={data.content}
-                            onEditorChange={content => setData('content', content)}
+                            onEditorChange={(content) => setData('content', content)}
                             init={{
                                 height: 500,
                                 menubar: true,
@@ -187,16 +172,23 @@ export default function PostEdit({ post }: Props) {
                                 image_title: true,
                                 automatic_uploads: true,
                                 file_picker_types: 'image',
-                                file_picker_callback: (callback, value, meta) => {
+                                file_picker_callback: (
+                                    callback: (url: string, options?: Record<string, string>) => void,
+                                    value: string,
+                                    meta: Record<string, unknown>,
+                                ) => {
                                     if (meta.filetype === 'image') {
                                         const input = document.createElement('input');
                                         input.setAttribute('type', 'file');
                                         input.setAttribute('accept', 'image/*');
-                                        input.onchange = function () {
-                                            const file = this.files[0];
+                                        input.onchange = () => {
+                                            const file = input.files?.[0];
+                                            if (!file) {
+                                                return;
+                                            }
                                             const reader = new FileReader();
-                                            reader.onload = function () {
-                                                callback(reader.result, { alt: file.name });
+                                            reader.onload = () => {
+                                                callback(reader.result?.toString() ?? '', { alt: file.name });
                                             };
                                             reader.readAsDataURL(file);
                                         };
@@ -211,15 +203,12 @@ export default function PostEdit({ post }: Props) {
                     <div className="flex space-x-4">
                         <button
                             type="submit"
-                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+                            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
                             disabled={processing}
                         >
                             Guardar cambios
                         </button>
-                        <a
-                            href="/dashboard/posts"
-                            className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700"
-                        >
+                        <a href="/dashboard/posts" className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-700">
                             Cancelar
                         </a>
                     </div>

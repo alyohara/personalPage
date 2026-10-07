@@ -1,229 +1,279 @@
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Section, SectionHeader } from '@/components/ui/section';
+import { Textarea } from '@/components/ui/textarea';
+import PublicLayout from '@/layouts/public-layout';
+import { cn } from '@/lib/utils';
 import { Head, Link } from '@inertiajs/react';
-import axios from 'axios';
-import { FormEvent, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Github, Linkedin, Mail, MapPin, MessageSquare } from 'lucide-react';
+import { FormEvent, useState } from 'react';
 
 export default function Contact() {
-    const [language, setLanguage] = useState<'en' | 'es'>('en');
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-    const [status, setStatus] = useState('');
-    const [statusType, setStatusType] = useState<'success' | 'error' | ''>('');
-
-    const content = {
-        en: {
-            title: 'Contact Me',
-            name: 'Name',
-            email: 'Email',
-            message: 'Message',
-            send: 'Send',
-            about: 'About Me',
-            projects: 'Projects',
-            blog: 'Blog',
-            contact: 'Contact',
-            statusSuccess: 'Message sent successfully!',
-            statusError: 'Failed to send the message.',
-        },
-        es: {
-            title: 'Contáctame',
-            name: 'Nombre',
-            email: 'Correo Electrónico',
-            message: 'Mensaje',
-            send: 'Enviar',
-            about: 'Sobre mí',
-            projects: 'Proyectos',
-            blog: 'Blog',
-            contact: 'Contacto',
-            statusSuccess: '¡Mensaje enviado con éxito!',
-            statusError: 'No se pudo enviar el mensaje.',
-        },
-    };
-
-    const handleLanguageChange = (lang: 'en' | 'es') => {
-        setLanguage(lang);
-    };
+    const [status, setStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        setIsSubmitting(true);
         try {
-            await axios.post('/messages', formData);
-            setStatus(language === 'es' ? 'Mensaje enviado correctamente.' : 'Message sent successfully!');
-            setFormData({ name: '', email: '', message: '' });
-        } catch (error) {
-            setStatus(language === 'es' ? 'No se pudo enviar el mensaje.' : 'Failed to send the message.');
+            const res = await fetch('/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+                },
+                body: JSON.stringify(formData),
+            });
+            if (res.ok) {
+                setStatus({ type: 'success', message: "Message sent successfully! I'll get back to you soon." });
+                setFormData({ name: '', email: '', message: '' });
+            } else {
+                throw new Error('Failed to send');
+            }
+        } catch {
+            setStatus({ type: 'error', message: 'Failed to send the message. Please try again or email me directly.' });
+        } finally {
+            setIsSubmitting(false);
         }
     };
-    useEffect(() => {
-        if (status) {
-            const timer = setTimeout(() => {
-                setStatus('');
-                setStatusType('');
-            }, 4000);
-            return () => clearTimeout(timer);
-        }
-    }, [status]);
+
+    const contactInfo = [
+        {
+            icon: Mail,
+            title: 'Email',
+            value: 'angel.leonardo.bianco@gmail.com',
+            href: 'mailto:angel.leonardo.bianco@gmail.com',
+            color: 'text-blue-400',
+        },
+        { icon: Mail, title: 'Academic Email', value: 'angel.bianco@unab.edu.ar', href: 'mailto:angel.bianco@unab.edu.ar', color: 'text-purple-400' },
+        { icon: MapPin, title: 'Location', value: 'Buenos Aires, Argentina', href: null, color: 'text-emerald-400' },
+    ] as const;
+
+    const socialLinks = [
+        { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/angel-leonardo-bianco/', color: 'text-blue-400' },
+        { icon: Github, label: 'GitHub', href: 'https://github.com/alyohara', color: 'text-fg' },
+    ] as const;
 
     return (
-        <>
-            <Head title={content[language].title}>
-                <link rel="preconnect" href="https://fonts.bunny.net" />
-                <link rel="icon" type="image/png" href="/imgs/perfil2.png" />
-                <style>
-                    {`
-                        body {
-                            font-family: 'Courier New', Courier, monospace;
-                        }
-                    `}
-                </style>
-            </Head>
-            <div className="flex min-h-screen items-center justify-center bg-black">
-                <div className="w-full max-w-4xl rounded-2xl border border-green-600 bg-black shadow-lg">
-                    <div className="flex w-full items-center justify-between border-b border-green-600 bg-black px-4 py-2 text-sm font-bold text-green-400">
-                        <span>Bianco(R) Angel Leonardo</span>
-                        <div className="flex gap-1">
-                            <button className="text-green-400 hover:text-white" onClick={() => handleLanguageChange('en')}>
-                                [En]
-                            </button>
-                            <button className="text-green-400 hover:text-white" onClick={() => handleLanguageChange('es')}>
-                                [Sp]
-                            </button>
-                        </div>
+        <PublicLayout>
+            <Head title="Contact — Angel Leonardo Bianco" />
+
+            {/* Hero */}
+            <section className="relative py-20 lg:py-28">
+                <div className="container-main">
+                    <div className="max-w-3xl">
+                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="mb-6">
+                            <span className="bg-accent-muted border-accent-border text-accent inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium">
+                                Let's work together
+                            </span>
+                        </motion.div>
+                        <motion.h1
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.1 }}
+                            className="text-display text-fg mb-6"
+                        >
+                            Get in Touch
+                        </motion.h1>
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            className="text-h3 text-fg-muted"
+                        >
+                            Have a project in mind? Looking for a tech lead? Want to collaborate? I'd love to hear from you.
+                        </motion.p>
                     </div>
-
-                    {/* Navigation */}
-                    <nav className="flex justify-center gap-6 border-b border-green-600 bg-black py-2 text-sm">
-                        <Link
-                            href={route('home')}
-                            className={`text-green-400 hover:text-white ${route().current('home') ? 'font-bold text-white' : ''}`}
-                        >
-                            [Home]
-                        </Link>
-                        <Link
-                            href={route('about')}
-                            className={`text-green-400 hover:text-white ${route().current('about') ? 'font-bold text-white' : ''}`}
-                        >
-                            [{content[language].about}]
-                        </Link>
-                        <Link
-                            href={route('projects')}
-                            className={`text-green-400 hover:text-white ${route().current('projects') ? 'font-bold text-white' : ''}`}
-                        >
-                            [{content[language].projects}]
-                        </Link>
-                        <Link
-                            href={route('blog')}
-                            className={`text-green-400 hover:text-white ${route().current('blog') ? 'font-bold text-white' : ''}`}
-                        >
-                            [{content[language].blog}]
-                        </Link>
-                        <Link
-                            href={route('contact')}
-                            className={`text-green-400 hover:text-white ${route().current('contact') ? 'font-bold text-white' : ''}`}
-                        >
-                            [{content[language].contact}]
-                        </Link>
-                    </nav>
-
-                    <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 font-mono text-sm leading-relaxed text-green-400">
-                        <div className="mx-auto w-full max-w-4xl p-6">
-                            <h1 className="text-2xl font-bold text-white">{content[language].title}</h1>
-                            <form onSubmit={handleSubmit} className="mt-6 w-full space-y-4">
-                                <div>
-                                    <label className="block text-sm">{content[language].name}</label>
-                                    <input
-                                        type="text"
-                                        value={formData.name}
-                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                        className="w-full rounded border border-green-600 bg-black p-2 text-white"
-                                        required
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm">{content[language].email}</label>
-                                    <input
-                                        type="email"
-                                        value={formData.email}
-                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                        className="w-full rounded border border-green-600 bg-black p-2 text-white"
-                                        required
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm">{content[language].message}</label>
-                                    <textarea
-                                        value={formData.message}
-                                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                        className="w-full rounded border border-green-600 bg-black p-2 text-white"
-                                        required
-                                    />
-                                </div>
-                                <button type="submit" className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-500">
-                                    {content[language].send}
-                                </button>
-                            </form>
-                            {status && (
-                                <p className={`mt-4 text-sm ${statusType === 'success' ? 'text-green-400' : 'text-green-400'}`}>{status}</p>
-                            )}{' '}
-                        </div>
-                    </div>
-
-                    {/* Footer */}
-                    <footer className="border-t border-green-600 bg-black px-6 py-4 text-center font-mono text-sm text-green-400">
-                        <p className="font-bold text-white">Angel Leonardo Bianco</p>
-                        <p className="mt-2">
-                            Emails:
-                            <a href="mailto:angel.leonardo.bianco@gmail.com" className="ml-1 text-green-300 underline hover:text-white">
-                                angel.leonardo.bianco@gmail.com
-                            </a>
-                            ,{' '}
-                            <a href="mailto:angelleonardobianco@outlook.com" className="text-green-300 underline hover:text-white">
-                                angelleonardobianco@outlook.com
-                            </a>
-                            ,{' '}
-                            <a href="mailto:angel.bianco@unab.edu.ar" className="text-green-300 underline hover:text-white">
-                                angel.bianco@unab.edu.ar
-                            </a>
-                        </p>
-                        <p className="mt-2">
-                            LinkedIn:
-                            <a
-                                href="https://www.linkedin.com/in/angel-leonardo-bianco/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="ml-1 text-green-300 underline hover:text-white"
-                            >
-                                https://www.linkedin.com/in/angel-leonardo-bianco/
-                            </a>
-                        </p>
-                        <p className="mt-2">
-                            GitHub:
-                            <a
-                                href="https://github.com/alyohara"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="ml-1 text-green-300 underline hover:text-white"
-                            >
-                                https://github.com/alyohara
-                            </a>
-                        </p>
-                        <p className="mt-4 text-xs text-green-600">&copy; {new Date().getFullYear()} Angel Leonardo Bianco</p>
-                    </footer>
                 </div>
-            </div>
-            <style>
-                {`
-                    .blinking-cursor {
-                        display: inline-block;
-                        width: 10px;
-                        height: 1rem;
-                        background-color: white;
-                        margin-left: 5px;
-                        animation: blink 1s steps(1) infinite;
-                    }
+            </section>
 
-                    @keyframes blink {
-                        50% { opacity: 0; }
-                    }
-                `}
-            </style>
-        </>
+            <Section>
+                <div className="grid gap-8 lg:grid-cols-3">
+                    {/* Contact Info */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="lg:col-span-1"
+                    >
+                        <SectionHeader
+                            title="Let's Talk"
+                            description="I'm always open to discussing new opportunities, projects, or just chatting about technology."
+                        />
+                        <div className="space-y-6">
+                            {contactInfo.map((item) => (
+                                <div key={item.title} className="bg-bg-elevated border-border flex items-start gap-4 rounded-xl border p-4">
+                                    <div
+                                        className={cn(
+                                            'bg-accent-muted inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg',
+                                            item.color,
+                                        )}
+                                    >
+                                        <item.icon className="text-accent size-5" aria-hidden="true" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-label text-fg font-semibold">{item.title}</h4>
+                                        {item.href ? (
+                                            <a href={item.href} className="text-body text-fg-muted hover:text-accent mt-1 block transition-colors">
+                                                {item.value}
+                                            </a>
+                                        ) : (
+                                            <p className="text-body text-fg-muted mt-1">{item.value}</p>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Social */}
+                        <div className="border-border border-t pt-6">
+                            <h4 className="text-label text-fg mb-4 font-semibold">Connect</h4>
+                            <div className="flex gap-3">
+                                {socialLinks.map((item) => (
+                                    <a
+                                        key={item.label}
+                                        href={item.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={cn(
+                                            'bg-bg-elevated border-border text-fg-muted hover:text-accent hover:border-accent group inline-flex h-10 w-10 items-center justify-center rounded-lg border transition-colors',
+                                            item.color,
+                                        )}
+                                    >
+                                        <item.icon className="size-5 transition-transform group-hover:scale-110" aria-hidden="true" />
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* Form */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="lg:col-span-2"
+                    >
+                        <SectionHeader title="Send a Message" />
+                        <Card variant="bordered">
+                            <CardContent className="p-6 md:p-8">
+                                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                                    <div className="grid gap-4 sm:grid-cols-2">
+                                        <div>
+                                            <Label htmlFor="name" className="mb-2">
+                                                Name
+                                            </Label>
+                                            <Input
+                                                id="name"
+                                                value={formData.name}
+                                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                                placeholder="Your name"
+                                                required
+                                                disabled={isSubmitting}
+                                                className="w-full"
+                                            />
+                                        </div>
+                                        <div>
+                                            <Label htmlFor="email" className="mb-2">
+                                                Email
+                                            </Label>
+                                            <Input
+                                                id="email"
+                                                type="email"
+                                                value={formData.email}
+                                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                                placeholder="your@email.com"
+                                                required
+                                                disabled={isSubmitting}
+                                                className="w-full"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <Label htmlFor="message" className="mb-2">
+                                            Message
+                                        </Label>
+                                        <Textarea
+                                            id="message"
+                                            value={formData.message}
+                                            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                            placeholder="Tell me about your project, idea, or question..."
+                                            rows={6}
+                                            required
+                                            disabled={isSubmitting}
+                                            className="w-full"
+                                        />
+                                    </div>
+                                    {status && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            className={cn(
+                                                'flex items-start gap-3 rounded-lg p-4 text-sm',
+                                                status.type === 'success'
+                                                    ? 'border border-green-500/20 bg-green-500/10 text-green-400'
+                                                    : 'border border-red-500/20 bg-red-500/10 text-red-400',
+                                            )}
+                                        >
+                                            <div className="flex-1">{status.message}</div>
+                                        </motion.div>
+                                    )}
+                                    <Button type="submit" size="lg" disabled={isSubmitting} className="w-full sm:w-auto">
+                                        {isSubmitting ? 'Sending...' : 'Send Message'}
+                                        <ArrowRight className="ml-2 size-4" aria-hidden="true" />
+                                    </Button>
+                                </form>
+                            </CardContent>
+                        </Card>
+
+                        {/* Alternative contact */}
+                        <div className="bg-bg-muted border-border mt-8 rounded-xl border p-6">
+                            <p className="text-body text-fg-muted text-center">
+                                Prefer email?{' '}
+                                <a href="mailto:angel.leonardo.bianco@gmail.com" className="text-accent font-medium hover:underline">
+                                    angel.leonardo.bianco@gmail.com
+                                </a>
+                            </p>
+                        </div>
+                    </motion.div>
+                </div>
+            </Section>
+
+            {/* CTA */}
+            <Section variant="muted">
+                <div className="container-narrow text-center">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="bg-bg-elevated border-border rounded-2xl border p-12 md:p-16"
+                    >
+                        <MessageSquare className="text-accent mx-auto mb-4 size-12" aria-hidden="true" />
+                        <h2 className="text-h1 mb-4">Let's Build Something Great</h2>
+                        <p className="text-body text-fg-muted mx-auto mb-8 max-w-xl">
+                            Whether you need a technical co-founder, a senior engineer for your team, or a consultant for architecture decisions —
+                            let's start a conversation.
+                        </p>
+                        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+                            <Button asChild size="xl">
+                                <Link href="mailto:angel.leonardo.bianco@gmail.com?subject=Project%20Inquiry">
+                                    Start a Conversation
+                                    <ArrowRight className="ml-2 size-4" aria-hidden="true" />
+                                </Link>
+                            </Button>
+                            <Button asChild variant="outline" size="xl">
+                                <Link href="/projects" prefetch>
+                                    View My Work
+                                </Link>
+                            </Button>
+                        </div>
+                    </motion.div>
+                </div>
+            </Section>
+        </PublicLayout>
     );
 }

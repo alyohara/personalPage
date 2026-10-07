@@ -1,0 +1,498 @@
+#######################################################################################
+##Imprima los primeros 10 numeros naturales usando el loop while
+
+##Salida experada:
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+##Solución:
+i = 1
+while i <= 10:
+    print(i)
+    i += 1
+#######################################################################################
+##Imprima el siguiente patrón usando un loop:
+
+1 
+
+1 2 
+
+1 2 3 
+
+1 2 3 4 
+
+1 2 3 4 5
+
+
+##Solución:
+print("Patron numerico ")
+
+# Instanciamos la cantidad de filas
+row = 5
+
+# corremos el loop principal 5 veces
+for i in range(1, row + 1, 1):
+    # corremos el loop interno i+1 veces
+    for j in range(1, i + 1):
+        print(j, end=' ')
+    # imprimimos una linea en blanco
+    print("")
+
+#######################################################################################
+## Escriba un programa que arme y muestre la tabla de multiplicar de dicho numero
+## Por ejemplo, num = 2, la salida debería ser:
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+
+##Solucion:
+n = input('ingrese un numero:')
+
+# corro el loop 10 veces
+for i in range(1, 11, 1):
+    # 2 *i (current number)
+    product = n * i
+    print(product)
+#######################################################################################
+##Escriba un programa que muestre sólo los númersos de una lista que cumplan las siguientes condiciones:
+
+##El número debe ser divisible por 5
+##Si el número es mayor a 150, saltearlo y seguir con el siguiente en la lista
+##Si el número es mayor a 500, parar el loop
+
+##Lista dada:
+numbers = [12, 75, 150, 180, 145, 525, 50]
+
+##Salida esperada:
+75
+150
+145
+
+##Solucion
+numbers = [12, 75, 150, 180, 145, 525, 50]
+# itero cada item de la lista
+for item in numbers:
+    if item > 500:
+        break
+    elif item > 150:
+        continue
+    # chequeo que el numero sea divisible por 5
+    elif item % 5 == 0:
+        print(item)
+#######################################################################################
+##Contar la cantidad de dígitos de un njmero usando el while
+## Por ejemplo, si el numero fuera 75869, la salida debería ser 5
+
+##Solución:
+num = 75869
+count = 0
+while num != 0:
+    # divido por 10 para contar (que trucazo!!)
+    num = num // 10
+
+    count = count + 1
+print("Total digits are:", count)
+
+#######################################################################################
+##Esriba un programa que imprima el siguiente patrón usando un loop
+
+5 4 3 2 1 
+4 3 2 1 
+3 2 1 
+2 1 
+1
+
+
+##Solucion
+n = 5
+k = 5
+for i in range(0,n+1):
+    for j in range(k-i,0,-1):
+        print(j,end=' ')
+    print()
+
+#######################################################################################
+## Cual de las siguientes soluciones imprimen la lista en orden inverso
+list1 = [10, 20, 30, 40, 50]
+
+##Solución 1
+##Usando reversed() y for ((correcta))
+
+list1 = [10, 20, 30, 40, 50]
+# reverse list
+new_list = reversed(list1)
+# iterate reversed list
+for item in new_list:
+    print(item)
+
+##Solución 2
+##Usando for y len () ((correcta también))
+
+list1 = [10, 20, 30, 40, 50]
+# get list size
+# len(list1) -1: because index start with 0
+# iterate list in reverse order
+# star from last item to first
+size = len(list1) - 1
+for i in range(size, -1, -1):
+    print(list1[i])
+
+##Solución 3
+##((Esta no hace lo que se le pide))
+
+list1 = [10, 20, 30, 40, 50]
+
+size = len(list1)
+for i in range(size, -1, -1):
+    print(list1[i])
+
+##Solución 4
+##((Esta no hace lo que se le pide))
+
+list1 = [10, 20, 30, 40, 50]
+
+size = len(list1)
+while (n <= size)
+    print(list1[i])
+
+########((este esta bueno porque tiene dos soluciones posibles  a elegir, hay que ponerle como checkbox y no decirles que más de una solución puede estar bien))
+
+
+#######################################################################################
+##Escriba un programa que imprima los numeros del -10 al -1 usando un for
+
+##Salida esperada:
+
+-10
+-9
+-8
+-7
+-6
+-5
+-4
+-3
+-2
+-1
+
+##Solucion:
+for num in range(-10, 0, 1):
+    print(num)
+
+#######################################################################################
+##Escriba un programa que mediante un else muestre "Hecho!" una vez se finalice exitosamente un loop
+##Por ejemplo, el siguiente loop se va a ejecutar sin errores
+
+for i in range(5):
+    print(i)
+
+##Salida esperada:
+
+0
+1
+2
+3
+4
+Done!
+
+##Solucion
+for i in range(5):
+    print(i)
+else:
+    print("Hecho!")
+
+#######################################################################################
+##Escriba un programa que muestre todos los numeros naturales en un rango
+##Nota, un numero primo es aquel numero que no puede ser dividido más que por 1 y por si mismo.
+##ejemplos:
+## 6 no es un numero primo porque puede ser dividido por 1, por 2, por 3 y por 6
+## 37 es un numero primo ya que sólo puede ser dividido por 1 y por si mismo (que es lo mismo decir que no hay otros numeros que multiplicados entre sí den 37)
+
+##Por ejemplo, dados:
+# rango
+start = 25
+end = 50
+##Salida esperada:
+
+Los numeros primos entre 25 y 50 son:
+29
+31
+37
+41
+43
+47
+
+##Solucion
+start = 25
+end = 50
+print("Los numeros primos entre", start, "y", end, "son:")
+
+for num in range(start, end + 1):
+    # todos los numeros primos son mayores que 1
+    if num > 1:
+        for i in range(2, num):
+            # busco los factores
+            if (num % i) == 0:
+                # si no tiene, no es primo y rompo el loop
+                break
+        else:
+            print(num)
+
+#######################################################################################
+## Use un loop para mostrar los siguientes elemntos impares de la lista
+##Dado:
+
+my_list = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+
+##Salida esperada
+20 40 60 80 100
+
+##Solucion
+my_list = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+for i in my_list[1::2]:
+    print(i, end=" ")
+
+
+#######################################################################################
+##Escriba un programa que imprima el siguiente patrón en pantalla usando un loop
+
+* 
+* * 
+* * * 
+* * * * 
+* * * * * 
+* * * * 
+* * * 
+* * 
+*
+
+##Solucion
+rows = 5
+for i in range(0, rows):
+    for j in range(0, i + 1):
+        print("*", end=' ')
+    print("\r")
+
+for i in range(rows, 0, -1):
+    for j in range(0, i - 1):
+        print("*", end=' ')
+    print("\r")
+
+#######################################################################################
+## (Este es hermoso)Escriba un programa que itere entre 1 y 50. Para múltiplos de 3 debe imprimir "Fizz" en vez del numero, si es multiplo de 5 entonces debe imprimir "Buzz" en vez del numero. Pero si el numero es multiplod e 3 y de 5, imprimir "FizzBuzz" en vez del numero.
+##Salida
+
+1
+2
+fizz
+4
+buzz
+.
+.
+14
+fizzbuzz
+16
+.
+.
+
+##Solucion:
+for fizzbuzz in range(51):
+    if fizzbuzz % 3 == 0 and fizzbuzz % 5 == 0:
+        print("fizzbuzz")
+        continue
+    elif fizzbuzz % 3 == 0:
+        print("fizz")
+        continue
+    elif fizzbuzz % 5 == 0:
+        print("buzz")
+        continue
+    print(fizzbuzz)
+
+#######################################################################################
+##Escriba un programa que calcule el valor de "a" a la potencia "b
+##Por ejemplo:
+(power(3,4)) 
+El resultado es: 81
+
+##Solucion
+def power(a,b):
+    if b==0:
+        return 1
+    elif a==0:
+        return 0
+    elif b==1:
+        return a
+    else:
+        return a*power(a,b-1)
+
+print("El resultado es: "power(3,4))
+
+
+#######################################################################################
+##Escriba una funcion que verifique que un string es un panagrama. 
+##Un panagrama es un texto que usa todas las letras posibles del alfabeto de un idioma.
+##Por ejemplo : "The quick brown fox jumps over the lazy dog"
+## ayuda: deben importar las bibliotecas string y sys
+
+##Solucion
+import string, sys
+def ispangram(str1, alphabet=string.ascii_lowercase):
+    alphaset = set(alphabet)
+    return alphaset <= set(str1.lower())
+ 
+print ( ispangram('The quick brown fox jumps over the lazy dog')) 
+
+
+#######################################################################################
+##Cree un diccionario y muestre sus claves alfabéticamente.
+## a) Muestra tanto las claves como los valores ordenados alfabéticamente por clave.
+## b) Igual que la parte (ii), pero ordenados alfabéticamente por el valor.
+
+## Ejmeplo:
+##Entrada:
+key_value[2] = '64'       
+key_value[1] = '69'
+key_value[4] = '23'
+key_value[5] = '65'
+key_value[6] = '34'
+key_value[3] = '76'
+
+##Salida:
+1 2 3 4 5 6 
+
+##Solucion
+
+def dictionairy():   
+ key_value ={}   
+ 
+
+ key_value[2] = 56      
+ key_value[1] = 2
+ key_value[5] = 12
+ key_value[4] = 24
+ key_value[6] = 18     
+ key_value[3] = 323
+ 
+ print ("Task 1:-\n")
+ print ("Keys are")
+
+ for i in sorted (key_value.keys()) :
+     print(i, end = " ")
+ 
+def main():
+
+    dictionairy()            
+     
+if __name__=="__main__":     
+    main()
+
+#######################################################################################
+## Dado un diccionario en Python, escriba un programa en Python para encontrar la suma de todos los elementos en el diccionario.
+##Ejemplos: 
+
+Input : {‘a’: 100, ‘b’:200, ‘c’:300}
+Output : 600
+
+Input : {‘x’: 25, ‘y’:18, ‘z’:45}
+Output : 88
+
+##Solucion
+
+def returnSum(myDict):
+
+    list = []
+    for i in myDict:
+        list.append(myDict[i])
+    final = sum(list)
+
+    return final
+
+
+
+dict = {'a': 100, 'b': 200, 'c': 300}
+print("Sum :", returnSum(dict))
+
+
+#######################################################################################
+##marque la/s correcta/s
+En Python, una variable declarada fuera de la función o en el ámbito global se conoce como variable global. Esto significa que se puede acceder a una variable global dentro o fuera de la función. (correcta)
+En Python, una variable declarada en el ámbito global se conoce como variable global. Esto significa que se puede acceder a una variable global dentro o fuera de la función. (incorrecta)
+Una variable declarada dentro del cuerpo de la función o en el ámbito local se conoce como variable nonlocal. (incorrecto)
+Las variables no locales (nonlocal) se utilizan en funciones anidadas cuyo alcance local no está definido. Esto significa que la variable no puede estar ni en el ámbito local ni en el global. (correcta)
+
+
+#######################################################################################
+##Que imprime el siguiente programa:
+
+x = 'global'
+ 
+def foo():
+    global x
+    y = 'local'
+    x = x * 2
+    print(x)
+    print(y)
+    
+foo()
+
+
+a) globalglobal
+local
+b) global global
+local
+c) global
+local
+d)da error
+
+
+#######################################################################################
+¿Cómo se declara una variable global en Python?
+
+a)Respuesta correcta: La variable global de python se declara con la ayuda de la palabra clave global. El alcance de una variable global es todo el programa.
+b)la variable debe ser declarada al comienzo del programa
+c)la variable debe llevar la palabra clave global
+d)a y b correctas
+e)b y c correctas
+
+#######################################################################################
+ Las variables que se declaran fuera del alcance de una función se definen como variables globales en python. Como resultado, un usuario puede acceder a una variable global dentro o fuera de la función.
+ a) verdadero (correcto)
+ b) falso (incorrecto)
+
+#######################################################################################
+Procedimientos y funciones, marque las correctas
+Un procedimiento realiza una tarea, mientras que una función produce información.  (correcta)
+Las funciones se diferencian de los procedimientos en que las funciones devuelven valores, a diferencia de los procedimientos que no lo hacen. (correcta)
+Los parámetros se pueden pasar tanto a procedimientos como a funciones. (correcta)
+Para devolver un valor en una función siempre se utiliza la variable argumento (incorrecta)
+
+
+#######################################################################################
+Marque las correctas:
+Los argumentos de función pueden tener valores predeterminados en Python. (correcta)
+Podemos proporcionar un valor predeterminado a un argumento usando el operador de asignación (:). (incorrecta)
+Cuando llamamos a una función con algunos valores, estos valores se asignan a los argumentos según su posición. (correcta)
+Python  no permite llamar a funciones usando argumentos de palabras clave (keywords). Cuando llamamos funciones de esta manera, el orden (posición) de los argumentos se puede cambiar. (incorrecta)
+
+
+
+
+#######################################################################################
+
+
+
+#######################################################################################

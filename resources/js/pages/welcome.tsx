@@ -1,189 +1,367 @@
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Section, SectionHeader } from '@/components/ui/section';
+import PublicLayout from '@/layouts/public-layout';
+import { cn } from '@/lib/utils';
 import { Head, Link } from '@inertiajs/react';
-import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Briefcase, Code, Database, GraduationCap, Layers, Server } from 'lucide-react';
+
+const specialties = [
+    { icon: Server, label: 'Backend & APIs', desc: 'Laravel, Node.js, REST, GraphQL' },
+    { icon: Database, label: 'Data & Storage', desc: 'MySQL, PostgreSQL, Redis, MongoDB' },
+    { icon: Layers, label: 'Architecture', desc: 'Microservices, DDD, Event-driven' },
+    { icon: Code, label: 'Frontend', desc: 'React, Vue, TypeScript, Tailwind' },
+    { icon: Briefcase, label: 'Leadership', desc: 'Tech Lead, Code Review, Mentoring' },
+    { icon: GraduationCap, label: 'Teaching', desc: 'University Lecturer, Workshops' },
+] as const;
+
+const highlights = [
+    { value: '15+', label: 'Years Experience' },
+    { value: '50+', label: 'Projects Delivered' },
+    { value: '10+', label: 'Production Systems' },
+    { value: '500+', label: 'Students Taught' },
+] as const;
 
 export default function Welcome() {
-    const [language, setLanguage] = useState('en'); // Estado para el idioma actual
-
-    // Contenido en inglés y español
-    const content = {
-        en: {
-            title: "Bianco's Personal Page",
-            greeting: 'Welcome to my portfolio. Here you will find information about my projects, experience, and contact details.',
-            options: 'Select an option:',
-            about: 'About Me',
-            projects: 'Projects',
-            blog: 'Blog',
-            contact: 'Contact',
-            biography: 'Biography',
-            description: [
-                "A passionate IT professional with a strong academic background, currently pursuing a Bachelor's degree in Systems Engineering (anticipated completion soon) while working as a Software Analyst and Full Stack Developer.",
-                'At my current role, I tackle complex challenges and guide best practices aligned with quality metrics. I also help build and implement custom solutions.',
-                'Since joining the team, we built a robust sector and a custom CRM system for streamlined workflows.',
-                "I'm constantly learning — from website development to QA and crypto projects.",
-                'I develop Laravel applications for various organizations and consulting firms.',
-                'I also teach Data Structures at UNAB and NTICS at Instituto Superior FEMEBA.',
-                'Academic rigor + dev experience + teaching = well-rounded IT profile.',
-            ],
-        },
-        es: {
-            title: 'Página Personal de Bianco',
-            greeting: 'Bienvenido a mi portafolio. Aquí encontrarás información sobre mis proyectos, experiencia y detalles de contacto.',
-            options: 'Selecciona una opción:',
-            about: 'Acerca de mí',
-            projects: 'Proyectos',
-            blog: 'Blog',
-            contact: 'Contacto',
-            biography: 'Biografía',
-            description: [
-                'Un profesional de IT apasionado con una sólida formación académica, actualmente cursando Licenciatura en  Sistemas (próxima finalización) mientras trabajo como Analista de Software y Desarrollador Full Stack.',
-                'En mi rol actual, enfrento desafíos complejos y guío las mejores prácticas alineadas con métricas de calidad. También ayudo a construir e implementar soluciones personalizadas.',
-                'Desde que me uní al equipo, construimos un sector sólido y un sistema CRM personalizado para flujos de trabajo optimizados.',
-                'Estoy en constante aprendizaje: desde desarrollo web hasta QA y proyectos de criptomonedas.',
-                'Desarrollo aplicaciones en Laravel para diversas organizaciones y consultoras.',
-                'También enseño Algoritmos y Estructuras de Datos en la UNAB y NTICS en el Instituto Superior FEMEBA.',
-                'Rigor académico + experiencia en desarrollo + enseñanza = perfil de IT integral.',
-            ],
-        },
-    };
-
     return (
-        <>
-            <Head title={content[language].title}>
-                <link rel="preconnect" href="https://fonts.bunny.net" />
-                <link rel="icon" type="image/png" href="/imgs/perfil2.png" />
-                <style>
-                    {`
-                        body {
-                            font-family: 'Courier New', Courier, monospace;
-                        }
-                    `}
-                </style>
-            </Head>
+        <PublicLayout>
+            <Head title="Angel Leonardo Bianco — Software Architect & Tech Lead" />
 
-            <div className="flex min-h-screen items-center justify-center bg-black">
-                {/* Terminal Window */}
-                <div className="w-full max-w-4xl border border-green-600 bg-black">
-                    {/* Top Bar */}
-                    <div className="flex w-full items-center justify-between border-b border-green-600 bg-black px-4 py-2 text-sm font-bold text-green-400">
-                        <span>Bianco(R) Angel Leonardo</span>
-                        <div className="flex gap-1">
-                            <button className="text-green-400 hover:text-white" onClick={() => setLanguage('en')}>
-                                [En]
-                            </button>
-                            <button className="text-green-400 hover:text-white" onClick={() => setLanguage('es')}>
-                                [Sp]
-                            </button>
+            {/* Hero */}
+            <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden">
+                {/* Background grid pattern */}
+                <div className="absolute inset-0 opacity-30" aria-hidden="true">
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] bg-[size:48px_48px]" />
+                </div>
+
+                {/* Accent glow */}
+                <div className="bg-accent/10 pointer-events-none absolute top-1/4 right-1/4 h-96 w-96 rounded-full blur-3xl" aria-hidden="true" />
+
+                <div className="container-main relative z-10 py-20">
+                    <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_7rem] xl:grid-cols-[minmax(0,1fr)_7rem]">
+                        {/* Portrait */}
+                        <motion.figure
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
+                            className="panel mx-auto w-full max-w-[5.5rem] p-2 lg:order-2 lg:mx-0 lg:max-w-[7rem]"
+                        >
+                            <div className="border-border overflow-hidden rounded-sm border">
+                                <img src="/imgs/perfil-256.png" alt="Angel Leonardo Bianco" width={256} height={256} className="h-auto w-full" />
+                            </div>
+                            <figcaption className="text-fg-subtle mt-2 text-center font-mono text-[0.625rem] leading-tight">~/angel.png</figcaption>
+                        </motion.figure>
+
+                        <div className="max-w-4xl lg:order-1">
+                            {/* Badge */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, ease: 'easeOut' }}
+                                className="bg-accent-muted border-accent-border text-accent mb-8 inline-flex items-center gap-2 rounded-sm border px-4 py-2 text-sm font-medium"
+                            >
+                                <span className="relative flex h-2 w-2">
+                                    <span className="bg-accent absolute inset-0 h-full w-full animate-ping rounded-full opacity-75" />
+                                    <span className="bg-accent relative h-full w-full rounded-full" />
+                                </span>
+                                Software Architect · Tech Lead · Full Stack Engineer · University Lecturer
+                            </motion.div>
+
+                            {/* Name + Title */}
+                            <motion.h1
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
+                                className="text-display text-fg mb-6"
+                            >
+                                Angel Leonardo Bianco
+                            </motion.h1>
+
+                            {/* Tagline */}
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
+                                className="text-h3 text-fg-muted mb-8 max-w-2xl"
+                            >
+                                Building robust software systems, leading engineering teams, and teaching the next generation of developers.
+                            </motion.p>
+
+                            {/* CTA Buttons */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, ease: 'easeOut', delay: 0.3 }}
+                                className="mb-16 flex flex-wrap items-center gap-4"
+                            >
+                                <Button asChild size="lg" className="group">
+                                    <Link href="/projects" prefetch>
+                                        View Projects
+                                        <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                                    </Link>
+                                </Button>
+                                <Button asChild variant="outline" size="lg">
+                                    <Link href="/contact" prefetch>
+                                        Get in Touch
+                                    </Link>
+                                </Button>
+                                <Button asChild variant="ghost" size="lg">
+                                    <Link href="/docs/resume.pdf" download>
+                                        Download CV
+                                    </Link>
+                                </Button>
+                            </motion.div>
+
+                            {/* Highlights */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, ease: 'easeOut', delay: 0.4 }}
+                                className="flex flex-wrap gap-8 md:gap-12"
+                            >
+                                {highlights.map((stat, idx) => (
+                                    <div key={stat.label} className={`stagger-${idx + 1}`}>
+                                        <div className="text-display font-display text-accent font-bold">{stat.value}</div>
+                                        <div className="text-body-sm text-fg-muted">{stat.label}</div>
+                                    </div>
+                                ))}
+                            </motion.div>
                         </div>
                     </div>
-
-                    {/* Navigation */}
-                    <nav className="flex justify-center gap-6 border-b border-green-600 bg-black py-2 text-sm">
-                        <Link
-                            href={route('home')}
-                            className={`text-green-400 hover:text-white ${route().current('home') ? 'font-bold text-white' : ''}`}
-                        >
-                            [Home]
-                        </Link>
-                        <Link
-                            href={route('about')}
-                            className={`text-green-400 hover:text-white ${route().current('about') ? 'font-bold text-white' : ''}`}
-                        >
-                            [{content[language].about}]
-                        </Link>
-                        <Link
-                            href={route('projects')}
-                            className={`text-green-400 hover:text-white ${route().current('projects') ? 'font-bold text-white' : ''}`}
-                        >
-                            [{content[language].projects}]
-                        </Link>
-                        <Link
-                            href={route('blog')}
-                            className={`text-green-400 hover:text-white ${route().current('blog') ? 'font-bold text-white' : ''}`}
-                        >
-                            [{content[language].blog}]
-                        </Link>
-                        <Link
-                            href={route('contact')}
-                            className={`text-green-400 hover:text-white ${route().current('contact') ? 'font-bold text-white' : ''}`}
-                        >
-                            [{content[language].contact}]
-                        </Link>
-                    </nav>
-
-                    {/* Main Content */}
-                    <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 font-mono text-sm leading-relaxed text-green-400">
-                        <h1 className="mb-4 text-xl font-bold text-white">C:\\{content[language].biography}&gt;</h1>
-
-                        <img src="/imgs/perfil2.png" alt="Perfil" className="mt-6 mb-4 h-32 w-32 rounded-full border-4 border-green-400 shadow-lg" />
-                        {content[language].description.map((paragraph, index) => (
-                            <p key={index} className="mt-4 text-left" style={{ textAlign: 'left' }}>
-                                {paragraph}
-                                {index === content[language].description.length - 1 && <span className="blinking-cursor"></span>}
-                            </p>
-                        ))}
-                    </div>
-
-                    {/* Footer */}
-                    <footer className="border-t border-green-600 bg-black px-6 py-4 text-center font-mono text-sm text-green-400">
-                        <p className="font-bold text-white">Angel Leonardo Bianco</p>
-                        <p className="mt-2">
-                            Emails:
-                            <a href="mailto:angel.leonardo.bianco@gmail.com" className="ml-1 text-green-300 underline hover:text-white">
-                                angel.leonardo.bianco@gmail.com
-                            </a>
-                            ,{' '}
-                            <a href="mailto:angelleonardobianco@outlook.com" className="text-green-300 underline hover:text-white">
-                                angelleonardobianco@outlook.com
-                            </a>
-                            ,{' '}
-                            <a href="mailto:angel.bianco@unab.edu.ar" className="text-green-300 underline hover:text-white">
-                                angel.bianco@unab.edu.ar
-                            </a>
-                        </p>
-                        <p className="mt-2">
-                            LinkedIn:
-                            <a
-                                href="https://www.linkedin.com/in/angel-leonardo-bianco/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="ml-1 text-green-300 underline hover:text-white"
-                            >
-                                https://www.linkedin.com/in/angel-leonardo-bianco/
-                            </a>
-                        </p>
-                        <p className="mt-2">
-                            GitHub:
-                            <a
-                                href="https://github.com/alyohara"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="ml-1 text-green-300 underline hover:text-white"
-                            >
-                                https://github.com/alyohara
-                            </a>
-                        </p>
-                        <p className="mt-4 text-xs text-green-600">&copy; {new Date().getFullYear()} Angel Leonardo Bianco</p>
-                    </footer>
                 </div>
-            </div>
 
-            {/* Blinking Cursor Style */}
-            <style>
-                {`
-                    .blinking-cursor {
-                        display: inline-block;
-                        width: 10px;
-                        height: 1rem;
-                        background-color: white;
-                        margin-left: 5px;
-                        animation: blink 1s steps(1) infinite;
-                    }
+                {/* Scroll indicator */}
+                <motion.div
+                    animate={{ y: [0, 8, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                    className="text-fg-subtle absolute bottom-8 left-1/2 -translate-x-1/2"
+                    aria-hidden="true"
+                >
+                    <svg className="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path d="M12 5v14M19 12l-7 7-7-7" />
+                    </svg>
+                </motion.div>
+            </section>
 
-                    @keyframes blink {
-                        50% { opacity: 0; }
+            {/* Specialties */}
+            <Section size="lg" variant="muted">
+                <SectionHeader
+                    title="Areas of Expertise"
+                    description="Deep technical knowledge across the full stack, with focus on backend architecture, data systems, and scalable infrastructure."
+                />
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {specialties.map((item, i) => (
+                        <motion.div
+                            key={item.label}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-50px' }}
+                            transition={{ duration: 0.4, delay: i * 0.08 }}
+                        >
+                            <Card variant="interactive" className="h-full">
+                                <CardContent className="p-6">
+                                    <div className="bg-accent-muted text-accent mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg">
+                                        <item.icon className="size-6" aria-hidden="true" />
+                                    </div>
+                                    <h3 className="text-h3 mb-2">{item.label}</h3>
+                                    <p className="text-body-sm text-fg-muted">{item.desc}</p>
+                                </CardContent>
+                            </Card>
+                        </motion.div>
+                    ))}
+                </div>
+            </Section>
+
+            {/* Tech Stack */}
+            <Section size="lg">
+                <SectionHeader title="Technology Stack" description="Tools and technologies I work with daily. Grouped by domain for clarity." />
+                <div className="space-y-12">
+                    {[
+                        {
+                            category: 'Backend',
+                            icon: Server,
+                            color: 'text-blue-400',
+                            tech: ['Laravel', 'PHP', 'Node.js', 'Go', 'REST APIs', 'GraphQL', 'gRPC'],
+                        },
+                        {
+                            category: 'Frontend',
+                            icon: Code,
+                            color: 'text-cyan-400',
+                            tech: ['React', 'TypeScript', 'Vue.js', 'Tailwind CSS', 'Next.js', 'Vite'],
+                        },
+                        {
+                            category: 'Databases',
+                            icon: Database,
+                            color: 'text-emerald-400',
+                            tech: ['PostgreSQL', 'MySQL', 'Redis', 'MongoDB', 'SQLite'],
+                        },
+                        {
+                            category: 'Infrastructure',
+                            icon: Layers,
+                            color: 'text-orange-400',
+                            tech: ['Docker', 'Kubernetes', 'AWS', 'CI/CD', 'GitLab CI', 'Terraform'],
+                        },
+                        {
+                            category: 'Architecture',
+                            icon: Layers,
+                            color: 'text-purple-400',
+                            tech: ['Microservices', 'DDD', 'Event Sourcing', 'CQRS', 'Message Queues'],
+                        },
+                        {
+                            category: 'Testing & Quality',
+                            icon: Code,
+                            color: 'text-rose-400',
+                            tech: ['PHPUnit', 'Pest', 'Vitest', 'Playwright', 'Static Analysis', 'Code Review'],
+                        },
+                    ].map((group, i) => (
+                        <motion.div
+                            key={group.category}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-50px' }}
+                            transition={{ duration: 0.4, delay: i * 0.08 }}
+                        >
+                            <div className="mb-4 flex items-center gap-3">
+                                <div className={cn('bg-accent-muted inline-flex h-10 w-10 items-center justify-center rounded-lg', group.color)}>
+                                    <group.icon className="text-accent size-5" aria-hidden="true" />
+                                </div>
+                                <h3 className="text-h3">{group.category}</h3>
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                                {group.tech.map((tech, idx) => (
+                                    <Badge key={tech} variant="outline" className={`stagger-${idx + 1}`}>
+                                        {tech}
+                                    </Badge>
+                                ))}
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </Section>
+
+            {/* Featured Projects */}
+            <Section size="lg" variant="muted">
+                <SectionHeader
+                    title="Featured Projects"
+                    description="A selection of production systems and open-source work."
+                    action={
+                        <Button asChild variant="outline">
+                            <Link href="/projects" prefetch>
+                                All Projects <ArrowRight className="ml-2 size-4" aria-hidden="true" />
+                            </Link>
+                        </Button>
                     }
-                `}
-            </style>
-        </>
+                />
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {[
+                        {
+                            title: 'WOZ.exe',
+                            desc: 'SCUMM-style adventure teaching data structures (stacks, queues, graphs, heaps). Playable in browser via WebAssembly.',
+                            tech: ['Python', 'pygame-ce', 'pygbag', 'WebAssembly'],
+                            url: 'https://alyohara.github.io/woz-exe/',
+                            featured: true,
+                        },
+                        {
+                            title: 'FEMEBA CRM',
+                            desc: 'Custom CRM and internal systems for healthcare organization. Improved workflow efficiency significantly.',
+                            tech: ['Laravel', 'PHP', 'Zend Framework', 'MySQL', 'REST API'],
+                            featured: true,
+                        },
+                        {
+                            title: 'UNaB Teacher Management',
+                            desc: 'Institutional system for teacher management and attendance tracking at Universidad Nacional Guillermo Brown.',
+                            tech: ['Laravel', 'Vue.js', 'MariaDB', 'REST API'],
+                            url: 'https://gestion.unab.edu.ar',
+                        },
+                        {
+                            title: 'Prospectiva.site',
+                            desc: 'Platform for analyzing and visualizing large volumes of data with interactive charts and dashboards.',
+                            tech: ['Laravel', 'Vue.js', 'Chart.js', 'Data Processing', 'REST API'],
+                            url: 'https://prospectiva.site',
+                        },
+                        {
+                            title: 'SOSMA Integrated System',
+                            desc: 'Internal systems, landing page, and virtual campus (Moodle) for Ministry of Productive Development.',
+                            tech: ['Laravel', 'CodeIgniter', 'Moodle', 'Leaflet'],
+                            url: 'http://www.sosma.com.ar',
+                        },
+                        {
+                            title: 'DevSlides',
+                            desc: 'Free, open-source desktop app for animated code presentations: Magic Move transitions, syntax themes, highlight steps and autoplay (Tauri + Svelte 5).',
+                            tech: ['TypeScript', 'Tauri', 'Svelte 5', 'Rust'],
+                            url: 'https://github.com/alyohara/DevSlides',
+                            featured: true,
+                        },
+                    ].map((project, i) => (
+                        <motion.div
+                            key={project.title}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-50px' }}
+                            transition={{ duration: 0.4, delay: i * 0.08 }}
+                        >
+                            <Card variant={project.featured ? 'bordered' : 'interactive'} className="flex h-full flex-col">
+                                {project.featured && (
+                                    <div className="bg-accent text-accent-fg absolute -top-3 -right-3 rounded px-2 py-0.5 text-[0.625rem] font-medium">
+                                        Featured
+                                    </div>
+                                )}
+                                <CardContent className="flex flex-1 flex-col p-6">
+                                    <h3 className="text-h3 mb-2">{project.title}</h3>
+                                    <p className="text-body-sm text-fg-muted mb-4 flex-1">{project.desc}</p>
+                                    <div className="mb-4 flex flex-wrap gap-2">
+                                        {project.tech.map((tech) => (
+                                            <Badge key={tech} variant="muted">
+                                                {tech}
+                                            </Badge>
+                                        ))}
+                                    </div>
+                                    {project.url && (
+                                        <Button asChild variant="link" className="mt-auto">
+                                            <Link href={project.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+                                                View Project
+                                                <ArrowRight className="size-3" aria-hidden="true" />
+                                            </Link>
+                                        </Button>
+                                    )}
+                                </CardContent>
+                            </Card>
+                        </motion.div>
+                    ))}
+                </div>
+            </Section>
+
+            {/* CTA Section */}
+            <Section size="lg">
+                <div className="container-narrow text-center">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="bg-bg-elevated border-border rounded-2xl border p-12 md:p-16"
+                    >
+                        <h2 className="text-h1 mb-4">Ready to work together?</h2>
+                        <p className="text-body text-fg-muted mx-auto mb-8 max-w-xl">
+                            I'm always open to discussing new projects, consulting opportunities, or speaking engagements.
+                        </p>
+                        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+                            <Button asChild size="xl">
+                                <Link href="/contact" prefetch>
+                                    Start a Conversation
+                                    <ArrowRight className="ml-2 size-4" aria-hidden="true" />
+                                </Link>
+                            </Button>
+                            <Button asChild variant="outline" size="xl">
+                                <Link href="/docs/resume.pdf" download>
+                                    Download CV
+                                </Link>
+                            </Button>
+                        </div>
+                    </motion.div>
+                </div>
+            </Section>
+        </PublicLayout>
     );
 }

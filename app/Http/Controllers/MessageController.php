@@ -25,7 +25,7 @@ class MessageController extends Controller
 
     public function index()
     {
-        $messages = Message::paginate(10);
+        $messages = Message::latest()->paginate(10);
         return Inertia::render('dashboard/messages', [
             'messages' => $messages,
         ]);

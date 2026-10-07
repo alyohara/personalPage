@@ -1,309 +1,323 @@
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Section, SectionHeader } from '@/components/ui/section';
+import PublicLayout from '@/layouts/public-layout';
+import { cn } from '@/lib/utils';
 import { Head, Link } from '@inertiajs/react';
-import { Briefcase, Code, GraduationCap, NotebookText } from 'lucide-react';
-import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Award, Code, Database, GraduationCap, Layers, NotebookText, Server } from 'lucide-react';
+
+const skillsCategories = [
+    {
+        category: 'Programming Languages',
+        icon: Code,
+        color: 'text-blue-400',
+        items: ['PHP (Laravel, Zend Framework, Drupal)', 'C++', 'Java', 'Python', 'Spoon', 'TypeScript/JavaScript'],
+    },
+    {
+        category: 'Databases',
+        icon: Database,
+        color: 'text-emerald-400',
+        items: ['MySQL', 'PostgreSQL', 'MongoDB', 'SQLite', 'Microsoft SQL Server', 'Redis'],
+    },
+    {
+        category: 'Web Development',
+        icon: Layers,
+        color: 'text-cyan-400',
+        items: ['HTML5', 'CSS3', 'JavaScript (React, Vue, jQuery)', 'PHP', 'RESTful APIs', 'GraphQL', 'AJAX'],
+    },
+    {
+        category: 'Frameworks & CMS',
+        icon: Server,
+        color: 'text-purple-400',
+        items: ['Laravel', 'CodeIgniter', 'Drupal', 'Moodle', 'WordPress', 'Next.js'],
+    },
+    {
+        category: 'DevOps & Tools',
+        icon: Award,
+        color: 'text-orange-400',
+        items: ['Git', 'Docker', 'Kubernetes', 'Jenkins', 'CI/CD', 'FLUIG', 'GitLab CI'],
+    },
+    {
+        category: 'Cloud Services',
+        icon: Database,
+        color: 'text-rose-400',
+        items: ['AWS (EC2, S3, RDS)', 'Azure', 'Google Cloud Platform'],
+    },
+    {
+        category: 'Testing & Quality',
+        icon: Code,
+        color: 'text-amber-400',
+        items: ['PHPUnit', 'Pest', 'Selenium', 'Playwright', 'Postman', 'Chrome DevTools', 'Static Analysis'],
+    },
+    {
+        category: 'Other',
+        icon: Layers,
+        color: 'text-slate-400',
+        items: ['Leaflet (interactive maps)', 'API Integration', 'Agile/Scrum', 'Software Documentation'],
+    },
+] as const;
+
+const experience = [
+    { role: 'Software Developer & Analyst (Freelance)', period: '2022 — Present', org: 'Various clients' },
+    { role: 'Full Stack Developer', period: '2021 — 2022', org: 'SOSMA / Ministerio de Desarrollo Productivo / Withmenetworks SL' },
+    { role: 'Developer Analyst', period: '2019 — 2021', org: 'FEMEBA' },
+    { role: 'FullStack Laravel Developer', period: '2018 — 2019', org: 'Universidad Nacional Guillermo Brown' },
+    { role: 'Team Leader & Help Desk Manager', period: '2015 — 2018', org: 'FEMEBA' },
+    { role: 'Help Desk Analyst & Tester', period: '2013 — 2015', org: 'FEMEBA' },
+    { role: 'Adjunct Professor & Teaching Fellow (Algorithms & Data Structures)', period: '2016 — Present', org: 'UNaB' },
+    { role: 'Professor (Informatics & NTICS)', period: '2014 — Present', org: 'Instituto Superior FEMEBA' },
+    { role: 'Freelance Web Developer & QA Engineer', period: '2010 — 2014', org: 'Various' },
+] as const;
+
+const education = [
+    { degree: "Bachelor's in Systems Engineering", org: 'UNLP (in progress)', icon: GraduationCap },
+    { degree: 'Analista Programador Universitario', org: 'UNLP', icon: GraduationCap },
+    { degree: 'Professional Certifications in Web Development & QA', org: 'Various', icon: Award },
+] as const;
 
 export default function About() {
-    const [language, setLanguage] = useState('en');
-
-    const fallbackLanguage = 'en';
-    const content = {
-        en: {
-            title: 'About Me',
-            biography: 'About Me',
-            about: 'About Me',
-            projects: 'Projects',
-            blog: 'Blog',
-            contact: 'Contact',
-            skills: 'Skills',
-            experience: 'Experience',
-            education: 'Education',
-            description: [
-                "I'm a passionate IT professional with a strong academic background and extensive experience in software development, systems analysis, and university-level teaching.",
-                "I'm currently completing a Bachelor's degree in Systems Engineering at the National University of La Plata, while working as a Software Analyst, Full Stack Developer, and Adjunct Professor at the National University Guillermo Brown.",
-                'I specialize in building robust web applications, both front-end and back-end, using technologies such as Laravel, JavaScript, MySQL, and RESTful APIs.',
-                'In my current role, I combine analytical skills with a collaborative approach to solve complex challenges and design scalable solutions.',
-                'One of my key achievements includes leading the development of a custom CRM system that significantly improved workflow efficiency in a healthcare organization.',
-                'In addition to my main role, I actively participate in freelance projects involving web development, QA, and cryptocurrency platforms.',
-                "I've contributed to projects like sosma.com.ar, and I’m currently working with various consulting firms and organizations to develop tailored solutions using modern technologies.",
-                'As an educator, I enjoy sharing my experience and passion for programming with future IT professionals.',
-                'I teach Data Structures, encouraging algorithmic thinking and mastery of languages like C++ and Python.',
-                'This blend of academic rigor, hands-on experience, and a passion for teaching defines my profile: committed, versatile, and always looking for new challenges in the tech world.',
-            ],
-        },
-        es: {
-            title: 'Sobre mí',
-            biography: 'Sobre mí',
-            options: 'Selecciona una opción:',
-            about: 'Acerca de mí',
-            projects: 'Proyectos',
-            blog: 'Blog',
-            contact: 'Contacto',
-            skills: 'Habilidades',
-            experience: 'Experiencia',
-            education: 'Educación',
-            description: [
-                'Soy un profesional de IT apasionado, con una sólida formación académica y una amplia experiencia en desarrollo de software, análisis de sistemas y docencia universitaria.',
-                'Actualmente me encuentro finalizando la carrera de Ingeniería en Sistemas en la Universidad Nacional de La Plata, mientras trabajo como Analista de Software, Desarrollador Full Stack y Profesor Adjunto en la Universidad Nacional Guillermo Brown.',
-                'Me especializo en el desarrollo de aplicaciones web robustas, tanto en el frontend como en el backend, utilizando tecnologías como Laravel, JavaScript, MySQL y APIs REST.',
-                'En mi rol actual, combino habilidades analíticas con un enfoque colaborativo para resolver problemas complejos y diseñar soluciones escalables.',
-                'Entre mis logros se encuentra el liderazgo en el desarrollo de un CRM personalizado que optimizó los flujos de trabajo en una organización de salud.',
-                'Además de mi trabajo principal, participo en proyectos freelance de desarrollo web, QA y criptomonedas.',
-                'He contribuido a plataformas como sosma.com.ar, entre otras, y actualmente colaboro con consultoras y organizaciones externas, desarrollando soluciones a medida con tecnologías modernas.',
-                'Como docente, tengo la oportunidad de compartir mi experiencia y pasión por la programación con nuevas generaciones de profesionales.',
-                'Enseño Estructuras de Datos, promoviendo el pensamiento algorítmico y el dominio de lenguajes como C++ y Python.',
-                'Esta combinación de rigor académico, experiencia práctica y vocación por la enseñanza define mi perfil: comprometido, versátil y siempre en búsqueda de nuevos desafíos en el mundo de la tecnología.',
-            ],
-        },
-    };
-
-    const currentContent = content[language] || content[fallbackLanguage];
-
-    const handleLanguageChange = (lang) => {
-        setLanguage(content[lang] ? lang : fallbackLanguage);
-    };
-
     return (
-        <>
-            <Head title={currentContent.title}>
-                <link rel="preconnect" href="https://fonts.bunny.net" />
-                <link rel="icon" type="image/png" href="/imgs/perfil2.png" />
-                <style>
-                    {`
-                        body {
-                            font-family: 'Courier New', Courier, monospace;
-                        }
-                    `}
-                </style>
-            </Head>
+        <PublicLayout>
+            <Head title="About — Angel Leonardo Bianco" />
 
-            <div className="flex min-h-screen items-center justify-center bg-black">
-                <div className="w-full max-w-4xl rounded-2xl border border-green-600 bg-black shadow-lg">
-                    <div className="flex w-full items-center justify-between border-b border-green-600 bg-black px-4 py-2 text-sm font-bold text-green-400">
-                        <span>Bianco(R) Angel Leonardo</span>
-                        <div className="flex gap-1">
-                            <button className="text-green-400 hover:text-white" onClick={() => handleLanguageChange('en')}>
-                                [En]
-                            </button>
-                            <button className="text-green-400 hover:text-white" onClick={() => handleLanguageChange('es')}>
-                                [Sp]
-                            </button>
+            {/* Hero */}
+            <section className="relative py-20 lg:py-28">
+                <div className="container-main">
+                    <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_7rem]">
+                        <div className="max-w-3xl lg:order-1">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5 }}
+                                className="mb-6"
+                            >
+                                <Badge variant="default">Software Architect · Tech Lead · Full Stack Engineer · University Lecturer</Badge>
+                            </motion.div>
+                            <motion.h1
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: 0.1 }}
+                                className="text-display text-fg mb-6"
+                            >
+                                About Me
+                            </motion.h1>
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: 0.2 }}
+                                className="text-h3 text-fg-muted mb-8 max-w-2xl"
+                            >
+                                Passionate IT professional with strong academic background and extensive experience in software development, systems
+                                analysis, and university-level teaching.
+                            </motion.p>
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: 0.3 }}
+                                className="flex flex-wrap gap-4"
+                            >
+                                <Button asChild size="lg">
+                                    <Link href="/projects" prefetch>
+                                        View Projects
+                                    </Link>
+                                </Button>
+                                <Button asChild variant="outline" size="lg">
+                                    <Link href="/contact" prefetch>
+                                        Get in Touch
+                                    </Link>
+                                </Button>
+                                <Button asChild variant="ghost" size="lg">
+                                    <Link href="/docs/resume.pdf" download>
+                                        Download CV
+                                    </Link>
+                                </Button>
+                            </motion.div>
                         </div>
-                    </div>
-
-                    {/* Navigation */}
-                    <nav className="flex justify-center gap-6 border-b border-green-600 bg-black py-2 text-sm">
-                        <Link
-                            href={route('home')}
-                            className={`text-green-400 hover:text-white ${route().current('home') ? 'font-bold text-white' : ''}`}
+                        <motion.figure
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.3 }}
+                            className="panel mx-auto w-full max-w-[5.5rem] p-2 lg:order-2 lg:mx-0 lg:max-w-[7rem]"
                         >
-                            [Home]
-                        </Link>
-                        <Link
-                            href={route('about')}
-                            className={`text-green-400 hover:text-white ${route().current('about') ? 'font-bold text-white' : ''}`}
-                        >
-                            [{content[language].about}]
-                        </Link>
-                        <Link
-                            href={route('projects')}
-                            className={`text-green-400 hover:text-white ${route().current('projects') ? 'font-bold text-white' : ''}`}
-                        >
-                            [{content[language].projects}]
-                        </Link>
-                        <Link
-                            href={route('blog')}
-                            className={`text-green-400 hover:text-white ${route().current('blog') ? 'font-bold text-white' : ''}`}
-                        >
-                            [{content[language].blog}]
-                        </Link>
-                        <Link
-                            href={route('contact')}
-                            className={`text-green-400 hover:text-white ${route().current('contact') ? 'font-bold text-white' : ''}`}
-                        >
-                            [{content[language].contact}]
-                        </Link>
-                    </nav>
-
-                    <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 font-mono text-sm leading-relaxed text-green-400">
-                        <h1 className="mb-4 text-xl font-bold text-white">C:\{currentContent.biography}&gt;</h1>
-                        {currentContent.description.map((paragraph, index) => (
-                            <p key={index} className="mt-4 text-left">
-                                {paragraph}
-                                {index === currentContent.description.length - 1 && <span className="blinking-cursor"></span>}
-                            </p>
-                        ))}
+                            <div className="border-border overflow-hidden rounded-sm border">
+                                <img src="/imgs/perfil-256.png" alt="Angel Leonardo Bianco" width={256} height={256} className="h-auto w-full" />
+                            </div>
+                            <figcaption className="text-fg-subtle mt-2 text-center font-mono text-[0.625rem] leading-tight">~/angel.png</figcaption>
+                        </motion.figure>
                     </div>
-
-                    <div className="border-t border-green-600 p-6 text-green-400">
-                        <h2 className="mb-2 flex items-center gap-2 text-lg font-bold text-white">
-                            <Code size={20} /> {currentContent.skills}
-                        </h2>
-                        {/*<p>Laravel, JavaScript, React, MySQL, RESTful APIs, Git, HTML, CSS, C++, Python</p>*/}
-                        <ul className="mt-4 list-disc pl-6">
-                            <li>
-                                <strong>{language === 'en' ? 'Programming Languages' : 'Lenguajes de Programación'}:</strong> PHP (Laravel, Zend
-                                Framework, Drupal), C++, Java, Python, Spoon
-                            </li>
-                            <li>
-                                <strong>{language === 'en' ? 'Databases' : 'Bases de Datos'}:</strong> MySQL, PostgreSQL, MongoDB, SQLite, Microsoft
-                                SQL Server, Redis
-                            </li>
-                            <li>
-                                <strong>{language === 'en' ? 'Web Development' : 'Desarrollo Web'}:</strong> HTML5, CSS3, JavaScript (jQuery, React),
-                                PHP, RESTful APIs, AJAX
-                            </li>
-                            <li>
-                                <strong>{language === 'en' ? 'Frameworks & CMS' : 'Frameworks y CMS'}:</strong> Laravel, CodeIgniter, Drupal, Moodle,
-                                WordPress
-                            </li>
-                            <li>
-                                <strong>{language === 'en' ? 'DevOps & Tools' : 'DevOps y Herramientas'}:</strong> Git, Docker, Jenkins, CI/CD,
-                                FLUIGsoftware
-                            </li>
-                            <li>
-                                <strong>{language === 'en' ? 'Cloud Services' : 'Servicios en la Nube'}:</strong> AWS (EC2, S3), Azure, Google Cloud
-                                Platform (GCP)
-                            </li>
-                            <li>
-                                <strong>{language === 'en' ? 'Version Control' : 'Control de Versiones'}:</strong> Git, GitHub, GitLab, Bitbucket
-                            </li>
-                            <li>
-                                <strong>{language === 'en' ? 'Testing & Debugging Tools' : 'Herramientas de Pruebas y Depuración'}:</strong> PHPUnit,
-                                Selenium, Postman, Chrome DevTools
-                            </li>
-                            <li>
-                                <strong>{language === 'en' ? 'Other' : 'Otros'}:</strong> Leaflet (interactive maps), API integration, Agile/Scrum
-                                methodologies, Software Documentation <span className="blinking-cursor"></span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div className="border-t border-green-600 p-6 text-green-400">
-                        <h2 className="mb-2 flex items-center gap-2 text-lg font-bold text-white">
-                            <Briefcase size={20} /> {currentContent.experience}
-                        </h2>
-                        <ul className="list-disc pl-6">
-                            <li>
-                                {language === 'sp' ? 'Desarrollador y Analista de Software (Freelance)' : 'Software Developer & Analyst (Freelance)'}
-                            </li>
-
-                            <li>
-                                {language === 'sp'
-                                    ? 'Desarrollador Full Stack – SOSMA / Ministerio de Desarrollo Productivo / Withmenetworks SL'
-                                    : 'Full Stack Developer – SOSMA / Ministerio de Desarrollo Productivo / Withmenetworks SL'}
-                            </li>
-                            <li>{language === 'sp' ? 'Analista Desarrollador – FEMEBA' : 'Developer Analyst – FEMEBA'}</li>
-                            <li>
-                                {language === 'sp'
-                                    ? 'Desarrollador FullStack Laravel– Universidad Nacional Guillermo Brown'
-                                    : 'FullStack Laravel Developer – National University Guillermo Brown'}
-                            </li>
-                            <li>
-                                {language === 'sp' ? 'Líder de equipo y responsable de soporte – FEMEBA' : 'Team Leader & Help Desk Manager – FEMEBA'}
-                            </li>
-                            <li>{language === 'sp' ? 'Analista de soporte y testing – FEMEBA' : 'Help Desk Analyst & Tester – FEMEBA'}</li>
-                            <li>
-                                {language === 'sp'
-                                    ? 'Profesor Adjunto y Ayudante (Algotimos y Estructuras de Datos) – UNaB'
-                                    : 'Adjunct Professor & Teaching Fellow (Algorithms & Data Structures)– UNaB'}
-                            </li>
-                            <li>{language === 'sp' ? 'Profesor (Informática & NTICS) – ISF' : 'Professor (Informatics & NTICS) – ISF'}</li>
-                            <li>
-                                {language === 'sp' ? 'Desarrollador Web Freelance y QA Engineer' : 'Freelance Web Developer & QA Engineer'}
-                                <span className="blinking-cursor"></span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div className="border-t border-green-600 p-6 text-green-400">
-                        <h2 className="mb-2 flex items-center gap-2 text-lg font-bold text-white">
-                            <GraduationCap size={20} /> {currentContent.education}
-                        </h2>
-                        <ul className="list-disc pl-6">
-                            <li>{language === 'en' ? 'Bachelor’s in Systems – UNLP (in progress)' : 'Licenciatura en Sistemas – UNLP (en curso)'}</li>
-                            <li>{language === 'en' ? 'Analist University Programer Degree– UNLP' : 'Analista Programador Universitario – UNLP'}</li>
-                            <li>
-                                {language === 'en'
-                                    ? 'Professional Certifications in Web Development & QA'
-                                    : 'Certificaciones Profesionales en Desarrollo Web y QA'}
-                            </li>
-                        </ul>
-                    </div>
-
-                    {/* Resume Section */}
-                    <div className="border-t border-green-600 p-6 text-green-400">
-                        <h2 className="mb-2 flex items-center gap-2 text-lg font-bold text-white">
-                            <NotebookText size={20} /> {language === 'en' ? 'Resume' : 'Currículum'}
-                        </h2>
-                        <p className="mb-4">
-                            {language === 'en'
-                                ? 'You can download my resume by clicking the button below:'
-                                : 'Puedes descargar mi currículum haciendo clic en el botón a continuación:'}
-                        </p>
-                        <a href="/docs/resume.pdf" download className="inline-block rounded bg-green-600 px-4 py-2 text-white hover:bg-green-500">
-                            {language === 'en' ? 'Download Resume' : 'Descargar Currículum'}
-                        </a>
-                    </div>
-                    {/* Footer */}
-                    <footer className="border-t border-green-600 bg-black px-6 py-4 text-center font-mono text-sm text-green-400">
-                        <p className="font-bold text-white">Angel Leonardo Bianco</p>
-                        <p className="mt-2">
-                            Emails:
-                            <a href="mailto:angel.leonardo.bianco@gmail.com" className="ml-1 text-green-300 underline hover:text-white">
-                                angel.leonardo.bianco@gmail.com
-                            </a>
-                            ,{' '}
-                            <a href="mailto:angelleonardobianco@outlook.com" className="text-green-300 underline hover:text-white">
-                                angelleonardobianco@outlook.com
-                            </a>
-                            ,{' '}
-                            <a href="mailto:angel.bianco@unab.edu.ar" className="text-green-300 underline hover:text-white">
-                                angel.bianco@unab.edu.ar
-                            </a>
-                        </p>
-                        <p className="mt-2">
-                            LinkedIn:
-                            <a
-                                href="https://www.linkedin.com/in/angel-leonardo-bianco/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="ml-1 text-green-300 underline hover:text-white"
-                            >
-                                https://www.linkedin.com/in/angel-leonardo-bianco/
-                            </a>
-                        </p>
-                        <p className="mt-2">
-                            GitHub:
-                            <a
-                                href="https://github.com/alyohara"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="ml-1 text-green-300 underline hover:text-white"
-                            >
-                                https://github.com/alyohara
-                            </a>
-                        </p>
-                        <p className="mt-4 text-xs text-green-600">&copy; {new Date().getFullYear()} Angel Leonardo Bianco</p>
-                    </footer>
                 </div>
-            </div>
+            </section>
 
-            <style>
-                {`
-                    .blinking-cursor {
-                        display: inline-block;
-                        width: 10px;
-                        height: 1rem;
-                        background-color: white;
-                        margin-left: 5px;
-                        animation: blink 1s steps(1) infinite;
-                    }
+            {/* Bio */}
+            <Section variant="muted">
+                <SectionHeader title="Biography" description="My journey in technology, education, and leadership." />
+                <div className="prose max-w-none">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-body text-fg-muted space-y-6"
+                    >
+                        <p>
+                            I'm a passionate IT professional with a strong academic background and extensive experience in software development,
+                            systems analysis, and university-level teaching.
+                        </p>
+                        <p>
+                            I'm currently completing a Bachelor's degree in Systems Engineering at the National University of La Plata, while working
+                            as a Software Analyst, Full Stack Developer, and Adjunct Professor at the National University Guillermo Brown.
+                        </p>
+                        <p>
+                            I specialize in building robust web applications, both front-end and back-end, using technologies such as Laravel,
+                            JavaScript, MySQL, and RESTful APIs.
+                        </p>
+                        <p>
+                            In my current role, I combine analytical skills with a collaborative approach to solve complex challenges and design
+                            scalable solutions.
+                        </p>
+                        <p>
+                            One of my key achievements includes leading the development of a custom CRM system that significantly improved workflow
+                            efficiency in a healthcare organization.
+                        </p>
+                        <p>
+                            In addition to my main role, I actively participate in freelance projects involving web development, QA, and
+                            cryptocurrency platforms.
+                        </p>
+                        <p>
+                            I've contributed to projects like sosma.com.ar, and I'm currently working with various consulting firms and organizations
+                            to develop tailored solutions using modern technologies.
+                        </p>
+                        <p>As an educator, I enjoy sharing my experience and passion for programming with future IT professionals.</p>
+                        <p>I teach Data Structures, encouraging algorithmic thinking and mastery of languages like C++ and Python.</p>
+                        <p>
+                            This blend of academic rigor, hands-on experience, and a passion for teaching defines my profile: committed, versatile,
+                            and always looking for new challenges in the tech world.
+                        </p>
+                    </motion.div>
+                </div>
+            </Section>
 
-                    @keyframes blink {
-                        50% { opacity: 0; }
-                    }
-                `}
-            </style>
-        </>
+            {/* Skills */}
+            <Section>
+                <SectionHeader
+                    title="Technical Skills"
+                    description="Organized by domain for clarity. I believe in using the right tool for the job."
+                />
+                <div className="space-y-10">
+                    {skillsCategories.map((group, i) => (
+                        <motion.div
+                            key={group.category}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-50px' }}
+                            transition={{ duration: 0.4, delay: i * 0.06 }}
+                        >
+                            <div className="mb-5 flex items-center gap-3">
+                                <div className={cn('bg-accent-muted inline-flex h-10 w-10 items-center justify-center rounded-lg', group.color)}>
+                                    <group.icon className="text-accent size-5" aria-hidden="true" />
+                                </div>
+                                <h3 className="text-h3">{group.category}</h3>
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                                {group.items.map((item, idx) => (
+                                    <Badge key={item} variant="outline" className={`stagger-${idx + 1}`}>
+                                        {item}
+                                    </Badge>
+                                ))}
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </Section>
+
+            {/* Experience */}
+            <Section variant="muted">
+                <SectionHeader
+                    title="Professional Experience"
+                    description="Chronological overview of my career in software engineering and education."
+                />
+                <div className="space-y-4">
+                    {experience.map((item, i) => (
+                        <motion.div
+                            key={item.role}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, delay: i * 0.05 }}
+                            className="group"
+                        >
+                            <Card variant="interactive" className="relative overflow-hidden">
+                                <CardContent className="p-6">
+                                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                                        <div className="min-w-0 flex-1">
+                                            <h4 className="text-h3 text-fg pr-4">{item.role}</h4>
+                                            <p className="text-body text-fg-muted mt-1">{item.org}</p>
+                                        </div>
+                                        <div className="flex-shrink-0 text-right">
+                                            <Badge variant="muted" className="whitespace-nowrap">
+                                                {item.period}
+                                            </Badge>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </motion.div>
+                    ))}
+                </div>
+            </Section>
+
+            {/* Education */}
+            <Section>
+                <SectionHeader title="Education & Certifications" description="Academic background and continuous learning." />
+                <div className="grid gap-6 md:grid-cols-3">
+                    {education.map((item, i) => (
+                        <motion.div
+                            key={item.degree}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, delay: i * 0.1 }}
+                        >
+                            <Card variant="interactive" className="h-full">
+                                <CardContent className="p-6">
+                                    <div className="bg-accent-muted text-accent mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg">
+                                        <item.icon className="size-6" aria-hidden="true" />
+                                    </div>
+                                    <h3 className="text-h3 mb-2">{item.degree}</h3>
+                                    <p className="text-body-sm text-fg-muted">{item.org}</p>
+                                </CardContent>
+                            </Card>
+                        </motion.div>
+                    ))}
+                </div>
+            </Section>
+
+            {/* Resume Download */}
+            <Section variant="muted">
+                <div className="container-narrow text-center">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="bg-bg-elevated border-border rounded-2xl border p-12 md:p-16"
+                    >
+                        <NotebookText className="text-accent mx-auto mb-4 size-12" aria-hidden="true" />
+                        <h2 className="text-h1 mb-4">Download My Resume</h2>
+                        <p className="text-body text-fg-muted mx-auto mb-8 max-w-xl">
+                            Get the full details of my experience, education, and technical skills in PDF format.
+                        </p>
+                        <Button asChild size="xl">
+                            <Link href="/docs/resume.pdf" download>
+                                Download CV
+                                <svg className="ml-2 size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                                </svg>
+                            </Link>
+                        </Button>
+                    </motion.div>
+                </div>
+            </Section>
+        </PublicLayout>
     );
 }

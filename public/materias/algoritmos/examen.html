@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Examen integrador de Algoritmos y Estructuras de Datos: 40 preguntas mezclando las 12 unidades. Se aprueba con 28 correctas (70 %).">
+  <title>AYED // Examen integrador</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="scanlines" data-page="exam">
+  <header class="panel topbar">
+    <div>
+      <p class="brand"><a href="index.html"><span class="prompt">student@unab</span>:<span class="path">~/ayed</span>$ <strong>study-console</strong></a><span class="cursor">_</span></p>
+      <p class="subtitle">Algoritmos y Estructuras de Datos // <a href="index.html">path de estudio</a></p>
+    </div>
+    <div class="system-status" aria-label="Estado del sitio">
+      <span><i class="dot online"></i> ONLINE</span>
+      <span id="clock">--:--:--</span>
+      <button id="theme-toggle" type="button" title="Cambiar tema">THEME: MOCHA</button>
+    </div>
+  </header>
+
+  <main class="landing-cols" style="grid-template-columns: minmax(0, 1fr)">
+    <section class="panel quiz-panel" id="seccion-examen">
+      <div class="box-title">[ EXAMEN INTEGRADOR ]</div>
+      <h1 style="margin-bottom: 8px">Examen integrador</h1>
+      <p class="muted">40 preguntas mezclando las 12 unidades y todos los tipos. Se aprueba con 28 correctas (70&nbsp;%). Tu mejor puntaje y la cantidad de intentos quedan guardados en este navegador.</p>
+      <div id="exam-intro">
+        <div class="entry-list">
+          <div class="entry"><b>Cómo funciona</b><span>Respondé de a una. Las respuestas incorrectas te muestran la solución correcta para que puedas aprenderla.</span></div>
+          <div class="entry"><b>Antes de empezar</b><span>Repasá los quizzes de cada unidad: son 15 preguntas por unidad y cubren los mismos temas.</span></div>
+        </div>
+        <div class="editor-toolbar" style="margin-top: 16px">
+          <button id="start-exam" class="action" type="button">INICIAR EXAMEN &gt;</button>
+          <span id="exam-history" class="score-line"></span>
+        </div>
+      </div>
+      <div id="exam-mount" hidden></div>
+    </section>
+  </main>
+
+  <nav class="panel unit-footer" style="grid-template-columns: 1fr auto 1fr">
+    <a class="unit-prev" href="trabajos-practicos.html"><small>&larr; VOLVER</small>Trabajos prácticos</a>
+    <a class="unit-back" href="index.html"><small>PATH</small>Volver a las 12 unidades</a>
+    <a class="unit-next" href="unidad-01.html"><small>UNIDAD 01 &rarr;</small>Repasar desde el inicio</a>
+  </nav>
+
+  <footer>
+    <span>AYED // UNaB</span>
+    <span>El examen no se guarda a mitad de camino: si salís, empieza de nuevo.</span>
+  </footer>
+
+  <script src="quizzes.js"></script>
+  <script src="core.js"></script>
+  <script src="page-exam.js"></script>
+</body>
+</html>

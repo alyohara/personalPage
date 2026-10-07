@@ -3,6 +3,8 @@ import AppLayout from '@/layouts/app-layout';
 import { useForm } from '@inertiajs/react';
 import { Editor } from '@tinymce/tinymce-react';
 
+const tinymceApiKey = import.meta.env.VITE_TINYMCE_API_KEY as string | undefined;
+
 export default function PostCreate() {
     const { data, setData, post, processing } = useForm({
         title: '',
@@ -16,29 +18,16 @@ export default function PostCreate() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        
-        const formData = new FormData();
-        formData.append('title', data.title);
-        formData.append('content', data.content);
-        formData.append('slug', data.slug);
-        formData.append('author', data.author);
-        formData.append('summary', data.summary);
-        formData.append('meta_description', data.meta_description);
-        
-        if (data.featured_image) {
-            formData.append('featured_image', data.featured_image);
-        }
 
         post('/dashboard/posts', {
             forceFormData: true,
-            data: formData,
             preserveScroll: true,
             onSuccess: () => {
                 window.location.href = '/dashboard/posts';
             },
             onError: (errors) => {
                 console.error('Error creating post:', errors);
-            }
+            },
         });
     };
 
@@ -115,7 +104,7 @@ export default function PostCreate() {
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Contenido</label>
                         <Editor
-                            apiKey="8g1rfig0ilfv0bkpciq81y6oc3rlwnh0ikz52jt69b8sf2bv"
+                            apiKey={tinymceApiKey}
                             value={data.content}
                             onEditorChange={(content) => setData('content', content)}
                             init={{
@@ -149,16 +138,23 @@ export default function PostCreate() {
                                 image_title: true,
                                 automatic_uploads: true,
                                 file_picker_types: 'image',
-                                file_picker_callback: (callback, value, meta) => {
+                                file_picker_callback: (
+                                    callback: (url: string, options?: Record<string, string>) => void,
+                                    value: string,
+                                    meta: Record<string, unknown>,
+                                ) => {
                                     if (meta.filetype === 'image') {
                                         const input = document.createElement('input');
                                         input.setAttribute('type', 'file');
                                         input.setAttribute('accept', 'image/*');
-                                        input.onchange = function () {
-                                            const file = this.files[0];
+                                        input.onchange = () => {
+                                            const file = input.files?.[0];
+                                            if (!file) {
+                                                return;
+                                            }
                                             const reader = new FileReader();
-                                            reader.onload = function () {
-                                                callback(reader.result, { alt: file.name });
+                                            reader.onload = () => {
+                                                callback(reader.result?.toString() ?? '', { alt: file.name });
                                             };
                                             reader.readAsDataURL(file);
                                         };

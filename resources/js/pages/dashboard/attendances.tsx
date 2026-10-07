@@ -1,6 +1,7 @@
 // resources/js/pages/dashboard/attendances.tsx
 import AppLayout from '@/layouts/app-layout';
-import { Link, router } from '@inertiajs/react';
+import { paginationLabel } from '@/lib/sanitize';
+import { router } from '@inertiajs/react';
 import { useState } from 'react';
 
 interface Attendance {
@@ -11,6 +12,20 @@ interface Attendance {
     attended_at: string;
 }
 
+interface PaginationLink {
+    url: string | null;
+    label: string;
+    active: boolean;
+}
+
+interface PaginatedAttendances {
+    data: Attendance[];
+    current_page: number;
+    last_page: number;
+    total: number;
+    links: PaginationLink[];
+}
+
 interface Filters {
     subject?: string;
     date?: string;
@@ -19,7 +34,7 @@ interface Filters {
 }
 
 interface Props {
-    attendances: Attendance[];
+    attendances: PaginatedAttendances;
     subjects: string[];
     filters: Filters;
 }
@@ -36,12 +51,10 @@ export default function Attendances({ attendances, subjects, filters }: Props) {
     const handleFilterChange = (key: keyof Filters, value: string) => {
         const newFilters = { ...localFilters, [key]: value || undefined };
         setLocalFilters(newFilters);
-        
+
         // Remover filtros vacíos antes de enviar
-        const cleanFilters = Object.fromEntries(
-            Object.entries(newFilters).filter(([_, v]) => v)
-        );
-        
+        const cleanFilters = Object.fromEntries(Object.entries(newFilters).filter(([, v]) => v));
+
         router.get('/dashboard/attendances', cleanFilters, {
             preserveState: true,
             preserveScroll: true,
@@ -50,43 +63,49 @@ export default function Attendances({ attendances, subjects, filters }: Props) {
 
     const clearFilters = () => {
         setLocalFilters({});
-        router.get('/dashboard/attendances', {}, {
-            preserveState: true,
-            preserveScroll: true,
-        });
+        router.get(
+            '/dashboard/attendances',
+            {},
+            {
+                preserveState: true,
+                preserveScroll: true,
+            },
+        );
+    };
+
+    const handlePageChange = (url: string | null) => {
+        if (url) {
+            router.visit(url, { preserveState: true, preserveScroll: true });
+        }
     };
 
     return (
         <AppLayout>
             <div className="p-6">
-                <div className="flex justify-between items-center mb-6">
+                <div className="mb-6 flex items-center justify-between">
                     <div>
                         <h1 className="text-2xl font-bold">Listado de Asistencias</h1>
-                        {Object.values(localFilters).some(v => v) && (
-                            <p className="text-sm text-gray-600 mt-1">
-                                Filtros activos: {Object.values(localFilters).filter(v => v).length}
-                            </p>
+                        {Object.values(localFilters).some((v) => v) && (
+                            <p className="mt-1 text-sm text-gray-600">Filtros activos: {Object.values(localFilters).filter((v) => v).length}</p>
                         )}
                     </div>
                     <a
                         href={`/dashboard/attendances/export?${new URLSearchParams(
-                            Object.fromEntries(Object.entries(localFilters).filter(([_, v]) => v))
+                            Object.fromEntries(Object.entries(localFilters).filter(([, v]) => v)),
                         ).toString()}`}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-150"
+                        className="rounded bg-blue-500 px-4 py-2 font-bold text-white transition-colors duration-150 hover:bg-blue-700"
                     >
                         Exportar CSV
                     </a>
                 </div>
 
                 {/* Filtros */}
-                <div className="bg-white rounded-lg shadow p-4 mb-6">
-                    <h3 className="text-lg font-semibold mb-4">Filtros</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="mb-6 rounded-lg bg-white p-4 shadow">
+                    <h3 className="mb-4 text-lg font-semibold">Filtros</h3>
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
                         {/* Filtro por materia */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                Materia
-                            </label>
+                            <label className="mb-1 block text-sm font-medium text-gray-700">Materia</label>
                             <select
                                 value={localFilters.subject || ''}
                                 onChange={(e) => handleFilterChange('subject', e.target.value)}
@@ -103,9 +122,7 @@ export default function Attendances({ attendances, subjects, filters }: Props) {
 
                         {/* Filtro por fecha específica */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                Fecha específica
-                            </label>
+                            <label className="mb-1 block text-sm font-medium text-gray-700">Fecha específica</label>
                             <input
                                 type="date"
                                 value={localFilters.date || ''}
@@ -116,9 +133,7 @@ export default function Attendances({ attendances, subjects, filters }: Props) {
 
                         {/* Filtro desde fecha */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                Desde
-                            </label>
+                            <label className="mb-1 block text-sm font-medium text-gray-700">Desde</label>
                             <input
                                 type="date"
                                 value={localFilters.date_from || ''}
@@ -129,9 +144,7 @@ export default function Attendances({ attendances, subjects, filters }: Props) {
 
                         {/* Filtro hasta fecha */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                Hasta
-                            </label>
+                            <label className="mb-1 block text-sm font-medium text-gray-700">Hasta</label>
                             <input
                                 type="date"
                                 value={localFilters.date_to || ''}
@@ -142,12 +155,12 @@ export default function Attendances({ attendances, subjects, filters }: Props) {
                     </div>
 
                     {/* Filtros rápidos y botón para limpiar filtros */}
-                    <div className="mt-4 flex flex-wrap gap-2 justify-between items-center">
+                    <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
                         <div className="flex flex-wrap gap-2">
                             <span className="text-sm font-medium text-gray-700">Filtros rápidos:</span>
                             <button
                                 onClick={() => handleFilterChange('date', new Date().toISOString().split('T')[0])}
-                                className="bg-green-100 hover:bg-green-200 text-green-800 px-3 py-1 rounded-full text-sm transition-colors duration-150"
+                                className="rounded-full bg-green-100 px-3 py-1 text-sm text-green-800 transition-colors duration-150 hover:bg-green-200"
                             >
                                 Hoy
                             </button>
@@ -157,7 +170,7 @@ export default function Attendances({ attendances, subjects, filters }: Props) {
                                     yesterday.setDate(yesterday.getDate() - 1);
                                     handleFilterChange('date', yesterday.toISOString().split('T')[0]);
                                 }}
-                                className="bg-blue-100 hover:bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm transition-colors duration-150"
+                                className="rounded-full bg-blue-100 px-3 py-1 text-sm text-blue-800 transition-colors duration-150 hover:bg-blue-200"
                             >
                                 Ayer
                             </button>
@@ -169,81 +182,80 @@ export default function Attendances({ attendances, subjects, filters }: Props) {
                                     handleFilterChange('date_from', weekAgo.toISOString().split('T')[0]);
                                     handleFilterChange('date_to', today.toISOString().split('T')[0]);
                                 }}
-                                className="bg-purple-100 hover:bg-purple-200 text-purple-800 px-3 py-1 rounded-full text-sm transition-colors duration-150"
+                                className="rounded-full bg-purple-100 px-3 py-1 text-sm text-purple-800 transition-colors duration-150 hover:bg-purple-200"
                             >
                                 Última semana
                             </button>
                         </div>
-                        
+
                         <button
                             onClick={clearFilters}
-                            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition-colors duration-150"
+                            className="rounded bg-gray-500 px-4 py-2 font-bold text-white transition-colors duration-150 hover:bg-gray-700"
                         >
                             Limpiar Filtros
                         </button>
                     </div>
                 </div>
-                
-                <div className="bg-white rounded-lg shadow overflow-hidden">
+
+                <div className="overflow-hidden rounded-lg bg-white shadow">
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-50">
                             <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    ID
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Nombre
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Email
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Materia
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Fecha
-                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">ID</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">Nombre</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">Email</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">Materia</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">Fecha</th>
                             </tr>
                         </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
-                            {attendances.map((attendance) => (
+                        <tbody className="divide-y divide-gray-200 bg-white">
+                            {attendances.data.map((attendance) => (
                                 <tr key={attendance.id} className="hover:bg-gray-50">
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                        {attendance.id}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        {attendance.name}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {attendance.email}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-900">{attendance.id}</td>
+                                    <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">{attendance.name}</td>
+                                    <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">{attendance.email}</td>
+                                    <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-900">
                                         {subjectMap[attendance.subject] || attendance.subject}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
                                         {new Date(attendance.attended_at).toLocaleString('es-ES', {
                                             year: 'numeric',
                                             month: 'short',
                                             day: 'numeric',
                                             hour: '2-digit',
-                                            minute: '2-digit'
+                                            minute: '2-digit',
                                         })}
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-                    
-                    {attendances.length === 0 && (
-                        <div className="text-center py-8 text-gray-500">
-                            No hay asistencias registradas
-                        </div>
-                    )}
+
+                    {attendances.data.length === 0 && <div className="py-8 text-center text-gray-500">No hay asistencias registradas</div>}
                 </div>
-                
-                <div className="mt-4 text-sm text-gray-600">
-                    Total de asistencias: {attendances.length}
-                </div>
+
+                {attendances.last_page > 1 && (
+                    <div className="mt-4 flex justify-center gap-2">
+                        {attendances.links.map((link, index) => (
+                            <button
+                                key={index}
+                                onClick={() => handlePageChange(link.url)}
+                                disabled={!link.url}
+                                className={`rounded-lg border px-4 py-2 text-sm ${
+                                    link.active
+                                        ? 'border-blue-600 bg-blue-600 text-white'
+                                        : link.url
+                                          ? 'bg-white text-gray-700 hover:bg-blue-50'
+                                          : 'cursor-not-allowed bg-gray-100 text-gray-400'
+                                }`}
+                            >
+                                {paginationLabel(link.label)}
+                            </button>
+                        ))}
+                    </div>
+                )}
+
+                <div className="mt-4 text-sm text-gray-600">Total de asistencias: {attendances.total}</div>
             </div>
         </AppLayout>
     );

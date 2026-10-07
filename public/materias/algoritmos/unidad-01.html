@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Unidad de Algoritmos y Estructuras de Datos: teoría, código ejecutable, laboratorio con tests, materiales de la cátedra y quiz.">
+  <title>AYED // Unidad</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="viz.css">
+</head>
+<body class="scanlines" data-page="unit" data-unit="1">
+  <header class="panel topbar">
+    <div>
+      <p class="brand"><a href="index.html"><span class="prompt">student@unab</span>:<span class="path">~/ayed</span>$ <strong>study-console</strong></a><span class="cursor">_</span></p>
+      <p class="subtitle">Algoritmos y Estructuras de Datos // <a href="index.html">path de estudio</a></p>
+    </div>
+    <div class="system-status" aria-label="Estado del sitio">
+      <span><i class="dot online"></i> ONLINE</span>
+      <span id="clock">--:--:--</span>
+      <button id="theme-toggle" type="button" title="Cambiar tema">THEME: MOCHA</button>
+    </div>
+  </header>
+
+  <nav class="panel route-strip" id="route-strip" aria-label="Ruta de unidades"></nav>
+
+  <nav class="panel section-jump" aria-label="Secciones de la unidad">
+    <a href="#seccion-teoria">TEORÍA</a>
+    <a href="#seccion-codigo">CÓDIGO</a>
+    <a href="#seccion-practica">PRÁCTICA</a>
+    <a href="#seccion-recursos">RECURSOS</a>
+    <a href="#seccion-viz">VIZ</a>
+    <a href="#seccion-quiz">QUIZ</a>
+  </nav>
+
+  <main class="unit-layout">
+    <div class="main-column">
+      <section class="panel unit-header">
+        <div>
+          <p class="label" id="unit-kicker">UNIDAD 01 / 12</p>
+          <h1 id="unit-title">&nbsp;</h1>
+          <p id="unit-summary"></p>
+        </div>
+        <div class="unit-meta">
+          <span id="unit-state" class="unit-state state-pendiente">[ PENDIENTE ]</span>
+          <span id="unit-count">00 RECURSOS</span>
+          <span><a href="trabajos-practicos.html">Trabajos prácticos &rsaquo;</a></span>
+        </div>
+      </section>
+
+      <section class="panel lesson-panel" id="seccion-teoria">
+        <div class="box-title">[ 01.TEORÍA ]</div>
+        <article class="lesson-theory">
+          <p class="label" id="objetivos-label">OBJETIVOS DE LA UNIDAD</p>
+          <ul id="objetivos-list" class="objetivos-list"></ul>
+          <p class="label">MARCO TEÓRICO</p>
+          <div id="theory-text" class="theory-text"></div>
+          <ul id="concept-list" class="concept-list"></ul>
+          <p class="label" id="secciones-label">TEORÍA PROFUNDA</p>
+          <div id="theory-sections" class="theory-sections"></div>
+          <p class="label" id="notes-label">NOTAS DE CLASE</p>
+          <ul id="notes-list" class="notes-list"></ul>
+        </article>
+        <article class="lesson-topics">
+          <p class="label">TOPICS.LOG</p>
+          <ul id="topic-list" class="topic-list"></ul>
+          <div class="tip"><strong>TIP&gt;</strong> <span id="unit-tip"></span></div>
+          <p class="label" style="margin-top: 20px">EJERCICIOS EXTRA</p>
+          <div id="extra-exercises" class="extra-exercises"></div>
+        </article>
+      </section>
+
+      <section class="panel code-panel" id="seccion-codigo">
+        <div class="box-title">[ 02.CÓDIGO + RUN ]</div>
+        <p id="code-caption" class="muted"></p>
+        <textarea id="code-editor" class="code-editor" spellcheck="false" rows="14" aria-label="Editor de código Python"></textarea>
+        <div class="editor-toolbar">
+          <button id="run-code" class="action" type="button">RUN &gt;</button>
+          <button id="reset-code" class="quiet-action" type="button">RESET</button>
+          <button id="copy-code" class="quiet-action" type="button">COPY</button>
+          <span id="pyodide-status" class="muted">Python corre en tu navegador (Pyodide, se carga al primer RUN).</span>
+        </div>
+        <pre id="code-output" class="code-output" aria-live="polite">Salida del intérprete aparecerá acá.</pre>
+      </section>
+
+      <section class="panel practice-panel" id="seccion-practica">
+        <div class="box-title">[ 03.PRÁCTICA + LAB ]</div>
+        <p class="label">EJERCICIO GUIADO</p>
+        <h2 id="exercise-title"></h2>
+        <p id="exercise-prompt" class="exercise-prompt"></p>
+        <div id="lab-area">
+          <p class="label lab-label">LABORATORIO (EDITÁ Y CORRÉ LOS TESTS)</p>
+          <textarea id="lab-editor" class="code-editor" spellcheck="false" rows="12" aria-label="Editor del laboratorio"></textarea>
+          <div class="editor-toolbar">
+            <button id="run-tests" class="action" type="button">RUN TESTS &gt;</button>
+            <button id="lab-solution" class="quiet-action" type="button">VER SOLUCIÓN</button>
+            <button id="lab-reset" class="quiet-action" type="button">RESET</button>
+            <span id="lab-status" class="muted"></span>
+          </div>
+          <ul id="test-results" class="test-results" hidden aria-live="polite"></ul>
+        </div>
+        <details id="lab-fallback">
+          <summary>VER UNA POSIBLE SOLUCIÓN</summary>
+          <pre><code id="exercise-solution"></code></pre>
+        </details>
+      </section>
+
+      <section class="panel resources-panel" id="seccion-recursos">
+        <div class="resource-heading">
+          <div class="box-title">[ 04.MATERIAL DE LA CÁTEDRA ]</div>
+          <label class="search-field">
+            <span>/</span>
+            <input id="resource-search" type="search" placeholder="filtrar recursos..." autocomplete="off">
+          </label>
+        </div>
+        <div id="resource-list" class="resource-list"></div>
+        <p id="empty-resources" class="empty" hidden>Ningún recurso coincide con la búsqueda.</p>
+      </section>
+
+      <section class="panel viz-panel" id="seccion-viz">
+        <div class="box-title">[ 05.VISUALIZADORES ]</div>
+        <p class="muted">Simulaciones paso a paso de las estructuras que toca esta unidad.</p>
+        <div id="viz-tabs" class="viz-tabs" role="tablist" aria-label="Visualizadores"></div>
+        <div id="viz-mount" class="viz-mount"></div>
+      </section>
+    </div>
+
+    <aside class="right-column">
+      <section class="panel quiz-panel" id="seccion-quiz">
+        <div class="box-title">[ 06.QUIZ DE LA UNIDAD ]</div>
+        <p class="muted">15 preguntas. Se aprueba con 70&nbsp;% o más.</p>
+        <div id="quiz-mount"></div>
+      </section>
+
+      <section class="panel progress-panel">
+        <div class="box-title">[ TU PROGRESO ]</div>
+        <p class="muted">Se guarda en este navegador.</p>
+        <div id="progress-figures"></div>
+        <div class="bar"><span id="progress-bar"></span></div>
+        <div class="mini-route" id="mini-route"></div>
+        <p class="score-line" id="progress-text"></p>
+        <div class="progress-actions">
+          <button id="mark-reviewed" class="quiet-action" type="button">MARCAR UNIDAD COMO REVISADA</button>
+          <button id="reset-progress" class="quiet-action danger-action" type="button">RESET PROGRESO</button>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <nav class="panel unit-footer" id="unit-footer" aria-label="Unidades vecinas"></nav>
+
+  <footer>
+    <span>AYED // UNaB</span>
+    <span>Los PDF e IPYNB originales están enlazados desde Material de la cátedra.</span>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="teoria.js"></script>
+  <script src="quizzes.js"></script>
+  <script src="labs.js"></script>
+  <script src="viz-core.js"></script>
+  <script src="viz-linear.js"></script>
+  <script src="viz-recursion.js"></script>
+  <script src="viz-tree.js"></script>
+  <script src="viz-heap.js"></script>
+  <script src="viz-sorting.js"></script>
+  <script src="viz-graph.js"></script>
+  <script src="core.js"></script>
+  <script src="page-unit.js"></script>
+</body>
+</html>

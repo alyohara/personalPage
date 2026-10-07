@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Post\StorePostRequest;
+use App\Http\Requests\Post\UpdatePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -61,63 +63,25 @@ class PostController extends Controller
         return redirect()->back()->with('success', 'El post ha sido publicado.');
     }
 
-    public function update(Request $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        try {
-            // Validate required fields first
-            $request->validate([
-                'title' => 'required|string|max:255',
-                'content' => 'required|string',
-                'slug' => 'required|string|unique:posts,slug,' . $post->id,
-                'author' => 'required|string|max:255',
-                'summary' => 'required|string|max:500',
-            ]);
-
-            // Then validate optional fields
-            $validated = $request->validate([
-                'featured_image' => 'nullable|image|max:2048',
-                'meta_description' => 'nullable|string|max:255',
-            ]);
-
-            // Merge the validated data
-            $validated = array_merge($request->only([
-                'title',
-                'content',
-                'slug',
-                'author',
-                'summary'
-            ]), $validated);
-
-            if ($request->hasFile('featured_image')) {
-                $path = $request->file('featured_image')->store('images', 'public');
-                $validated['featured_image'] = $path;
-            }
-
-            $post->update($validated);
-
-            return redirect()->route('posts.index')->with('success', 'Post actualizado correctamente.');
-        } catch (\Exception $e) {
-            \Log::error('Error updating post: ' . $e->getMessage());
-            \Log::error('Stack trace: ' . $e->getTraceAsString());
-            return back()->withErrors(['error' => 'Error al actualizar el post: ' . $e->getMessage()]);
-        }
-    }
-
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'slug' => 'required|string|unique:posts,slug',
-            'author' => 'required|string|max:255',
-            'featured_image' => 'nullable|image|max:2048',
-            'meta_description' => 'nullable|string|max:255',
-            'summary' => 'required|string|max:500',
-        ]);
+        $validated = $request->validated();
 
         if ($request->hasFile('featured_image')) {
-            $path = $request->file('featured_image')->store('images', 'public');
-            $validated['featured_image'] = $path;
+            $validated['featured_image'] = $request->file('featured_image')->store('images', 'public');
+        }
+
+        $post->update($validated);
+
+        return redirect()->route('posts.index')->with('success', 'Post actualizado correctamente.');
+    }
+
+    public function store(StorePostRequest $request)
+    {
+        $validated = $request->validated();
+
+        if ($request->hasFile('featured_image')) {
+            $validated['featured_image'] = $request->file('featured_image')->store('images', 'public');
         }
 
         Post::create($validated);

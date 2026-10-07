@@ -1,7 +1,13 @@
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Section } from '@/components/ui/section';
+import PublicLayout from '@/layouts/public-layout';
+import { paginationLabel } from '@/lib/sanitize';
 import { Head, Link, router } from '@inertiajs/react';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import debounce from 'lodash/debounce';
+import { ArrowRight, Calendar, Search } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Post {
     id: number;
@@ -33,303 +39,201 @@ interface Props {
 }
 
 export default function Blog({ posts, search: initialSearch, sort: initialSort }: Props) {
-    const [language, setLanguage] = useState<'en' | 'es'>('es');
     const [searchQuery, setSearchQuery] = useState(initialSearch);
     const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>(initialSort);
 
-    const content = {
-        en: {
-            title: 'Blog',
-            about: 'About Me',
-            projects: 'Projects',
-            blog: 'Blog',
-            contact: 'Contact',
-            sortNewest: 'Sort by Newest',
-            sortOldest: 'Sort by Oldest',
-            searchPlaceholder: 'Search posts...',
-            noResults: 'No posts found matching your search.',
-        },
-        es: {
-            title: 'Blog',
-            about: 'Acerca de mí',
-            projects: 'Proyectos',
-            blog: 'Blog',
-            contact: 'Contacto',
-            sortNewest: 'Ordenar más recientes',
-            sortOldest: 'Ordenar más antiguos',
-            searchPlaceholder: 'Buscar posts...',
-            noResults: 'No se encontraron posts que coincidan con tu búsqueda.',
-        },
-    };
-
-    const t = content[language];
-
-    const handleLanguageChange = (lang: 'en' | 'es') => {
-        setLanguage(content[lang] ? lang : 'en');
-    };
-
-    const handlePageChange = (url: string | null) => {
-        if (url) {
-            window.location.href = url;
-        }
-    };
-
-    // Helper function to get posts array and pagination data
     const getPostsData = () => {
         if (Array.isArray(posts)) {
-            return {
-                posts: posts,
-                links: [],
-                hasPagination: false
-            };
+            return { posts: posts, links: [], hasPagination: false };
         }
-        return {
-            posts: posts.data,
-            links: posts.links,
-            hasPagination: true
-        };
+        return { posts: posts.data, links: posts.links, hasPagination: true };
     };
 
     const { posts: postsList, links, hasPagination } = getPostsData();
 
-    // Debounced search function
-    const debouncedSearch = debounce((value: string) => {
-        router.get(
-            route('blog'),
-            { search: value, sort: sortOrder },
-            { preserveState: true, preserveScroll: true }
-        );
+    const debouncedSearch = useDebouncedCallback((value: string) => {
+        router.get(route('blog'), { search: value, sort: sortOrder }, { preserveState: true, preserveScroll: true });
     }, 300);
 
-    // Handle search input change
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setSearchQuery(value);
         debouncedSearch(value);
     };
 
-    // Handle sort order change
     const handleSortChange = (order: 'newest' | 'oldest') => {
         setSortOrder(order);
-        router.get(
-            route('blog'),
-            { search: searchQuery, sort: order },
-            { preserveState: true, preserveScroll: true }
-        );
+        router.get(route('blog'), { search: searchQuery, sort: order }, { preserveState: true, preserveScroll: true });
+    };
+
+    const handlePageChange = (url: string | null) => {
+        if (url) window.location.href = url;
     };
 
     return (
-        <>
-            <Head title={t.title}>
-                <link rel="preconnect" href="https://fonts.bunny.net" />
-                <link rel="icon" type="image/png" href="/imgs/perfil2.png" />
-                <style>
-                    {`
-                        body {
-                            font-family: 'Courier New', Courier, monospace;
-                        }
-                    `}
-                </style>
-            </Head>
+        <PublicLayout>
+            <Head title="Blog — Angel Leonardo Bianco" />
 
-            <div className="flex min-h-screen items-center justify-center bg-black">
-                <div className="w-full max-w-4xl border border-green-600 bg-black">
-                    <div className="flex w-full items-center justify-between border-b border-green-600 bg-black px-4 py-2 text-sm font-bold text-green-400">
-                        <span>Bianco(R) Angel Leonardo</span>
-                        <div className="flex gap-1">
-                            <button className="text-green-400 hover:text-white" onClick={() => handleLanguageChange('en')}>
-                                [En]
-                            </button>
-                            <button className="text-green-400 hover:text-white" onClick={() => handleLanguageChange('es')}>
-                                [Sp]
-                            </button>
-                        </div>
+            {/* Hero */}
+            <section className="relative py-20 lg:py-28">
+                <div className="container-main">
+                    <div className="max-w-3xl">
+                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="mb-6">
+                            <Badge variant="default">Technical Articles & Tutorials</Badge>
+                        </motion.div>
+                        <motion.h1
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.1 }}
+                            className="text-display text-fg mb-6"
+                        >
+                            Blog
+                        </motion.h1>
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            className="text-h3 text-fg-muted"
+                        >
+                            Thoughts on software architecture, backend engineering, databases, and teaching.
+                        </motion.p>
                     </div>
+                </div>
+            </section>
 
-                    <nav className="flex justify-center gap-6 border-b border-green-600 bg-black py-2 text-sm">
-                        <Link
-                            href={route('home')}
-                            className={`text-green-400 hover:text-white ${route().current('home') ? 'font-bold text-white' : ''}`}
-                        >
-                            [Home]
-                        </Link>
-                        <Link
-                            href={route('about')}
-                            className={`text-green-400 hover:text-white ${route().current('about') ? 'font-bold text-white' : ''}`}
-                        >
-                            [{t.about}]
-                        </Link>
-                        <Link
-                            href={route('projects')}
-                            className={`text-green-400 hover:text-white ${route().current('projects') ? 'font-bold text-white' : ''}`}
-                        >
-                            [{t.projects}]
-                        </Link>
-                        <Link
-                            href={route('blog')}
-                            className={`text-green-400 hover:text-white ${route().current('blog') ? 'font-bold text-white' : ''}`}
-                        >
-                            [{t.blog}]
-                        </Link>
-                        <Link
-                            href={route('contact')}
-                            className={`text-green-400 hover:text-white ${route().current('contact') ? 'font-bold text-white' : ''}`}
-                        >
-                            [{t.contact}]
-                        </Link>
-                    </nav>
+            {/* Search & Filter */}
+            <Section variant="muted" size="default">
+                <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+                    <div className="relative w-full sm:w-80">
+                        <Search className="text-fg-subtle absolute top-1/2 left-3 size-5 -translate-y-1/2" aria-hidden="true" />
+                        <input
+                            type="search"
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                            placeholder="Search articles..."
+                            className="bg-bg-elevated border-border text-fg placeholder-fg-subtle focus:ring-ring w-full rounded-lg border py-2.5 pr-4 pl-10 transition-all focus:border-transparent focus:ring-2"
+                            aria-label="Search articles"
+                        />
+                    </div>
+                    <div className="flex gap-2">
+                        {(['newest', 'oldest'] as const).map((order) => (
+                            <Button
+                                key={order}
+                                variant={sortOrder === order ? 'primary' : 'outline'}
+                                size="sm"
+                                onClick={() => handleSortChange(order)}
+                                className="gap-2"
+                            >
+                                {order === 'newest' ? 'Newest' : 'Oldest'}
+                            </Button>
+                        ))}
+                    </div>
+                </div>
+            </Section>
 
-                    <div className="mx-auto px-6 py-8 font-mono text-sm text-green-400">
-                        <div className="mb-4 flex items-center justify-between">
-                            <h1 className="text-xl font-bold text-white">C:\{t.blog}&gt;</h1>
-                            <div className="flex gap-2">
-                                <button
-                                    onClick={() => handleSortChange('newest')}
-                                    className={`rounded border border-green-600 px-3 py-1 ${
-                                        sortOrder === 'newest' ? 'bg-green-600 text-white' : 'text-green-400 hover:bg-green-600 hover:text-white'
-                                    }`}
+            {/* Posts Grid */}
+            <Section>
+                {postsList.length > 0 ? (
+                    <>
+                        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                            {postsList.map((post, i) => (
+                                <motion.article
+                                    key={post.id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, margin: '-50px' }}
+                                    transition={{ duration: 0.4, delay: i * 0.06 }}
                                 >
-                                    {t.sortNewest}
-                                </button>
-                                <button
-                                    onClick={() => handleSortChange('oldest')}
-                                    className={`rounded border border-green-600 px-3 py-1 ${
-                                        sortOrder === 'oldest' ? 'bg-green-600 text-white' : 'text-green-400 hover:bg-green-600 hover:text-white'
-                                    }`}
-                                >
-                                    {t.sortOldest}
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Search Bar */}
-                        <div className="mb-6">
-                            <input
-                                type="text"
-                                value={searchQuery}
-                                onChange={handleSearchChange}
-                                placeholder={t.searchPlaceholder}
-                                className="w-full rounded border border-green-600 bg-black px-4 py-2 text-green-400 placeholder-green-600 focus:border-green-500 focus:outline-none"
-                            />
-                        </div>
-
-                        <div className="space-y-6">
-                            {postsList.length > 0 ? (
-                                postsList.map((post, i) => (
-                                    <motion.div
-                                        key={post.id}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: i * 0.1 }}
-                                        className="rounded-lg border border-green-600 bg-black p-4 shadow-md"
-                                    >
-                                        <div className="flex gap-4">
-                                            <div className="h-32 w-32 flex-shrink-0 overflow-hidden rounded-lg border border-green-600">
+                                    <Card variant="interactive" className="flex h-full flex-col overflow-hidden">
+                                        {post.featured_image && (
+                                            <Link href={`/blog/${post.slug}`} prefetch className="relative h-48 overflow-hidden">
                                                 <img
-                                                    src={post.featured_image ? `/storage/${post.featured_image}` : '/imgs/perfil2.png'}
-                                                    alt={post.title}
-                                                    className="h-full w-full object-cover"
+                                                    src={`/storage/${post.featured_image}`}
+                                                    alt=""
+                                                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                    loading="lazy"
                                                 />
+                                            </Link>
+                                        )}
+                                        <CardContent className="flex flex-1 flex-col p-6">
+                                            <div className="mb-3 flex items-center gap-2">
+                                                <time dateTime={post.published_at} className="text-body-sm text-fg-muted flex items-center gap-1">
+                                                    <Calendar className="size-3.5" aria-hidden="true" />
+                                                    {new Date(post.published_at).toLocaleDateString('en-US', {
+                                                        year: 'numeric',
+                                                        month: 'long',
+                                                        day: 'numeric',
+                                                    })}
+                                                </time>
                                             </div>
-                                            <div className="flex flex-1 flex-col">
-                                                <h2 className="text-lg font-semibold text-white">
-                                                    <Link href={`/blog/${post.slug}`} className="text-green-400 hover:underline">
-                                                        {post.title}
-                                                    </Link>
-                                                </h2>
-                                                <p className="mt-2 flex-1 text-green-300">{post.summary}</p>
-                                                <p className="mt-2 text-xs text-green-500">
-                                                    Publicado el {new Date(post.published_at).toLocaleDateString()}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </motion.div>
-                                ))
-                            ) : (
-                                <div className="rounded-lg border border-green-600 bg-black p-4 text-center text-green-400">
-                                    {t.noResults}
-                                </div>
-                            )}
+                                            <Link href={`/blog/${post.slug}`} prefetch className="group">
+                                                <h3 className="text-h3 group-hover:text-accent mb-3 transition-colors">{post.title}</h3>
+                                            </Link>
+                                            <p className="text-body-sm text-fg-muted mb-4 flex-1">{post.summary}</p>
+                                            <Link
+                                                href={`/blog/${post.slug}`}
+                                                prefetch
+                                                className="text-body-sm text-accent group flex items-center gap-1 hover:underline"
+                                            >
+                                                Read more
+                                                <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                                            </Link>
+                                        </CardContent>
+                                    </Card>
+                                </motion.article>
+                            ))}
                         </div>
 
                         {/* Pagination */}
                         {hasPagination && links.length > 0 && (
-                            <div className="mt-8 flex justify-center space-x-2">
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.3 }}
+                                className="mt-12 flex justify-center gap-2"
+                            >
                                 {links.map((link, index) => (
-                                    <button
+                                    <Button
                                         key={index}
+                                        variant={link.active ? 'primary' : 'outline'}
+                                        size="sm"
+                                        disabled={!link.url}
                                         onClick={() => handlePageChange(link.url)}
-                                        className={`rounded-lg border border-green-600 px-4 py-2 ${
-                                            link.active
-                                                ? 'bg-green-600 text-white'
-                                                : 'text-green-400 hover:bg-green-600 hover:text-white'
-                                        }`}
-                                        dangerouslySetInnerHTML={{ __html: link.label }}
-                                    />
+                                        aria-label={paginationLabel(link.label)}
+                                        aria-current={link.active ? 'page' : undefined}
+                                    >
+                                        {paginationLabel(link.label)}
+                                    </Button>
                                 ))}
-                            </div>
+                            </motion.div>
                         )}
-                    </div>
-
-                    <footer className="border-t border-green-600 bg-black px-6 py-4 text-center font-mono text-sm text-green-400">
-                        <p className="font-bold text-white">Angel Leonardo Bianco</p>
-                        <p className="mt-2">
-                            Emails:
-                            <a href="mailto:angel.leonardo.bianco@gmail.com" className="ml-1 text-green-300 underline hover:text-white">
-                                angel.leonardo.bianco@gmail.com
-                            </a>
-                            ,{' '}
-                            <a href="mailto:angelleonardobianco@outlook.com" className="text-green-300 underline hover:text-white">
-                                angelleonardobianco@outlook.com
-                            </a>
-                            ,{' '}
-                            <a href="mailto:angel.bianco@unab.edu.ar" className="text-green-300 underline hover:text-white">
-                                angel.bianco@unab.edu.ar
-                            </a>
-                        </p>
-                        <p className="mt-2">
-                            LinkedIn:
-                            <a
-                                href="https://www.linkedin.com/in/angel-leonardo-bianco/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="ml-1 text-green-300 underline hover:text-white"
-                            >
-                                https://www.linkedin.com/in/angel-leonardo-bianco/
-                            </a>
-                        </p>
-                        <p className="mt-2">
-                            GitHub:
-                            <a
-                                href="https://github.com/alyohara"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="ml-1 text-green-300 underline hover:text-white"
-                            >
-                                https://github.com/alyohara
-                            </a>
-                        </p>
-                        <p className="mt-4 text-xs text-green-600">&copy; {new Date().getFullYear()} Angel Leonardo Bianco</p>
-                    </footer>
-                </div>
-            </div>
-
-            <style>
-                {`
-                    .blinking-cursor {
-                        display: inline-block;
-                        width: 10px;
-                        height: 1rem;
-                        background-color: white;
-                        margin-left: 5px;
-                        animation: blink 1s steps(1) infinite;
-                    }
-
-                    @keyframes blink {
-                        50% { opacity: 0; }
-                    }
-                `}
-            </style>
-        </>
+                    </>
+                ) : (
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="py-16 text-center">
+                        <Search className="text-fg-subtle mx-auto mb-4 size-12" aria-hidden="true" />
+                        <h3 className="text-h3 mb-2">No articles found</h3>
+                        <p className="text-body text-fg-muted">Try adjusting your search or filter criteria.</p>
+                    </motion.div>
+                )}
+            </Section>
+        </PublicLayout>
     );
+}
+
+// Simple debounced callback hook
+function useDebouncedCallback<T extends (...args: Parameters<T>) => ReturnType<T>>(callback: T, delay: number): T {
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const callbackRef = useRef(callback);
+    callbackRef.current = callback;
+
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        };
+    }, []);
+
+    return ((...args: Parameters<T>) => {
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(() => callbackRef.current(...args), delay);
+    }) as T;
 }

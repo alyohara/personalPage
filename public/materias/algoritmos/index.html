@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Trayecto interactivo de Algoritmos y Estructuras de Datos (UNaB): 12 unidades en páginas propias, laboratorios con tests automáticos, 180 preguntas de quiz, 4 trabajos prácticos y examen integrador.">
+  <title>AYED // Path de estudio</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="viz.css">
+</head>
+<body class="scanlines" data-page="index">
+  <header class="panel topbar">
+    <div>
+      <p class="brand"><span class="prompt">student@unab</span>:<span class="path">~/ayed</span>$ <strong>study-console</strong><span class="cursor">_</span></p>
+      <p class="subtitle">Algoritmos y Estructuras de Datos // path de cursada completo</p>
+    </div>
+    <div class="system-status" aria-label="Estado del sitio">
+      <span><i class="dot online"></i> ONLINE</span>
+      <span id="clock">--:--:--</span>
+      <button id="theme-toggle" type="button" title="Cambiar tema">THEME: MOCHA</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel hero">
+      <p class="label">TRAYECTO INTERACTIVO &middot; 1&deg; CUATRIMESTRE &middot; UNaB</p>
+      <h1>Algoritmos y Estructuras de Datos</h1>
+      <p>Doce unidades en páginas independientes, en el orden en que se cursan la materia. Cada unidad tiene su teoría, su código ejecutable en el navegador, un laboratorio con tests automáticos, sus materiales de la cátedra y un quiz. Avanzás a tu ritmo: el sitio recuerda dónde lo dejaste.</p>
+      <div class="hero-facts">
+        <span id="fact-units">12 UNIDADES</span>
+        <span id="fact-theory">60 SECCIONES DE TEORÍA</span>
+        <span id="fact-quiz">180 PREGUNTAS</span>
+        <span id="fact-lab">48 TESTS AUTOMÁTICOS</span>
+        <span>4 TRABAJOS PRÁCTICOS</span>
+        <span>11 VISUALIZADORES</span>
+      </div>
+      <div class="hero-actions">
+        <a class="action" id="hero-primary" href="unidad-01.html">EMPEZAR POR LA UNIDAD 01 &gt;</a>
+        <a class="action ghost" href="trabajos-practicos.html">Trabajos prácticos</a>
+        <a class="action ghost" href="examen.html">Examen integrador</a>
+      </div>
+    </section>
+
+    <section class="panel overall" id="seccion-progreso">
+      <div>
+        <p class="label">TU PROGRESO</p>
+        <div class="overall-numbers" id="overall-numbers"></div>
+        <div class="bar"><span id="overall-bar"></span></div>
+        <p class="global-count" id="overall-note"></p>
+      </div>
+      <div class="overall-actions">
+        <a class="action" id="resume-link" href="unidad-01.html">CONTINUAR &gt;</a>
+        <button class="quiet-action danger-action" id="reset-progress" type="button">Reset progreso</button>
+      </div>
+    </section>
+
+    <section class="panel path-panel" id="seccion-path">
+      <div class="box-title">[ COURSE MAP ]</div>
+      <p class="label">PATH DE ESTUDIO &middot; ORDEN DE CURSADA</p>
+      <p class="muted">Entrá a la unidad que te toca. Cuando termines el quiz con 70&nbsp;% o más, queda aprobada.</p>
+      <div class="path-grid" id="path-grid"></div>
+    </section>
+
+    <div class="landing-cols">
+      <section class="panel landing-panel">
+        <div class="box-title">[ EVALUACIÓN ]</div>
+        <p class="label">CÓMO TE EVALÚAN</p>
+        <div class="entry-list">
+          <a class="entry" href="examen.html">
+            <b>Examen integrador &rsaquo;</b>
+            <span>40 preguntas mezclando las 12 unidades. Se aprueba con 28 correctas (70&nbsp;%). Guarda tu mejor puntaje.</span>
+          </a>
+          <a class="entry" href="trabajos-practicos.html">
+            <b>Trabajos prácticos &rsaquo;</b>
+            <span>4 TP con enunciado en PDF, consignas, plantilla editable y tests automáticos en el navegador.</span>
+          </a>
+        </div>
+        <p class="label" style="margin-top: 18px">PARCIALES Y MATERIAL DE LA CÁTEDRA</p>
+        <div id="assessment-links"></div>
+      </section>
+
+      <section class="panel landing-panel">
+        <div class="box-title">[ CÓMO SE ESTUDIA ]</div>
+        <p class="label">RITUAL DE CADA UNIDAD</p>
+        <ul class="objetivos-list" style="margin-top: 0">
+          <li>Leé la teoría y desplegá las 5 secciones profundas.</li>
+          <li>Correlá el ejemplo con RUN: Python ejecuta en tu navegador.</li>
+          <li>Resolvé el laboratorio y corré los tests hasta que pasen todos.</li>
+          <li>Abrí los PDF/IPYNB de la cátedra desde Material.</li>
+          <li>Tirate el quiz de la unidad: se aprueba con 70&nbsp;%.</li>
+          <li>Marcá la unidad como revisada y seguí con la siguiente.</li>
+        </ul>
+        <p class="label" style="margin-top: 18px">ATAJOS DE TECLADO</p>
+        <div class="key-help">
+          <p><kbd>1</kbd>-<kbd>9</kbd> <kbd>0</kbd> <kbd>-</kbd> <kbd>=</kbd> ir a la unidad</p>
+          <p><kbd>/</kbd> buscar material</p>
+          <p><kbd>e</kbd> examen integrador</p>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel global-search" id="seccion-recursos">
+      <div class="box-title">[ MATERIAL INDEX ]</div>
+      <p class="label">BUSCADOR GLOBAL DE RECURSOS</p>
+      <p class="muted">PDF, notebooks, cuestionarios y ejercicios de toda la cátedra, agrupados por unidad.</p>
+      <label class="search-field">
+        <span>/</span>
+        <input id="global-search" type="search" placeholder="filtrar recursos..." autocomplete="off">
+      </label>
+      <div class="search-results" id="global-results"></div>
+      <p class="global-count" id="global-count"></p>
+    </section>
+
+    <section class="panel terminal-panel">
+      <div class="box-title">[ AYED SHELL ]</div>
+      <div id="terminal-output" class="terminal-output" aria-live="polite">
+        <p><span class="success">AYED Study Console v3.0</span> &mdash; escribí <strong>help</strong> para ver los comandos.</p>
+      </div>
+      <form id="terminal-form" class="terminal-input">
+        <label for="command-input"><span class="prompt">student@unab</span>:<span class="path">~/ayed</span>$</label>
+        <input id="command-input" type="text" autocomplete="off" spellcheck="false" aria-label="Comando de la consola">
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <span>AYED // UNaB</span>
+    <span>El progreso y los borradores se guardan en este navegador (localStorage).</span>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="labs.js"></script>
+  <script src="core.js"></script>
+  <script src="page-index.js"></script>
+</body>
+</html>

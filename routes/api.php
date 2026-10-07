@@ -3,4 +3,4 @@
 use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/messages/{id}/toggle-read', [MessageController::class, 'toggleRead']);
+Route::post('/messages/{id}/toggle-read', [MessageController::class, 'toggleReadStatus'])->middleware('auth');

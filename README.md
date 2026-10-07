@@ -9,7 +9,8 @@ This project combines a public-facing professional website with private operatio
 Public features include:
 
 - Portfolio pages (Home, About, Projects, Contact)
-- Blog listing and post detail by slug
+- Teaching section (Cátedras) with an index to the bundled course sites
+- Blog listing and post detail by slug (reachable by URL, not listed in the nav)
 - Attendance submission form for students
 - Contact/message submission
 
@@ -36,8 +37,9 @@ Private (authenticated) features include:
 
 ## Main Route Groups
 
-- Public pages: /, /about, /projects, /contact
+- Public pages: /, /about, /projects, /catedras, /contact
 - Blog: /blog, /blog/{slug}
+- Static course sites (copied into the repo): /materias/algoritmos/, /materias/estructuras/
 - Attendance: /attendance (GET + POST)
 - Authenticated dashboard: /dashboard and /dashboard/*
 - Google OAuth: /auth/google, /auth/google/callback

@@ -1,0 +1,66 @@
+EJERCICIO 1:
+Dados los siguientes tres valores, la tarea es encontrar el número total de chocolates máximos que puedes comprar.
+
+dinero: Dinero que tienes para comprar chocolates
+precio: Precio de un chocolate
+envoltorio: Número de envoltorios a devolver por recibir un chocolate extra.
+Se puede suponer que todos los valores dados son números enteros positivos y mayores que 1.
+Ejemplos:
+
+Entrada: dinero = 16, precio = 2, envoltura = 2
+Salida: 15
+El precio de un chocolate es 2. Puedes comprar 8 chocolates de
+cantidad 16. Puedes devolver 8 envoltorios y obtener 4 más
+bombones Luego puede devolver 4 envoltorios y obtener 2 más
+bombones Finalmente puedes devolver 2 envoltorios para obtener 1
+más chocolate.
+
+Entrada: dinero = 15, precio = 1, envoltura = 3
+Salida: 22
+Compramos y comemos 15 chocolates.
+Devolvemos 15 envoltorios y nos llevamos 5 bombones más.
+Devolvemos 3 envoltorios, sacamos 1 chocolate y nos lo comemos
+(guardar 2 envoltorios). Ahora tenemos 3 envoltorios. Devolver
+3 y consigue 1 chocolate más.
+Así que chocolates totales = 15 + 5 + 1 + 1
+
+Entrada: dinero = 20, precio = 3, envoltura = 5
+Salida: 7
+
+EJERCICIO 2:
+
+Suma de dígitos de un número usando recursividad
+
+Dado un número, necesitamos encontrar la suma de sus dígitos usando recursividad.
+Ejemplos:
+ 
+
+Entrada: 12345
+Salida : 15
+
+Entrada: 45632
+Salida: 20
+
+
+El proceso paso a paso para una mejor comprensión de cómo funciona el algoritmo.
+Sea el número 12345.
+Paso 1-> 12345 % 10 que es igual a 5 + (enviar 12345/10 al siguiente paso)
+Paso 2-> 1234 % 10 que es igual a 4 + (enviar 1234/10 al siguiente paso)
+Paso 3-> 123 % 10 que es igual a 3 + (enviar 123/10 al siguiente paso)
+Paso 4-> 12 % 10 que es igual a 2 + (enviar 12/10 al siguiente paso)
+Paso 5-> 1 % 10 que es igual a 1 + (enviar 1/10 al siguiente paso)
+Paso 6-> 0 algoritmo se detiene
+
+
+EJERCICIO 3:
+Invertir una lista doblemente enlazada usando recursividad
+Dada una lista doblemente enlazada. Invertirlo usando recursividad.
+
+Algoritmo
+1) Si la lista está vacía, regresa
+2) Cabeza inversa intercambiando cabeza->anterior y cabeza->siguiente
+3) Si prev = NULL significa que la lista está completamente invertida. De lo contrario, revertir (cabeza-> anterior)
+
+
+
+

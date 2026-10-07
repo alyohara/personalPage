@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Trabajos prácticos de Algoritmos y Estructuras de Datos: enunciado, consignas, plantilla editable y tests automáticos en el navegador.">
+  <title>AYED // Trabajos prácticos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="scanlines" data-page="tps">
+  <header class="panel topbar">
+    <div>
+      <p class="brand"><a href="index.html"><span class="prompt">student@unab</span>:<span class="path">~/ayed</span>$ <strong>study-console</strong></a><span class="cursor">_</span></p>
+      <p class="subtitle">Algoritmos y Estructuras de Datos // <a href="index.html">path de estudio</a></p>
+    </div>
+    <div class="system-status" aria-label="Estado del sitio">
+      <span><i class="dot online"></i> ONLINE</span>
+      <span id="clock">--:--:--</span>
+      <button id="theme-toggle" type="button" title="Cambiar tema">THEME: MOCHA</button>
+    </div>
+  </header>
+
+  <main class="landing-cols" style="grid-template-columns: minmax(0, 1fr)">
+    <section class="panel tps-panel" id="seccion-tps">
+      <div class="box-title">[ TRABAJOS PRÁCTICOS ]</div>
+      <h1 style="margin-bottom: 8px">Los 4 TP de la cátedra</h1>
+      <p class="muted">Cada TP trae el enunciado original en PDF, las consignas, una plantilla editable y 4 tests automáticos que corren con Python en tu navegador. El enunciado de cada TP se entrega en clase.</p>
+      <div id="tp-tabs" class="tp-tabs" role="tablist" aria-label="Trabajos prácticos"></div>
+      <div id="tp-body" class="tp-body"></div>
+    </section>
+  </main>
+
+  <nav class="panel unit-footer" style="grid-template-columns: 1fr auto 1fr">
+    <a class="unit-prev" href="unidad-08.html"><small>&larr; VOLVER</small>Unidad 08</a>
+    <a class="unit-back" href="index.html"><small>PATH</small>Volver a las 12 unidades</a>
+    <a class="unit-next" href="examen.html"><small>EXAMEN &rarr;</small>Examen integrador</a>
+  </nav>
+
+  <footer>
+    <span>AYED // UNaB</span>
+    <span>Los borradores de cada TP se guardan en este navegador.</span>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="tps.js"></script>
+  <script src="core.js"></script>
+  <script src="page-tps.js"></script>
+</body>
+</html>
