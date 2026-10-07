@@ -4,7 +4,7 @@ import { useAppearance } from '@/hooks/use-appearance';
 import { locales, useI18n } from '@/i18n';
 import { cn } from '@/lib/utils';
 import { Link, usePage } from '@inertiajs/react';
-import { Menu, Monitor, Moon, Sun, X } from 'lucide-react';
+import { Menu, Monitor, Moon, Sun, Terminal, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const navItems = [
@@ -129,6 +129,12 @@ export function PublicHeader() {
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="bg-bg-elevated w-44 rounded-sm">
+                                <DropdownMenuItem
+                                    onClick={() => updateAppearance('terminal')}
+                                    className={cn('flex cursor-pointer items-center gap-2', appearance === 'terminal' && 'text-accent')}
+                                >
+                                    <Terminal className="size-4" /> {t.header.themeMenu.terminal}
+                                </DropdownMenuItem>
                                 <DropdownMenuItem
                                     onClick={() => updateAppearance('light')}
                                     className={cn('flex cursor-pointer items-center gap-2', appearance === 'light' && 'text-accent')}

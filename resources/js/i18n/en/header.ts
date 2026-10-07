@@ -19,11 +19,13 @@ export const header = {
     status: 'online',
     themePrefix: 'theme:',
     themeButton: {
+        terminal: 'terminal',
         light: 'latte',
         dark: 'mocha',
         system: 'auto',
     },
     themeMenu: {
+        terminal: 'Terminal (green)',
         light: 'Latte (light)',
         dark: 'Mocha (dark)',
         system: 'Auto (system)',

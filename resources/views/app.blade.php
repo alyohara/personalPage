@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => ($appearance ?? 'system') == 'dark', 'light' => ($appearance ?? 'system') == 'light'])>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => in_array($appearance ?? 'terminal', ['dark', 'terminal']), 'light' => ($appearance ?? 'terminal') === 'light', 'terminal' => ($appearance ?? 'terminal') === 'terminal'])>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,12 +18,13 @@
     {{-- Inline script to detect system dark mode preference and apply it immediately --}}
     <script>
         (function() {
-            const appearance = '{{ $appearance ?? "system" }}';
+            const appearance = '{{ $appearance ?? "terminal" }}';
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const isDark = appearance === 'dark' || (appearance === 'system' && prefersDark);
+            const isDark = appearance === 'dark' || appearance === 'terminal' || (appearance === 'system' && prefersDark);
 
             document.documentElement.classList.toggle('dark', isDark);
             document.documentElement.classList.toggle('light', !isDark);
+            document.documentElement.classList.toggle('terminal', appearance === 'terminal');
         })();
     </script>
 
@@ -33,7 +34,8 @@
             background-color: #eff1f5;
         }
 
-        html.dark {
+        html.dark,
+        html.terminal {
             background-color: #11111b;
         }
     </style>

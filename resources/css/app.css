@@ -160,6 +160,31 @@
     --color-code-fg: var(--color-code-fg-light);
 }
 
+/* Terminal verde — fondo mocha, letras y bordes en verde */
+.terminal {
+    --color-fg: #a6e3a1;
+    --color-fg-muted: color-mix(in srgb, #a6e3a1 78%, #11111b);
+    --color-fg-subtle: color-mix(in srgb, #a6e3a1 55%, #11111b);
+
+    --color-accent: #a6e3a1;
+    --color-accent-fg: #11111b;
+    --color-accent-muted: color-mix(in srgb, #a6e3a1 18%, #1e1e2e);
+    --color-accent-border: color-mix(in srgb, #a6e3a1 45%, #1e1e2e);
+
+    --color-prompt: #a6e3a1;
+    --color-path: #a6e3a1;
+    --color-cursor: #a6e3a1;
+    --color-ok: #a6e3a1;
+
+    --color-border: color-mix(in srgb, #a6e3a1 32%, #11111b);
+    --color-border-strong: color-mix(in srgb, #a6e3a1 48%, #11111b);
+
+    --color-ring: color-mix(in srgb, #a6e3a1 55%, transparent);
+
+    --color-code-bg: #11111b;
+    --color-code-fg: #a6e3a1;
+}
+
 @layer base {
     *,
     ::after,

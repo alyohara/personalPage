@@ -19,11 +19,13 @@ export const header = {
     status: 'en línea',
     themePrefix: 'tema:',
     themeButton: {
+        terminal: 'terminal',
         light: 'latte',
         dark: 'mocha',
         system: 'auto',
     },
     themeMenu: {
+        terminal: 'Terminal (verde)',
         light: 'Latte (claro)',
         dark: 'Mocha (oscuro)',
         system: 'Auto (sistema)',
