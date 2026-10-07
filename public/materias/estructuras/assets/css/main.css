@@ -703,7 +703,7 @@ footer.site {
 .nav-units { display: flex; gap: 10px; justify-content: space-between; flex-wrap: wrap; margin-top: 20px; }
 .nav-units .btn { max-width: 48%; }
 
-.grid-units { grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); }
+.grid-units { grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); margin-bottom: 10px; }
 .grid-files { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
 .file {
   display: flex; align-items: center; gap: 11px; padding: 11px 13px;
