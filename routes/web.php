@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -60,6 +61,15 @@ Route::post('/auth/logout-all', function (Request $request) {
 
 // Rutas públicas
 Route::get('/', fn () => Inertia::render('welcome'))->name('home');
+
+// Selector de idioma (guarda la preferencia en cookie y vuelve a la página anterior)
+Route::get('/locale/{locale}', function (string $locale) {
+    abort_unless(in_array($locale, ['en', 'es'], true), 404);
+
+    Cookie::queue('locale', $locale, 60 * 24 * 365);
+
+    return redirect(request()->header('referer') ?: '/');
+})->name('locale.switch');
 Route::get('/about', fn () => Inertia::render('about'))->name('about');
 Route::get('/projects', fn () => Inertia::render('projects'))->name('projects');
 Route::get('/catedras', fn () => Inertia::render('catedras'))->name('catedras');

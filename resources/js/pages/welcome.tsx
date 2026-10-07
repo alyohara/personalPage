@@ -2,32 +2,23 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Section, SectionHeader } from '@/components/ui/section';
+import { useI18n } from '@/i18n';
 import PublicLayout from '@/layouts/public-layout';
 import { cn } from '@/lib/utils';
 import { Head, Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Briefcase, Code, Database, GraduationCap, Layers, Server } from 'lucide-react';
 
-const specialties = [
-    { icon: Server, label: 'Backend & APIs', desc: 'Laravel, Node.js, REST, GraphQL' },
-    { icon: Database, label: 'Data & Storage', desc: 'MySQL, PostgreSQL, Redis, MongoDB' },
-    { icon: Layers, label: 'Architecture', desc: 'Microservices, DDD, Event-driven' },
-    { icon: Code, label: 'Frontend', desc: 'React, Vue, TypeScript, Tailwind' },
-    { icon: Briefcase, label: 'Leadership', desc: 'Tech Lead, Code Review, Mentoring' },
-    { icon: GraduationCap, label: 'Teaching', desc: 'University Lecturer, Workshops' },
-] as const;
+const specialtyIcons = [Server, Database, Layers, Code, Briefcase, GraduationCap] as const;
 
-const highlights = [
-    { value: '15+', label: 'Years Experience' },
-    { value: '50+', label: 'Projects Delivered' },
-    { value: '10+', label: 'Production Systems' },
-    { value: '500+', label: 'Students Taught' },
-] as const;
+const highlightValues = ['15+', '50+', '10+', '500+'] as const;
 
 export default function Welcome() {
+    const { t } = useI18n();
+
     return (
         <PublicLayout>
-            <Head title="Angel Leonardo Bianco — Software Architect & Tech Lead" />
+            <Head title={t.home.head.title} />
 
             {/* Hero */}
             <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden">
@@ -49,9 +40,11 @@ export default function Welcome() {
                             className="panel mx-auto w-full max-w-[5.5rem] p-2 lg:order-2 lg:mx-0 lg:max-w-[7rem]"
                         >
                             <div className="border-border overflow-hidden rounded-sm border">
-                                <img src="/imgs/perfil-256.png" alt="Angel Leonardo Bianco" width={256} height={256} className="h-auto w-full" />
+                                <img src="/imgs/perfil-256.png" alt={t.home.hero.image.alt} width={256} height={256} className="h-auto w-full" />
                             </div>
-                            <figcaption className="text-fg-subtle mt-2 text-center font-mono text-[0.625rem] leading-tight">~/angel.png</figcaption>
+                            <figcaption className="text-fg-subtle mt-2 text-center font-mono text-[0.625rem] leading-tight">
+                                {t.home.hero.image.caption}
+                            </figcaption>
                         </motion.figure>
 
                         <div className="max-w-4xl lg:order-1">
@@ -66,7 +59,7 @@ export default function Welcome() {
                                     <span className="bg-accent absolute inset-0 h-full w-full animate-ping rounded-full opacity-75" />
                                     <span className="bg-accent relative h-full w-full rounded-full" />
                                 </span>
-                                Software Architect · Tech Lead · Full Stack Engineer · University Lecturer
+                                {t.home.hero.badge}
                             </motion.div>
 
                             {/* Name + Title */}
@@ -76,7 +69,7 @@ export default function Welcome() {
                                 transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
                                 className="text-display text-fg mb-6"
                             >
-                                Angel Leonardo Bianco
+                                {t.home.hero.name}
                             </motion.h1>
 
                             {/* Tagline */}
@@ -86,7 +79,7 @@ export default function Welcome() {
                                 transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
                                 className="text-h3 text-fg-muted mb-8 max-w-2xl"
                             >
-                                Building robust software systems, leading engineering teams, and teaching the next generation of developers.
+                                {t.home.hero.tagline}
                             </motion.p>
 
                             {/* CTA Buttons */}
@@ -98,18 +91,18 @@ export default function Welcome() {
                             >
                                 <Button asChild size="lg" className="group">
                                     <Link href="/projects" prefetch>
-                                        View Projects
+                                        {t.home.hero.cta.viewProjects}
                                         <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                                     </Link>
                                 </Button>
                                 <Button asChild variant="outline" size="lg">
                                     <Link href="/contact" prefetch>
-                                        Get in Touch
+                                        {t.home.hero.cta.getInTouch}
                                     </Link>
                                 </Button>
                                 <Button asChild variant="ghost" size="lg">
                                     <Link href="/docs/resume.pdf" download>
-                                        Download CV
+                                        {t.home.hero.cta.downloadCv}
                                     </Link>
                                 </Button>
                             </motion.div>
@@ -121,10 +114,10 @@ export default function Welcome() {
                                 transition={{ duration: 0.5, ease: 'easeOut', delay: 0.4 }}
                                 className="flex flex-wrap gap-8 md:gap-12"
                             >
-                                {highlights.map((stat, idx) => (
-                                    <div key={stat.label} className={`stagger-${idx + 1}`}>
-                                        <div className="text-display font-display text-accent font-bold">{stat.value}</div>
-                                        <div className="text-body-sm text-fg-muted">{stat.label}</div>
+                                {highlightValues.map((value, idx) => (
+                                    <div key={value} className={`stagger-${idx + 1}`}>
+                                        <div className="text-display font-display text-accent font-bold">{value}</div>
+                                        <div className="text-body-sm text-fg-muted">{t.home.highlights[idx]}</div>
                                     </div>
                                 ))}
                             </motion.div>
@@ -147,14 +140,11 @@ export default function Welcome() {
 
             {/* Specialties */}
             <Section size="lg" variant="muted">
-                <SectionHeader
-                    title="Areas of Expertise"
-                    description="Deep technical knowledge across the full stack, with focus on backend architecture, data systems, and scalable infrastructure."
-                />
+                <SectionHeader title={t.home.specialties.title} description={t.home.specialties.description} />
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {specialties.map((item, i) => (
+                    {specialtyIcons.map((Icon, i) => (
                         <motion.div
-                            key={item.label}
+                            key={t.home.specialties.items[i].label}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-50px' }}
@@ -163,10 +153,10 @@ export default function Welcome() {
                             <Card variant="interactive" className="h-full">
                                 <CardContent className="p-6">
                                     <div className="bg-accent-muted text-accent mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg">
-                                        <item.icon className="size-6" aria-hidden="true" />
+                                        <Icon className="size-6" aria-hidden="true" />
                                     </div>
-                                    <h3 className="text-h3 mb-2">{item.label}</h3>
-                                    <p className="text-body-sm text-fg-muted">{item.desc}</p>
+                                    <h3 className="text-h3 mb-2">{t.home.specialties.items[i].label}</h3>
+                                    <p className="text-body-sm text-fg-muted">{t.home.specialties.items[i].desc}</p>
                                 </CardContent>
                             </Card>
                         </motion.div>
@@ -176,48 +166,42 @@ export default function Welcome() {
 
             {/* Tech Stack */}
             <Section size="lg">
-                <SectionHeader title="Technology Stack" description="Tools and technologies I work with daily. Grouped by domain for clarity." />
+                <SectionHeader title={t.home.techStack.title} description={t.home.techStack.description} />
                 <div className="space-y-12">
                     {[
                         {
-                            category: 'Backend',
                             icon: Server,
                             color: 'text-blue-400',
                             tech: ['Laravel', 'PHP', 'Node.js', 'Go', 'REST APIs', 'GraphQL', 'gRPC'],
                         },
                         {
-                            category: 'Frontend',
                             icon: Code,
                             color: 'text-cyan-400',
                             tech: ['React', 'TypeScript', 'Vue.js', 'Tailwind CSS', 'Next.js', 'Vite'],
                         },
                         {
-                            category: 'Databases',
                             icon: Database,
                             color: 'text-emerald-400',
                             tech: ['PostgreSQL', 'MySQL', 'Redis', 'MongoDB', 'SQLite'],
                         },
                         {
-                            category: 'Infrastructure',
                             icon: Layers,
                             color: 'text-orange-400',
                             tech: ['Docker', 'Kubernetes', 'AWS', 'CI/CD', 'GitLab CI', 'Terraform'],
                         },
                         {
-                            category: 'Architecture',
                             icon: Layers,
                             color: 'text-purple-400',
                             tech: ['Microservices', 'DDD', 'Event Sourcing', 'CQRS', 'Message Queues'],
                         },
                         {
-                            category: 'Testing & Quality',
                             icon: Code,
                             color: 'text-rose-400',
                             tech: ['PHPUnit', 'Pest', 'Vitest', 'Playwright', 'Static Analysis', 'Code Review'],
                         },
                     ].map((group, i) => (
                         <motion.div
-                            key={group.category}
+                            key={t.home.techStack.categories[i]}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-50px' }}
@@ -227,7 +211,7 @@ export default function Welcome() {
                                 <div className={cn('bg-accent-muted inline-flex h-10 w-10 items-center justify-center rounded-lg', group.color)}>
                                     <group.icon className="text-accent size-5" aria-hidden="true" />
                                 </div>
-                                <h3 className="text-h3">{group.category}</h3>
+                                <h3 className="text-h3">{t.home.techStack.categories[i]}</h3>
                             </div>
                             <div className="flex flex-wrap gap-2">
                                 {group.tech.map((tech, idx) => (
@@ -244,12 +228,12 @@ export default function Welcome() {
             {/* Featured Projects */}
             <Section size="lg" variant="muted">
                 <SectionHeader
-                    title="Featured Projects"
-                    description="A selection of production systems and open-source work."
+                    title={t.home.projects.title}
+                    description={t.home.projects.description}
                     action={
                         <Button asChild variant="outline">
                             <Link href="/projects" prefetch>
-                                All Projects <ArrowRight className="ml-2 size-4" aria-hidden="true" />
+                                {t.home.projects.allProjects} <ArrowRight className="ml-2 size-4" aria-hidden="true" />
                             </Link>
                         </Button>
                     }
@@ -257,46 +241,34 @@ export default function Welcome() {
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {[
                         {
-                            title: 'WOZ.exe',
-                            desc: 'SCUMM-style adventure teaching data structures (stacks, queues, graphs, heaps). Playable in browser via WebAssembly.',
                             tech: ['Python', 'pygame-ce', 'pygbag', 'WebAssembly'],
                             url: 'https://alyohara.github.io/woz-exe/',
                             featured: true,
                         },
                         {
-                            title: 'FEMEBA CRM',
-                            desc: 'Custom CRM and internal systems for healthcare organization. Improved workflow efficiency significantly.',
                             tech: ['Laravel', 'PHP', 'Zend Framework', 'MySQL', 'REST API'],
                             featured: true,
                         },
                         {
-                            title: 'UNaB Teacher Management',
-                            desc: 'Institutional system for teacher management and attendance tracking at Universidad Nacional Guillermo Brown.',
                             tech: ['Laravel', 'Vue.js', 'MariaDB', 'REST API'],
                             url: 'https://gestion.unab.edu.ar',
                         },
                         {
-                            title: 'Prospectiva.site',
-                            desc: 'Platform for analyzing and visualizing large volumes of data with interactive charts and dashboards.',
                             tech: ['Laravel', 'Vue.js', 'Chart.js', 'Data Processing', 'REST API'],
                             url: 'https://prospectiva.site',
                         },
                         {
-                            title: 'SOSMA Integrated System',
-                            desc: 'Internal systems, landing page, and virtual campus (Moodle) for Ministry of Productive Development.',
                             tech: ['Laravel', 'CodeIgniter', 'Moodle', 'Leaflet'],
                             url: 'http://www.sosma.com.ar',
                         },
                         {
-                            title: 'DevSlides',
-                            desc: 'Free, open-source desktop app for animated code presentations: Magic Move transitions, syntax themes, highlight steps and autoplay (Tauri + Svelte 5).',
                             tech: ['TypeScript', 'Tauri', 'Svelte 5', 'Rust'],
                             url: 'https://github.com/alyohara/DevSlides',
                             featured: true,
                         },
                     ].map((project, i) => (
                         <motion.div
-                            key={project.title}
+                            key={t.home.projects.items[i].title}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-50px' }}
@@ -305,12 +277,12 @@ export default function Welcome() {
                             <Card variant={project.featured ? 'bordered' : 'interactive'} className="flex h-full flex-col">
                                 {project.featured && (
                                     <div className="bg-accent text-accent-fg absolute -top-3 -right-3 rounded px-2 py-0.5 text-[0.625rem] font-medium">
-                                        Featured
+                                        {t.home.projects.featured}
                                     </div>
                                 )}
                                 <CardContent className="flex flex-1 flex-col p-6">
-                                    <h3 className="text-h3 mb-2">{project.title}</h3>
-                                    <p className="text-body-sm text-fg-muted mb-4 flex-1">{project.desc}</p>
+                                    <h3 className="text-h3 mb-2">{t.home.projects.items[i].title}</h3>
+                                    <p className="text-body-sm text-fg-muted mb-4 flex-1">{t.home.projects.items[i].desc}</p>
                                     <div className="mb-4 flex flex-wrap gap-2">
                                         {project.tech.map((tech) => (
                                             <Badge key={tech} variant="muted">
@@ -321,7 +293,7 @@ export default function Welcome() {
                                     {project.url && (
                                         <Button asChild variant="link" className="mt-auto">
                                             <Link href={project.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
-                                                View Project
+                                                {t.home.projects.viewProject}
                                                 <ArrowRight className="size-3" aria-hidden="true" />
                                             </Link>
                                         </Button>
@@ -342,20 +314,18 @@ export default function Welcome() {
                         viewport={{ once: true }}
                         className="bg-bg-elevated border-border rounded-2xl border p-12 md:p-16"
                     >
-                        <h2 className="text-h1 mb-4">Ready to work together?</h2>
-                        <p className="text-body text-fg-muted mx-auto mb-8 max-w-xl">
-                            I'm always open to discussing new projects, consulting opportunities, or speaking engagements.
-                        </p>
+                        <h2 className="text-h1 mb-4">{t.home.cta.title}</h2>
+                        <p className="text-body text-fg-muted mx-auto mb-8 max-w-xl">{t.home.cta.description}</p>
                         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                             <Button asChild size="xl">
                                 <Link href="/contact" prefetch>
-                                    Start a Conversation
+                                    {t.home.cta.startConversation}
                                     <ArrowRight className="ml-2 size-4" aria-hidden="true" />
                                 </Link>
                             </Button>
                             <Button asChild variant="outline" size="xl">
                                 <Link href="/docs/resume.pdf" download>
-                                    Download CV
+                                    {t.home.cta.downloadCv}
                                 </Link>
                             </Button>
                         </div>

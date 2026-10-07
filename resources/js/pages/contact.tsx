@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Section, SectionHeader } from '@/components/ui/section';
 import { Textarea } from '@/components/ui/textarea';
+import { useI18n } from '@/i18n';
 import PublicLayout from '@/layouts/public-layout';
 import { cn } from '@/lib/utils';
 import { Head, Link } from '@inertiajs/react';
@@ -12,6 +13,7 @@ import { ArrowRight, Github, Linkedin, Mail, MapPin, MessageSquare } from 'lucid
 import { FormEvent, useState } from 'react';
 
 export default function Contact() {
+    const { t } = useI18n();
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [status, setStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,13 +31,13 @@ export default function Contact() {
                 body: JSON.stringify(formData),
             });
             if (res.ok) {
-                setStatus({ type: 'success', message: "Message sent successfully! I'll get back to you soon." });
+                setStatus({ type: 'success', message: t.contact.form.status.success });
                 setFormData({ name: '', email: '', message: '' });
             } else {
                 throw new Error('Failed to send');
             }
         } catch {
-            setStatus({ type: 'error', message: 'Failed to send the message. Please try again or email me directly.' });
+            setStatus({ type: 'error', message: t.contact.form.status.error });
         } finally {
             setIsSubmitting(false);
         }
@@ -44,13 +46,19 @@ export default function Contact() {
     const contactInfo = [
         {
             icon: Mail,
-            title: 'Email',
+            title: t.contact.info.items.email,
             value: 'angel.leonardo.bianco@gmail.com',
             href: 'mailto:angel.leonardo.bianco@gmail.com',
             color: 'text-blue-400',
         },
-        { icon: Mail, title: 'Academic Email', value: 'angel.bianco@unab.edu.ar', href: 'mailto:angel.bianco@unab.edu.ar', color: 'text-purple-400' },
-        { icon: MapPin, title: 'Location', value: 'Buenos Aires, Argentina', href: null, color: 'text-emerald-400' },
+        {
+            icon: Mail,
+            title: t.contact.info.items.academicEmail,
+            value: 'angel.bianco@unab.edu.ar',
+            href: 'mailto:angel.bianco@unab.edu.ar',
+            color: 'text-purple-400',
+        },
+        { icon: MapPin, title: t.contact.info.items.location, value: 'Buenos Aires, Argentina', href: null, color: 'text-emerald-400' },
     ] as const;
 
     const socialLinks = [
@@ -60,7 +68,7 @@ export default function Contact() {
 
     return (
         <PublicLayout>
-            <Head title="Contact — Angel Leonardo Bianco" />
+            <Head title={t.contact.head.title} />
 
             {/* Hero */}
             <section className="relative py-20 lg:py-28">
@@ -68,7 +76,7 @@ export default function Contact() {
                     <div className="max-w-3xl">
                         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="mb-6">
                             <span className="bg-accent-muted border-accent-border text-accent inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium">
-                                Let's work together
+                                {t.contact.hero.badge}
                             </span>
                         </motion.div>
                         <motion.h1
@@ -77,7 +85,7 @@ export default function Contact() {
                             transition={{ duration: 0.5, delay: 0.1 }}
                             className="text-display text-fg mb-6"
                         >
-                            Get in Touch
+                            {t.contact.hero.title}
                         </motion.h1>
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
@@ -85,7 +93,7 @@ export default function Contact() {
                             transition={{ duration: 0.5, delay: 0.2 }}
                             className="text-h3 text-fg-muted"
                         >
-                            Have a project in mind? Looking for a tech lead? Want to collaborate? I'd love to hear from you.
+                            {t.contact.hero.subtitle}
                         </motion.p>
                     </div>
                 </div>
@@ -100,10 +108,7 @@ export default function Contact() {
                         viewport={{ once: true }}
                         className="lg:col-span-1"
                     >
-                        <SectionHeader
-                            title="Let's Talk"
-                            description="I'm always open to discussing new opportunities, projects, or just chatting about technology."
-                        />
+                        <SectionHeader title={t.contact.info.title} description={t.contact.info.description} />
                         <div className="space-y-6">
                             {contactInfo.map((item) => (
                                 <div key={item.title} className="bg-bg-elevated border-border flex items-start gap-4 rounded-xl border p-4">
@@ -131,7 +136,7 @@ export default function Contact() {
 
                         {/* Social */}
                         <div className="border-border border-t pt-6">
-                            <h4 className="text-label text-fg mb-4 font-semibold">Connect</h4>
+                            <h4 className="text-label text-fg mb-4 font-semibold">{t.contact.info.connect}</h4>
                             <div className="flex gap-3">
                                 {socialLinks.map((item) => (
                                     <a
@@ -158,20 +163,20 @@ export default function Contact() {
                         viewport={{ once: true }}
                         className="lg:col-span-2"
                     >
-                        <SectionHeader title="Send a Message" />
+                        <SectionHeader title={t.contact.form.title} />
                         <Card variant="bordered">
                             <CardContent className="p-6 md:p-8">
                                 <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                                     <div className="grid gap-4 sm:grid-cols-2">
                                         <div>
                                             <Label htmlFor="name" className="mb-2">
-                                                Name
+                                                {t.contact.form.fields.name.label}
                                             </Label>
                                             <Input
                                                 id="name"
                                                 value={formData.name}
                                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                                placeholder="Your name"
+                                                placeholder={t.contact.form.fields.name.placeholder}
                                                 required
                                                 disabled={isSubmitting}
                                                 className="w-full"
@@ -179,14 +184,14 @@ export default function Contact() {
                                         </div>
                                         <div>
                                             <Label htmlFor="email" className="mb-2">
-                                                Email
+                                                {t.contact.form.fields.email.label}
                                             </Label>
                                             <Input
                                                 id="email"
                                                 type="email"
                                                 value={formData.email}
                                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                                placeholder="your@email.com"
+                                                placeholder={t.contact.form.fields.email.placeholder}
                                                 required
                                                 disabled={isSubmitting}
                                                 className="w-full"
@@ -195,13 +200,13 @@ export default function Contact() {
                                     </div>
                                     <div>
                                         <Label htmlFor="message" className="mb-2">
-                                            Message
+                                            {t.contact.form.fields.message.label}
                                         </Label>
                                         <Textarea
                                             id="message"
                                             value={formData.message}
                                             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                            placeholder="Tell me about your project, idea, or question..."
+                                            placeholder={t.contact.form.fields.message.placeholder}
                                             rows={6}
                                             required
                                             disabled={isSubmitting}
@@ -223,7 +228,7 @@ export default function Contact() {
                                         </motion.div>
                                     )}
                                     <Button type="submit" size="lg" disabled={isSubmitting} className="w-full sm:w-auto">
-                                        {isSubmitting ? 'Sending...' : 'Send Message'}
+                                        {isSubmitting ? t.contact.form.sending : t.contact.form.submit}
                                         <ArrowRight className="ml-2 size-4" aria-hidden="true" />
                                     </Button>
                                 </form>
@@ -233,7 +238,7 @@ export default function Contact() {
                         {/* Alternative contact */}
                         <div className="bg-bg-muted border-border mt-8 rounded-xl border p-6">
                             <p className="text-body text-fg-muted text-center">
-                                Prefer email?{' '}
+                                {t.contact.form.preferEmail}{' '}
                                 <a href="mailto:angel.leonardo.bianco@gmail.com" className="text-accent font-medium hover:underline">
                                     angel.leonardo.bianco@gmail.com
                                 </a>
@@ -253,21 +258,18 @@ export default function Contact() {
                         className="bg-bg-elevated border-border rounded-2xl border p-12 md:p-16"
                     >
                         <MessageSquare className="text-accent mx-auto mb-4 size-12" aria-hidden="true" />
-                        <h2 className="text-h1 mb-4">Let's Build Something Great</h2>
-                        <p className="text-body text-fg-muted mx-auto mb-8 max-w-xl">
-                            Whether you need a technical co-founder, a senior engineer for your team, or a consultant for architecture decisions —
-                            let's start a conversation.
-                        </p>
+                        <h2 className="text-h1 mb-4">{t.contact.cta.title}</h2>
+                        <p className="text-body text-fg-muted mx-auto mb-8 max-w-xl">{t.contact.cta.description}</p>
                         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                             <Button asChild size="xl">
                                 <Link href="mailto:angel.leonardo.bianco@gmail.com?subject=Project%20Inquiry">
-                                    Start a Conversation
+                                    {t.contact.cta.startConversation}
                                     <ArrowRight className="ml-2 size-4" aria-hidden="true" />
                                 </Link>
                             </Button>
                             <Button asChild variant="outline" size="xl">
                                 <Link href="/projects" prefetch>
-                                    View My Work
+                                    {t.contact.cta.viewWork}
                                 </Link>
                             </Button>
                         </div>

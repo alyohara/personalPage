@@ -6,6 +6,7 @@ declare module '@inertiajs/react' {
     interface PageProps extends InertiaPageProps {
         auth: Auth;
         name: string;
+        locale: 'en' | 'es';
         ziggy: Config & { location: string };
         quote?: { message: string; author: string };
         [key: string]: unknown;

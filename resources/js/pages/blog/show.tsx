@@ -1,3 +1,6 @@
+import { useI18n } from '@/i18n';
+import { en } from '@/i18n/en';
+import { es } from '@/i18n/es';
 import { sanitizeHtml } from '@/lib/sanitize';
 import { Head, Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
@@ -18,29 +21,18 @@ interface Props {
 }
 
 export default function Show({ post }: Props) {
+    const { t } = useI18n();
     const [language, setLanguage] = useState<'en' | 'es'>('es');
 
-    const content = {
-        en: {
-            title: 'Blog',
-            about: 'About Me',
-            projects: 'Projects',
-            blog: 'Blog',
-            contact: 'Contact',
-        },
-        es: {
-            title: 'Blog',
-            about: 'Acerca de mí',
-            projects: 'Proyectos',
-            blog: 'Blog',
-            contact: 'Contacto',
-        },
+    const navContent = {
+        en: en.blog.show.nav,
+        es: es.blog.show.nav,
     };
 
-    const t = content[language];
+    const nav = navContent[language];
 
     const handleLanguageChange = (lang: 'en' | 'es') => {
-        setLanguage(content[lang] ? lang : 'en');
+        setLanguage(navContent[lang] ? lang : 'en');
     };
 
     return (
@@ -78,31 +70,31 @@ export default function Show({ post }: Props) {
                             href={route('home')}
                             className={`text-green-400 hover:text-white ${route().current('home') ? 'font-bold text-white' : ''}`}
                         >
-                            [Home]
+                            [{t.blog.show.nav.home}]
                         </Link>
                         <Link
                             href={route('about')}
                             className={`text-green-400 hover:text-white ${route().current('about') ? 'font-bold text-white' : ''}`}
                         >
-                            [{t.about}]
+                            [{nav.about}]
                         </Link>
                         <Link
                             href={route('projects')}
                             className={`text-green-400 hover:text-white ${route().current('projects') ? 'font-bold text-white' : ''}`}
                         >
-                            [{t.projects}]
+                            [{nav.projects}]
                         </Link>
                         <Link
                             href={route('blog')}
                             className={`text-green-400 hover:text-white ${route().current('blog') ? 'font-bold text-white' : ''}`}
                         >
-                            [{t.blog}]
+                            [{nav.blog}]
                         </Link>
                         <Link
                             href={route('contact')}
                             className={`text-green-400 hover:text-white ${route().current('contact') ? 'font-bold text-white' : ''}`}
                         >
-                            [{t.contact}]
+                            [{nav.contact}]
                         </Link>
                     </nav>
 
@@ -111,7 +103,7 @@ export default function Show({ post }: Props) {
                             href={route('blog')}
                             className="mb-6 inline-block rounded border border-green-600 px-4 py-2 text-green-400 transition-colors hover:bg-green-600 hover:text-white"
                         >
-                            ← Back to Blog
+                            {t.blog.show.backToBlog}
                         </Link>
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -132,7 +124,7 @@ export default function Show({ post }: Props) {
                             <h1 className="mb-4 text-4xl font-bold text-white">{post.title}</h1>
 
                             <div className="mb-8 flex items-center text-green-500">
-                                <span className="mr-4">By {post.author}</span>
+                                <span className="mr-4">{t.blog.show.byAuthor(post.author)}</span>
                                 <span>{new Date(post.published_at).toLocaleDateString()}</span>
                             </div>
 
@@ -146,7 +138,7 @@ export default function Show({ post }: Props) {
                     <footer className="border-t border-green-600 bg-black px-6 py-4 text-center font-mono text-sm text-green-400">
                         <p className="font-bold text-white">Angel Leonardo Bianco</p>
                         <p className="mt-2">
-                            Emails:
+                            {t.blog.show.emails}
                             <a href="mailto:angel.leonardo.bianco@gmail.com" className="ml-1 text-green-300 underline hover:text-white">
                                 angel.leonardo.bianco@gmail.com
                             </a>
@@ -160,7 +152,7 @@ export default function Show({ post }: Props) {
                             </a>
                         </p>
                         <p className="mt-2">
-                            LinkedIn:
+                            {t.blog.show.linkedin}
                             <a
                                 href="https://www.linkedin.com/in/angel-leonardo-bianco/"
                                 target="_blank"
@@ -171,7 +163,7 @@ export default function Show({ post }: Props) {
                             </a>
                         </p>
                         <p className="mt-2">
-                            GitHub:
+                            {t.blog.show.github}
                             <a
                                 href="https://github.com/alyohara"
                                 target="_blank"

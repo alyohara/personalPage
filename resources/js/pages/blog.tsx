@@ -2,6 +2,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Section } from '@/components/ui/section';
+import { useI18n } from '@/i18n';
 import PublicLayout from '@/layouts/public-layout';
 import { paginationLabel } from '@/lib/sanitize';
 import { Head, Link, router } from '@inertiajs/react';
@@ -39,6 +40,7 @@ interface Props {
 }
 
 export default function Blog({ posts, search: initialSearch, sort: initialSort }: Props) {
+    const { t } = useI18n();
     const [searchQuery, setSearchQuery] = useState(initialSearch);
     const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>(initialSort);
 
@@ -72,14 +74,14 @@ export default function Blog({ posts, search: initialSearch, sort: initialSort }
 
     return (
         <PublicLayout>
-            <Head title="Blog — Angel Leonardo Bianco" />
+            <Head title={t.blog.head.title} />
 
             {/* Hero */}
             <section className="relative py-20 lg:py-28">
                 <div className="container-main">
                     <div className="max-w-3xl">
                         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="mb-6">
-                            <Badge variant="default">Technical Articles & Tutorials</Badge>
+                            <Badge variant="default">{t.blog.hero.badge}</Badge>
                         </motion.div>
                         <motion.h1
                             initial={{ opacity: 0, y: 20 }}
@@ -87,7 +89,7 @@ export default function Blog({ posts, search: initialSearch, sort: initialSort }
                             transition={{ duration: 0.5, delay: 0.1 }}
                             className="text-display text-fg mb-6"
                         >
-                            Blog
+                            {t.blog.hero.title}
                         </motion.h1>
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
@@ -95,7 +97,7 @@ export default function Blog({ posts, search: initialSearch, sort: initialSort }
                             transition={{ duration: 0.5, delay: 0.2 }}
                             className="text-h3 text-fg-muted"
                         >
-                            Thoughts on software architecture, backend engineering, databases, and teaching.
+                            {t.blog.hero.subtitle}
                         </motion.p>
                     </div>
                 </div>
@@ -110,9 +112,9 @@ export default function Blog({ posts, search: initialSearch, sort: initialSort }
                             type="search"
                             value={searchQuery}
                             onChange={handleSearchChange}
-                            placeholder="Search articles..."
+                            placeholder={t.blog.search.placeholder}
                             className="bg-bg-elevated border-border text-fg placeholder-fg-subtle focus:ring-ring w-full rounded-lg border py-2.5 pr-4 pl-10 transition-all focus:border-transparent focus:ring-2"
-                            aria-label="Search articles"
+                            aria-label={t.blog.search.ariaLabel}
                         />
                     </div>
                     <div className="flex gap-2">
@@ -124,7 +126,7 @@ export default function Blog({ posts, search: initialSearch, sort: initialSort }
                                 onClick={() => handleSortChange(order)}
                                 className="gap-2"
                             >
-                                {order === 'newest' ? 'Newest' : 'Oldest'}
+                                {order === 'newest' ? t.blog.sort.newest : t.blog.sort.oldest}
                             </Button>
                         ))}
                     </div>
@@ -175,7 +177,7 @@ export default function Blog({ posts, search: initialSearch, sort: initialSort }
                                                 prefetch
                                                 className="text-body-sm text-accent group flex items-center gap-1 hover:underline"
                                             >
-                                                Read more
+                                                {t.blog.list.readMore}
                                                 <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                                             </Link>
                                         </CardContent>
@@ -211,8 +213,8 @@ export default function Blog({ posts, search: initialSearch, sort: initialSort }
                 ) : (
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="py-16 text-center">
                         <Search className="text-fg-subtle mx-auto mb-4 size-12" aria-hidden="true" />
-                        <h3 className="text-h3 mb-2">No articles found</h3>
-                        <p className="text-body text-fg-muted">Try adjusting your search or filter criteria.</p>
+                        <h3 className="text-h3 mb-2">{t.blog.list.empty.title}</h3>
+                        <p className="text-body text-fg-muted">{t.blog.list.empty.description}</p>
                     </motion.div>
                 )}
             </Section>

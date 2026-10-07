@@ -2,85 +2,94 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Section, SectionHeader } from '@/components/ui/section';
+import { useI18n } from '@/i18n';
 import PublicLayout from '@/layouts/public-layout';
 import { cn } from '@/lib/utils';
 import { Head, Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { Award, Code, Database, GraduationCap, Layers, NotebookText, Server } from 'lucide-react';
 
-const skillsCategories = [
-    {
-        category: 'Programming Languages',
-        icon: Code,
-        color: 'text-blue-400',
-        items: ['PHP (Laravel, Zend Framework, Drupal)', 'C++', 'Java', 'Python', 'Spoon', 'TypeScript/JavaScript'],
-    },
-    {
-        category: 'Databases',
-        icon: Database,
-        color: 'text-emerald-400',
-        items: ['MySQL', 'PostgreSQL', 'MongoDB', 'SQLite', 'Microsoft SQL Server', 'Redis'],
-    },
-    {
-        category: 'Web Development',
-        icon: Layers,
-        color: 'text-cyan-400',
-        items: ['HTML5', 'CSS3', 'JavaScript (React, Vue, jQuery)', 'PHP', 'RESTful APIs', 'GraphQL', 'AJAX'],
-    },
-    {
-        category: 'Frameworks & CMS',
-        icon: Server,
-        color: 'text-purple-400',
-        items: ['Laravel', 'CodeIgniter', 'Drupal', 'Moodle', 'WordPress', 'Next.js'],
-    },
-    {
-        category: 'DevOps & Tools',
-        icon: Award,
-        color: 'text-orange-400',
-        items: ['Git', 'Docker', 'Kubernetes', 'Jenkins', 'CI/CD', 'FLUIG', 'GitLab CI'],
-    },
-    {
-        category: 'Cloud Services',
-        icon: Database,
-        color: 'text-rose-400',
-        items: ['AWS (EC2, S3, RDS)', 'Azure', 'Google Cloud Platform'],
-    },
-    {
-        category: 'Testing & Quality',
-        icon: Code,
-        color: 'text-amber-400',
-        items: ['PHPUnit', 'Pest', 'Selenium', 'Playwright', 'Postman', 'Chrome DevTools', 'Static Analysis'],
-    },
-    {
-        category: 'Other',
-        icon: Layers,
-        color: 'text-slate-400',
-        items: ['Leaflet (interactive maps)', 'API Integration', 'Agile/Scrum', 'Software Documentation'],
-    },
-] as const;
-
-const experience = [
-    { role: 'Software Developer & Analyst (Freelance)', period: '2022 — Present', org: 'Various clients' },
-    { role: 'Full Stack Developer', period: '2021 — 2022', org: 'SOSMA / Ministerio de Desarrollo Productivo / Withmenetworks SL' },
-    { role: 'Developer Analyst', period: '2019 — 2021', org: 'FEMEBA' },
-    { role: 'FullStack Laravel Developer', period: '2018 — 2019', org: 'Universidad Nacional Guillermo Brown' },
-    { role: 'Team Leader & Help Desk Manager', period: '2015 — 2018', org: 'FEMEBA' },
-    { role: 'Help Desk Analyst & Tester', period: '2013 — 2015', org: 'FEMEBA' },
-    { role: 'Adjunct Professor & Teaching Fellow (Algorithms & Data Structures)', period: '2016 — Present', org: 'UNaB' },
-    { role: 'Professor (Informatics & NTICS)', period: '2014 — Present', org: 'Instituto Superior FEMEBA' },
-    { role: 'Freelance Web Developer & QA Engineer', period: '2010 — 2014', org: 'Various' },
-] as const;
-
-const education = [
-    { degree: "Bachelor's in Systems Engineering", org: 'UNLP (in progress)', icon: GraduationCap },
-    { degree: 'Analista Programador Universitario', org: 'UNLP', icon: GraduationCap },
-    { degree: 'Professional Certifications in Web Development & QA', org: 'Various', icon: Award },
-] as const;
+const getIcon = (name: string) => {
+    switch (name) {
+        case 'Code':
+            return Code;
+        case 'Database':
+            return Database;
+        case 'Layers':
+            return Layers;
+        case 'Server':
+            return Server;
+        case 'Award':
+            return Award;
+        case 'GraduationCap':
+            return GraduationCap;
+        default:
+            return Code;
+    }
+};
 
 export default function About() {
+    const { t } = useI18n();
+    const skillsCategories = [
+        {
+            key: 'programmingLanguages',
+            icon: Code,
+            color: 'text-blue-400',
+            items: t.about.skills.categories.programmingLanguages.items,
+        },
+        {
+            key: 'databases',
+            icon: Database,
+            color: 'text-emerald-400',
+            items: t.about.skills.categories.databases.items,
+        },
+        {
+            key: 'webDevelopment',
+            icon: Layers,
+            color: 'text-cyan-400',
+            items: t.about.skills.categories.webDevelopment.items,
+        },
+        {
+            key: 'frameworksCms',
+            icon: Server,
+            color: 'text-purple-400',
+            items: t.about.skills.categories.frameworksCms.items,
+        },
+        {
+            key: 'devopsTools',
+            icon: Award,
+            color: 'text-orange-400',
+            items: t.about.skills.categories.devopsTools.items,
+        },
+        {
+            key: 'cloudServices',
+            icon: Database,
+            color: 'text-rose-400',
+            items: t.about.skills.categories.cloudServices.items,
+        },
+        {
+            key: 'testingQuality',
+            icon: Code,
+            color: 'text-amber-400',
+            items: t.about.skills.categories.testingQuality.items,
+        },
+        {
+            key: 'other',
+            icon: Layers,
+            color: 'text-slate-400',
+            items: t.about.skills.categories.other.items,
+        },
+    ] as const;
+
+    const experience = t.about.experience.items;
+    const education = t.about.education.items.map((item) => ({
+        ...item,
+        icon: getIcon(item.iconText),
+    }));
+
     return (
         <PublicLayout>
-            <Head title="About — Angel Leonardo Bianco" />
+            <Head title={t.about.head.title} />
 
             {/* Hero */}
             <section className="relative py-20 lg:py-28">
@@ -93,7 +102,7 @@ export default function About() {
                                 transition={{ duration: 0.5 }}
                                 className="mb-6"
                             >
-                                <Badge variant="default">Software Architect · Tech Lead · Full Stack Engineer · University Lecturer</Badge>
+                                <Badge variant="default">{t.about.hero.badge}</Badge>
                             </motion.div>
                             <motion.h1
                                 initial={{ opacity: 0, y: 20 }}
@@ -101,7 +110,7 @@ export default function About() {
                                 transition={{ duration: 0.5, delay: 0.1 }}
                                 className="text-display text-fg mb-6"
                             >
-                                About Me
+                                {t.about.hero.title}
                             </motion.h1>
                             <motion.p
                                 initial={{ opacity: 0, y: 20 }}
@@ -109,8 +118,7 @@ export default function About() {
                                 transition={{ duration: 0.5, delay: 0.2 }}
                                 className="text-h3 text-fg-muted mb-8 max-w-2xl"
                             >
-                                Passionate IT professional with strong academic background and extensive experience in software development, systems
-                                analysis, and university-level teaching.
+                                {t.about.hero.subtitle}
                             </motion.p>
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
@@ -120,17 +128,17 @@ export default function About() {
                             >
                                 <Button asChild size="lg">
                                     <Link href="/projects" prefetch>
-                                        View Projects
+                                        {t.about.hero.cta.viewProjects}
                                     </Link>
                                 </Button>
                                 <Button asChild variant="outline" size="lg">
                                     <Link href="/contact" prefetch>
-                                        Get in Touch
+                                        {t.about.hero.cta.getInTouch}
                                     </Link>
                                 </Button>
                                 <Button asChild variant="ghost" size="lg">
                                     <Link href="/docs/resume.pdf" download>
-                                        Download CV
+                                        {t.about.hero.cta.downloadCv}
                                     </Link>
                                 </Button>
                             </motion.div>
@@ -142,9 +150,11 @@ export default function About() {
                             className="panel mx-auto w-full max-w-[5.5rem] p-2 lg:order-2 lg:mx-0 lg:max-w-[7rem]"
                         >
                             <div className="border-border overflow-hidden rounded-sm border">
-                                <img src="/imgs/perfil-256.png" alt="Angel Leonardo Bianco" width={256} height={256} className="h-auto w-full" />
+                                <img src="/imgs/perfil-256.png" alt={t.about.hero.image.alt} width={256} height={256} className="h-auto w-full" />
                             </div>
-                            <figcaption className="text-fg-subtle mt-2 text-center font-mono text-[0.625rem] leading-tight">~/angel.png</figcaption>
+                            <figcaption className="text-fg-subtle mt-2 text-center font-mono text-[0.625rem] leading-tight">
+                                {t.about.hero.image.caption}
+                            </figcaption>
                         </motion.figure>
                     </div>
                 </div>
@@ -152,7 +162,7 @@ export default function About() {
 
             {/* Bio */}
             <Section variant="muted">
-                <SectionHeader title="Biography" description="My journey in technology, education, and leadership." />
+                <SectionHeader title={t.about.bio.title} description={t.about.bio.description} />
                 <div className="prose max-w-none">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -160,54 +170,20 @@ export default function About() {
                         viewport={{ once: true }}
                         className="text-body text-fg-muted space-y-6"
                     >
-                        <p>
-                            I'm a passionate IT professional with a strong academic background and extensive experience in software development,
-                            systems analysis, and university-level teaching.
-                        </p>
-                        <p>
-                            I'm currently completing a Bachelor's degree in Systems Engineering at the National University of La Plata, while working
-                            as a Software Analyst, Full Stack Developer, and Adjunct Professor at the National University Guillermo Brown.
-                        </p>
-                        <p>
-                            I specialize in building robust web applications, both front-end and back-end, using technologies such as Laravel,
-                            JavaScript, MySQL, and RESTful APIs.
-                        </p>
-                        <p>
-                            In my current role, I combine analytical skills with a collaborative approach to solve complex challenges and design
-                            scalable solutions.
-                        </p>
-                        <p>
-                            One of my key achievements includes leading the development of a custom CRM system that significantly improved workflow
-                            efficiency in a healthcare organization.
-                        </p>
-                        <p>
-                            In addition to my main role, I actively participate in freelance projects involving web development, QA, and
-                            cryptocurrency platforms.
-                        </p>
-                        <p>
-                            I've contributed to projects like sosma.com.ar, and I'm currently working with various consulting firms and organizations
-                            to develop tailored solutions using modern technologies.
-                        </p>
-                        <p>As an educator, I enjoy sharing my experience and passion for programming with future IT professionals.</p>
-                        <p>I teach Data Structures, encouraging algorithmic thinking and mastery of languages like C++ and Python.</p>
-                        <p>
-                            This blend of academic rigor, hands-on experience, and a passion for teaching defines my profile: committed, versatile,
-                            and always looking for new challenges in the tech world.
-                        </p>
+                        {t.about.bio.paragraphs.map((p, i) => (
+                            <p key={i}>{p}</p>
+                        ))}
                     </motion.div>
                 </div>
             </Section>
 
             {/* Skills */}
             <Section>
-                <SectionHeader
-                    title="Technical Skills"
-                    description="Organized by domain for clarity. I believe in using the right tool for the job."
-                />
+                <SectionHeader title={t.about.skills.title} description={t.about.skills.description} />
                 <div className="space-y-10">
                     {skillsCategories.map((group, i) => (
                         <motion.div
-                            key={group.category}
+                            key={group.key}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-50px' }}
@@ -217,7 +193,7 @@ export default function About() {
                                 <div className={cn('bg-accent-muted inline-flex h-10 w-10 items-center justify-center rounded-lg', group.color)}>
                                     <group.icon className="text-accent size-5" aria-hidden="true" />
                                 </div>
-                                <h3 className="text-h3">{group.category}</h3>
+                                <h3 className="text-h3">{t.about.skills.categories[group.key].category}</h3>
                             </div>
                             <div className="flex flex-wrap gap-2">
                                 {group.items.map((item, idx) => (
@@ -233,14 +209,11 @@ export default function About() {
 
             {/* Experience */}
             <Section variant="muted">
-                <SectionHeader
-                    title="Professional Experience"
-                    description="Chronological overview of my career in software engineering and education."
-                />
+                <SectionHeader title={t.about.experience.title} description={t.about.experience.description} />
                 <div className="space-y-4">
                     {experience.map((item, i) => (
                         <motion.div
-                            key={item.role}
+                            key={item.role + i}
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
@@ -269,11 +242,11 @@ export default function About() {
 
             {/* Education */}
             <Section>
-                <SectionHeader title="Education & Certifications" description="Academic background and continuous learning." />
+                <SectionHeader title={t.about.education.title} description={t.about.education.description} />
                 <div className="grid gap-6 md:grid-cols-3">
                     {education.map((item, i) => (
                         <motion.div
-                            key={item.degree}
+                            key={item.degree + i}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -303,13 +276,11 @@ export default function About() {
                         className="bg-bg-elevated border-border rounded-2xl border p-12 md:p-16"
                     >
                         <NotebookText className="text-accent mx-auto mb-4 size-12" aria-hidden="true" />
-                        <h2 className="text-h1 mb-4">Download My Resume</h2>
-                        <p className="text-body text-fg-muted mx-auto mb-8 max-w-xl">
-                            Get the full details of my experience, education, and technical skills in PDF format.
-                        </p>
+                        <h2 className="text-h1 mb-4">{t.about.resume.title}</h2>
+                        <p className="text-body text-fg-muted mx-auto mb-8 max-w-xl">{t.about.resume.description}</p>
                         <Button asChild size="xl">
                             <Link href="/docs/resume.pdf" download>
-                                Download CV
+                                {t.about.resume.downloadCv}
                                 <svg className="ml-2 size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
                                 </svg>

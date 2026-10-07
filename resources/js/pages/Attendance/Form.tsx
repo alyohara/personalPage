@@ -1,4 +1,5 @@
 import PixelDevice from '@/components/pixel-device';
+import { useI18n } from '@/i18n';
 import { router, useForm } from '@inertiajs/react';
 import React, { useEffect, useState } from 'react';
 
@@ -8,6 +9,7 @@ interface AttendanceFormProps {
 }
 
 const Form: React.FC<AttendanceFormProps> = ({ googleUser, user }) => {
+    const { t } = useI18n();
     const { data, setData, post, processing, errors, reset, clearErrors } = useForm({
         subject: '',
     });
@@ -75,14 +77,14 @@ const Form: React.FC<AttendanceFormProps> = ({ googleUser, user }) => {
                 <div className="fixed top-4 left-1/2 z-10 w-full -translate-x-1/2 px-4">
                     <div className="mx-auto flex max-w-md justify-end">
                         <button type="button" onClick={handleLogout} className={retroButton} style={{ background: '#222', borderColor: '#222' }}>
-                            Salir
+                            {t.attendance.retro.logout}
                         </button>
                     </div>
                 </div>
             )}
             <div className={retroCard} style={{ boxShadow: '8px 8px 0 0 #222' }}>
                 <h1 className={retroTitle} style={{ fontFamily: 'monospace, "Press Start 2P", "VT323", "Courier New", Courier, monospace' }}>
-                    Toma de Asistencia
+                    {t.attendance.title}
                 </h1>
 
                 {!currentUser && (
@@ -120,7 +122,7 @@ const Form: React.FC<AttendanceFormProps> = ({ googleUser, user }) => {
                                     <path fill="none" d="M0 0h48v48H0z" />
                                 </g>
                             </svg>
-                            Ingresar con Google
+                            {t.attendance.retro.login}
                         </a>
                     </>
                 )}
@@ -128,18 +130,18 @@ const Form: React.FC<AttendanceFormProps> = ({ googleUser, user }) => {
                 {step === 'subject' && currentUser && (
                     <>
                         <div className={retroWelcome}>
-                            Bienvenido, <span className="font-bold">{currentUser.name}</span>
+                            {t.attendance.retro.welcome.text.replace('{{name}}', currentUser.name)}
                             <br />
-                            <span className="text-sm text-[#555]">{currentUser.email}</span>
+                            <span className="text-sm text-[#555]">{t.attendance.retro.welcome.email.replace('{{email}}', currentUser.email)}</span>
                         </div>
                         <label htmlFor="subject" className={retroLabel}>
-                            Selecciona la materia:
+                            {t.attendance.retro.label}
                         </label>
                         <select name="subject" id="subject" className={retroSelect} value={data.subject} onChange={handleSubjectSelect}>
-                            <option value="">Elige una materia</option>
-                            <option value="AyED">Algoritmos y Estructuras de Datos</option>
-                            <option value="ED">Estructuras de Datos</option>
-                            <option value="PC">Programación Concurrente</option>
+                            <option value="">{t.attendance.retro.placeholder}</option>
+                            <option value="AyED">{t.attendance.retro.subjects.ayed}</option>
+                            <option value="ED">{t.attendance.retro.subjects.ed}</option>
+                            <option value="PC">{t.attendance.retro.subjects.pc}</option>
                         </select>
                         {errors.subject && <div className="pixel-font mt-2 text-red-600">{errors.subject}</div>}
                     </>
@@ -148,11 +150,11 @@ const Form: React.FC<AttendanceFormProps> = ({ googleUser, user }) => {
                 {step === 'register' && currentUser && (
                     <form onSubmit={handleSubmit} className="mt-6">
                         <div className="mb-4 text-center font-mono text-lg text-[#222]">
-                            Materia seleccionada:{' '}
+                            {t.attendance.retro.selected}{' '}
                             <span className="font-bold">
-                                {data.subject === 'AyED' && 'Algoritmos y Estructuras de Datos'}
-                                {data.subject === 'ED' && 'Estructuras de Datos'}
-                                {data.subject === 'PC' && 'Programación Concurrente'}
+                                {data.subject === 'AyED' && t.attendance.retro.subjects.ayed}
+                                {data.subject === 'ED' && t.attendance.retro.subjects.ed}
+                                {data.subject === 'PC' && t.attendance.retro.subjects.pc}
                             </span>
                         </div>
                         {errors.subject && <div className="pixel-font mb-2 text-center text-red-600">{errors.subject}</div>}
@@ -163,11 +165,11 @@ const Form: React.FC<AttendanceFormProps> = ({ googleUser, user }) => {
                                 className={retroButton}
                                 style={{ background: '#ffbf00', borderColor: '#222' }}
                             >
-                                Volver
+                                {t.attendance.retro.back}
                             </button>
                         ) : (
                             <button type="submit" className={retroButton} disabled={processing}>
-                                Registrar Asistencia
+                                {t.attendance.retro.register}
                             </button>
                         )}
                     </form>
@@ -175,14 +177,14 @@ const Form: React.FC<AttendanceFormProps> = ({ googleUser, user }) => {
 
                 {step === 'done' && (
                     <div>
-                        <div className={retroSuccess}>¡Asistencia registrada correctamente!</div>
+                        <div className={retroSuccess}>{t.attendance.retro.success}</div>
                         <button
                             type="button"
                             onClick={handleBackToSubject}
                             className={retroButton}
                             style={{ background: '#ffbf00', borderColor: '#222' }}
                         >
-                            Volver
+                            {t.attendance.retro.back}
                         </button>
                     </div>
                 )}

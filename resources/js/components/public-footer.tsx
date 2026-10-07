@@ -1,23 +1,25 @@
+import { useI18n } from '@/i18n';
 import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { Github, Linkedin, Mail } from 'lucide-react';
 
 const socialLinks = [
-    { href: 'mailto:angel.leonardo.bianco@gmail.com', label: 'Email (personal)', icon: Mail, external: false },
-    { href: 'mailto:angel.bianco@unab.edu.ar', label: 'Email (academic)', icon: Mail, external: false },
-    { href: 'https://www.linkedin.com/in/angel-leonardo-bianco/', label: 'LinkedIn', icon: Linkedin, external: true },
-    { href: 'https://github.com/alyohara', label: 'GitHub', icon: Github, external: true },
+    { href: 'mailto:angel.leonardo.bianco@gmail.com', key: 'emailPersonal', icon: Mail, external: false },
+    { href: 'mailto:angel.bianco@unab.edu.ar', key: 'emailAcademic', icon: Mail, external: false },
+    { href: 'https://www.linkedin.com/in/angel-leonardo-bianco/', key: 'linkedin', icon: Linkedin, external: true },
+    { href: 'https://github.com/alyohara', key: 'github', icon: Github, external: true },
 ] as const;
 
 const footerNav = [
-    { href: '/', label: 'home' },
-    { href: '/about', label: 'about' },
-    { href: '/projects', label: 'projects' },
-    { href: '/catedras', label: 'cátedras' },
-    { href: '/contact', label: 'contact' },
+    { href: '/', key: 'home' },
+    { href: '/about', key: 'about' },
+    { href: '/projects', key: 'projects' },
+    { href: '/catedras', key: 'courses' },
+    { href: '/contact', key: 'contact' },
 ] as const;
 
 export function PublicFooter() {
+    const { t } = useI18n();
     const year = new Date().getFullYear();
 
     return (
@@ -30,7 +32,7 @@ export function PublicFooter() {
                             href="/"
                             prefetch
                             className="focus-ring mb-4 block rounded px-1 py-0.5 text-sm transition-opacity hover:opacity-80"
-                            aria-label="Angel Leonardo Bianco - Home"
+                            aria-label={t.footer.aria.brand}
                         >
                             <span className="prompt">angel@bianco</span>
                             <span className="text-fg-subtle">:</span>
@@ -40,14 +42,11 @@ export function PublicFooter() {
                                 _
                             </span>
                         </Link>
-                        <p className="text-body text-fg-muted max-w-xs">
-                            Software Architect · Tech Lead · Full Stack Engineer · University Lecturer. Building robust systems, leading teams, and
-                            teaching the next generation.
-                        </p>
+                        <p className="text-body text-fg-muted max-w-xs">{t.footer.tagline}</p>
                     </div>
 
                     {/* Navigation */}
-                    <nav aria-label="Footer navigation">
+                    <nav aria-label={t.footer.aria.nav}>
                         <h3 className="text-label text-fg mb-3 font-semibold">ls ./</h3>
                         <ul className="space-y-2">
                             {footerNav.map((item) => (
@@ -57,7 +56,7 @@ export function PublicFooter() {
                                         className="bracket-link text-body-sm text-fg-muted hover:text-accent focus-ring rounded px-1 py-0.5 transition-colors"
                                         prefetch
                                     >
-                                        {item.label}
+                                        {t.footer.nav[item.key]}
                                     </Link>
                                 </li>
                             ))}
@@ -79,10 +78,10 @@ export function PublicFooter() {
                                             item.external &&
                                                 "opacity-60 after:size-3 after:bg-current after:mask-[url('/icons/external-link.svg')] after:content-['']",
                                         )}
-                                        aria-label={item.label}
+                                        aria-label={t.footer.social[item.key]}
                                     >
                                         <item.icon className="size-4 shrink-0" aria-hidden="true" />
-                                        <span>{item.label}</span>
+                                        <span>{t.footer.social[item.key]}</span>
                                     </a>
                                 </li>
                             ))}
@@ -92,18 +91,18 @@ export function PublicFooter() {
 
                 {/* Bottom bar */}
                 <div className="border-border mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
-                    <p className="text-body-sm text-fg-subtle">&copy; {year} Angel Leonardo Bianco. All rights reserved.</p>
+                    <p className="text-body-sm text-fg-subtle">{t.footer.copyright(year)}</p>
                     <div className="flex items-center gap-4">
                         <a
                             href="/docs/resume.pdf"
                             download
                             className="bracket-link text-body-sm text-fg-muted hover:text-accent focus-ring rounded px-2 py-1 transition-colors"
                         >
-                            download cv
+                            {t.footer.downloadCv}
                         </a>
                         <span className="text-body-sm text-fg-subtle text-[0.6875rem] tracking-widest uppercase">
                             <span className="bg-ok mr-1.5 inline-block size-1.5 rounded-full align-middle" aria-hidden="true" />
-                            system status: online
+                            {t.footer.systemStatus}
                         </span>
                     </div>
                 </div>
