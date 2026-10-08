@@ -22,6 +22,13 @@ const courses = [
         site: '/materias/estructuras/',
         repo: 'https://github.com/alyohara/Estructuras_de_Datos_UNaB',
     },
+    {
+        slug: 'ntics',
+        code: 'ntics',
+        stats: ['8', '80', '5', '360'],
+        site: '/materias/Informatica_y_NTICs/',
+        repo: 'https://github.com/alyohara/personalPage',
+    },
 ] as const;
 
 export default function Catedras() {
@@ -70,6 +77,17 @@ export default function Catedras() {
                             <Button asChild variant="outline" size="lg">
                                 <a href="/materias/estructuras/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                                     {t.catedras.hero.buttons.edd}
+                                    <ArrowRight className="size-4" aria-hidden="true" />
+                                </a>
+                            </Button>
+                            <Button asChild variant="outline" size="lg">
+                                <a
+                                    href="/materias/Informatica_y_NTICs/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-2"
+                                >
+                                    {t.catedras.hero.buttons.ntics}
                                     <ArrowRight className="size-4" aria-hidden="true" />
                                 </a>
                             </Button>

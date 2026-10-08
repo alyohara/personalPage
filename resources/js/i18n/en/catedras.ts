@@ -8,10 +8,11 @@ export const catedras = {
             prefix: '~/',
             suffix: 'courses',
         },
-        description: 'Index of the courses I teach. Both sites are static material hosted within this website.',
+        description: 'Index of the courses I teach. All three sites are static material hosted within this website.',
         buttons: {
             ayed: 'Data Structures and Algorithms',
             edd: 'Data Structures',
+            ntics: 'Informatics and ICTs',
         },
     },
     index: {
@@ -50,11 +51,27 @@ export const catedras = {
                     repo: 'Repository',
                 },
             },
+            ntics: {
+                title: 'Informatics and ICTs',
+                subtitle: 'Full course - UNaB - Theory and assignments',
+                desc: 'Interactive Informatics and ICTs course: theory per unit with self-assessments, practical assignments (GIS, telemedicine, cybersecurity), and the full course material to download.',
+                stats: ['units', 'questions', 'assignments', 'files'],
+                features: [
+                    '8 units with theory and self-assessments',
+                    '5 practical assignments with their briefs',
+                    '360 downloadable files organized by unit',
+                    'Progress and answers saved in the browser',
+                ],
+                actions: {
+                    enter: 'Go to site',
+                    repo: 'Repository',
+                },
+            },
         },
     },
     tech: {
         title: 'How they are built',
-        description: 'Both sites are served within this website, with no build process or external dependencies.',
+        description: 'All three sites are served within this website, with no build process or external dependencies.',
         cards: [
             {
                 title: 'Static site',
@@ -66,7 +83,7 @@ export const catedras = {
             },
             {
                 title: 'Python in the browser',
-                body: 'Labs run with Pyodide, with automatic fallback to CDN if the local copy is missing.',
+                body: 'The Algorithms and Data Structures sites run their labs with Pyodide, with automatic fallback to CDN if the local copy is missing.',
             },
         ],
     },

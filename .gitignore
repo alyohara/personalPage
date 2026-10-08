@@ -23,3 +23,4 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+/public/materias/Informatica_y_NTICs/[0-9]*/
