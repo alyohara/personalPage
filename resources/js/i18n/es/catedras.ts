@@ -10,7 +10,7 @@ export const catedras: EnCatedrasDict = {
             prefix: '~/',
             suffix: 'cátedras',
         },
-        description: 'Índice de las materias que dicto. Los tres sitios son material estático alojado dentro de esta misma web.',
+        description: 'Índice de las materias que dicto. Los cuatro sitios son material estático alojado dentro de esta misma web.',
         buttons: {
             ayed: 'Algoritmos y Estructuras de Datos',
             edd: 'Estructuras de Datos',
@@ -69,16 +69,17 @@ export const catedras: EnCatedrasDict = {
                     enter: 'Entrar al sitio',
                     repo: 'Repositorio',
                 },
-progc: {
+            },
+            progc: {
                 title: 'Programación Concurrente',
                 subtitle: 'Cátedra completa - UNaB - Teoría y TP',
                 desc: 'Curso interactivo de Programación Concurrente y Paralela: teoría, laboratorios de Python en el navegador, prácticas, proyecto incremental y material de cursada.',
-                stats: ['unidades', 'preguntas', 'TP y actividades', 'archivos'],
+                stats: ['unidades', 'laboratorios', 'TP y hitos', 'archivos'],
                 features: [
                     '4 unidades con teoría y autoevaluaciones',
-                    '4 laboratorios Pyodide con tests automáticos',
-                    '4 hitos del proyecto incremental',
-                    '283 archivos descargables organizados por unidad',
+                    '8 laboratorios Pyodide con tests automáticos',
+                    'Prácticas y 4 hitos del proyecto incremental',
+                    '283 archivos descargables de la cursada',
                 ],
                 actions: {
                     enter: 'Entrar al sitio',
@@ -87,10 +88,9 @@ progc: {
             },
         },
     },
-    },
     tech: {
         title: 'Cómo están armados',
-        description: 'Los tres sitios viajan dentro de esta web, sin build ni dependencias externas.',
+        description: 'Los cuatro sitios viajan dentro de esta web, sin build ni dependencias externas.',
         cards: [
             {
                 title: 'Sitio estático',
@@ -102,7 +102,7 @@ progc: {
             },
             {
                 title: 'Python en el navegador',
-                body: 'Los sitios de algoritmos y estructuras corren sus laboratorios con Pyodide, con respaldo automático desde CDN si falta la copia local.',
+                body: 'Los sitios de algoritmos, estructuras y Programación Concurrente corren sus laboratorios con Pyodide, con respaldo automático desde CDN si falta la copia local.',
             },
         ],
     },

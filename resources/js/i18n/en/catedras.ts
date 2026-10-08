@@ -8,7 +8,7 @@ export const catedras = {
             prefix: '~/',
             suffix: 'courses',
         },
-        description: 'Index of the courses I teach. All three sites are static material hosted within this website.',
+        description: 'Index of the courses I teach. All four sites are static material hosted within this website.',
         buttons: {
             ayed: 'Data Structures and Algorithms',
             edd: 'Data Structures',
@@ -67,16 +67,17 @@ export const catedras = {
                     enter: 'Go to site',
                     repo: 'Repository',
                 },
-progc: {
+            },
+            progc: {
                 title: 'Concurrent Programming',
                 subtitle: 'Full course - UNaB - Theory and assignments',
-                desc: 'Interactive Programming Concurrency and Parallelism course: theory, Python labs running in the browser, practical assignments, project incremental and the full course material to download.',
-                stats: ['units', 'questions', 'assignments', 'files'],
+                desc: 'Interactive Concurrent and Parallel Programming course: theory, Python labs running in the browser, practical assignments, an incremental project and the full course material to download.',
+                stats: ['units', 'labs', 'assignments', 'files'],
                 features: [
-                    '4 units with self-assessments',
-                    '4 Pyodide labs with automatic tests',
-                    '4 incremental project milestones',
-                    '283 downloadable files organized by unit',
+                    '4 units with theory and self-assessments',
+                    '8 Pyodide labs with automatic tests',
+                    'Practical assignments and 4 project milestones',
+                    '283 downloadable course files',
                 ],
                 actions: {
                     enter: 'Go to site',
@@ -85,10 +86,9 @@ progc: {
             },
         },
     },
-    },
     tech: {
         title: 'How they are built',
-        description: 'All three sites are served within this website, with no build process or external dependencies.',
+        description: 'All four sites are served within this website, with no build process or external dependencies.',
         cards: [
             {
                 title: 'Static site',
@@ -100,7 +100,7 @@ progc: {
             },
             {
                 title: 'Python in the browser',
-                body: 'The Algorithms and Data Structures sites run their labs with Pyodide, with automatic fallback to CDN if the local copy is missing.',
+                body: 'The Algorithms, Data Structures and Concurrent Programming sites run their labs with Pyodide, with automatic fallback to CDN if the local copy is missing.',
             },
         ],
     },

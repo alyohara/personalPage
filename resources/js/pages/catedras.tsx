@@ -32,7 +32,7 @@ const courses = [
     {
         slug: 'progc',
         code: 'progc',
-        stats: ['4', '8', '4', '283'],
+        stats: ['4', '8', '2', '283'],
         site: '/materias/ProgConcurrente/',
         repo: 'https://github.com/alyohara/personalPage',
     },
@@ -95,6 +95,17 @@ export default function Catedras() {
                                     className="flex items-center gap-2"
                                 >
                                     {t.catedras.hero.buttons.ntics}
+                                    <ArrowRight className="size-4" aria-hidden="true" />
+                                </a>
+                            </Button>
+                            <Button asChild variant="outline" size="lg">
+                                <a
+                                    href="/materias/ProgConcurrente/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-2"
+                                >
+                                    {t.catedras.hero.buttons.progc}
                                     <ArrowRight className="size-4" aria-hidden="true" />
                                 </a>
                             </Button>
