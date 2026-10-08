@@ -29,44 +29,49 @@
     ],
     labs: [
       {
-        title: 'Interleavings de una sección crítica',
-        enunciado: '<p>Implementá la función <code>generar_interleavings(historia, n)</code> que devuelva todas las secuencias de intercalado de las instrucciones de <em>n</em> procesos que respetan el orden dentro de cada proceso (permutaciones con restricciones).</p>',
-        starter: 'def generar_interleavings(secuencias):\n    if not secuencias: return [ [] ]\n    primero = secuencias[0]\n    resto = generar_interleavings(secuencias[1:])\n    resultado = []\n    for i, paso in enumerate(primero):\n        for combinacion in resto:\n            resultado.append([paso] + combinacion)\n    return resultado',
+        title: 'Interleavings de procesos',
+        enunciado: '<p>Cuando varios procesos corren en una misma CPU, sus instrucciones se <strong>intercalan</strong> respetando el orden interno de cada proceso. Implementá <code>generar_interleavings(secuencias)</code>, que devuelva <em>todos</em> los intercalados posibles: para <code>[[1], [2]]</code> hay 2 (<code>[[1, 2], [2, 1]]</code>); para tres procesos de una instrucción hay 6 (3!).</p>',
+        setup: 'def intercalar_dos(a, b):\n    if not a:\n        return [list(b)]\n    if not b:\n        return [list(a)]\n    resultado = []\n    for cola in intercalar_dos(a[1:], b):\n        resultado.append([a[0]] + cola)\n    for cola in intercalar_dos(a, b[1:]):\n        resultado.append([b[0]] + cola)\n    return resultado',
+        starter: 'def generar_interleavings(secuencias):\n    resultado = [[]]\n    # TODO: para cada secuencia, intercalarla con cada intercalado acumulado\n    return resultado',
         input: '',
         inputLabel: '',
         tests: [
-          { name: 'Interleavings básicos', code: 'print(len(generar_interleavings([[1,2],[3,4]])))', mustEqual: '6' },
-          { name: 'Interleavings con 3 procesos', code: 'print(len(generar_interleavings([[1],[2],[3]])))', mustEqual: '6' }
+          { name: 'Dos procesos de dos instrucciones', code: 'print(len(generar_interleavings([[1, 2], [3, 4]])))', mustEqual: '6' },
+          { name: 'Tres procesos de una instrucción', code: 'print(len(generar_interleavings([[1], [2], [3]])))', mustEqual: '6' },
+          { name: 'Los dos intercalados de [[1], [2]]', code: 'print(generar_interleavings([[1], [2]]))', mustEqual: '[[1, 2], [2, 1]]' }
         ],
-        solution: 'def generar_interleavings(secuencias):\n    if not secuencias: return [ [] ]\n    primero = secuencias[0]\n    resto = generar_interleavings(secuencias[1:])\n    resultado = []\n    for i, paso in enumerate(primero):\n        for combinacion in resto:\n            resultado.append([paso] + combinacion)\n    return resultado',
-        solutionExp: '<p>La recursión genera todas las permutaciones intercalando el primer elemento con cada posición de las combinaciones del resto.</p>',
-        hints: ['Si tenés 2 procesos con 1 instrucción cada uno, hay 2! = 2 interleavings.', 'Con 3 procesos de 1 instrucción, hay 3! = 6 interleavings.']
+        solution: 'def generar_interleavings(secuencias):\n    resultado = [[]]\n    for seq in secuencias:\n        nuevo = []\n        for acum in resultado:\n            for inter in intercalar_dos(acum, seq):\n                nuevo.append(inter)\n        resultado = nuevo\n    return resultado',
+        solutionExp: '<p>Se arranca con el intercalado vacío y se va <em>plegando</em>: cada nueva secuencia se intercala (con <code>intercalar_dos</code>, ya definida en el setup) con todos los intercalados acumulados. Dos secuencias de 2 instrucciones dan C(4,2) = 6 intercalados; tres de una instrucción dan 3! = 6.</p>',
+        hints: ['<code>intercalar_dos</code> ya está definida en el setup: devuelve la lista de todos los intercalados de dos secuencias.', 'El plegado es un bucle: <code>resultado = [inter para cada acum, para cada inter en intercalar_dos(acum, seq)]</code>.']
       },
       {
-        title: 'Simulación de exclusión mutua con semáforos',
-        enunciado: '<p>Implementar una clase <code>Semaphore</code> con operaciones <code>wait()</code> y <code>signal()</code> usando una cola interna para simular bloqueo. Los hilos llaman a <code>wait()</code> antes de acceder a una variable compartida y <code>signal()</code> después. El test verifica que el valor final de la variable sea el esperado.</p>',
-        starter: 'class Semaphore:\n    def __init__(self, valor=1):\n        self.valor = valor\n        self.cola = []\n    def wait(self):\n        self.valor -= 1\n        if self.valor < 0:\n            self.cola.append(1)\n    def signal(self):\n        self.valor += 1\n        if self.cola:\n            self.cola.pop()',
+        title: 'Semáforo con cola de espera',
+        enunciado: '<p>Un semáforo tiene un contador y una cola de procesos bloqueados. <code>wait()</code> decrementa el contador y, si queda negativo, encola al proceso; <code>signal()</code> incrementa y desencola. Implementá la clase <code>Semaphore</code> con ese comportamiento.</p>',
+        starter: 'class Semaphore:\n    def __init__(self, valor=1):\n        self.valor = valor\n        self.cola = []\n\n    def wait(self):\n        # TODO: decrementar self.valor y encolar si quedó negativo\n        pass\n\n    def signal(self):\n        # TODO: incrementar self.valor y desencolar si había espera\n        pass',
         input: '',
         inputLabel: '',
         tests: [
-          { name: 'Semáforo básico', code: 's = Semaphore(1); s.wait(); s.signal(); print(s.valor)', mustEqual: '1' }
+          { name: 'wait y signal dejan el contador en 1', code: 's = Semaphore(1)\ns.wait()\ns.signal()\nprint(s.valor)', mustEqual: '1' },
+          { name: 'Dos waits sin signal dejan uno en cola', code: 's = Semaphore(1)\ns.wait()\ns.wait()\nprint(len(s.cola))', mustEqual: '1' }
         ],
-        solution: 'class Semaphore:\n    def __init__(self, valor=1):\n        self.valor = valor\n        self.cola = []\n    def wait(self):\n        self.valor -= 1\n        if self.valor < 0:\n            self.cola.append(1)\n    def signal(self):\n        self.valor += 1\n        if self.cola:\n            self.cola.pop()',
-        solutionExp: '<p>Después de wait() el valor pasa a 0; después de signal() vuelve a 1.</p>',
-        hints: ['El contador empieza en 1 (un solo hilo permitido).', 'signal() incrementa y vacía la cola si hay esperas.']
+        solution: 'class Semaphore:\n    def __init__(self, valor=1):\n        self.valor = valor\n        self.cola = []\n\n    def wait(self):\n        self.valor -= 1\n        if self.valor < 0:\n            self.cola.append(1)\n\n    def signal(self):\n        self.valor += 1\n        if self.cola:\n            self.cola.pop()',
+        solutionExp: '<p>Tras <code>wait()</code> el contador pasa a 0 (recurso ocupado, nadie en cola); un segundo <code>wait()</code> lo lleva a -1 y encola al proceso. <code>signal()</code> devuelve el contador y libera al primero de la cola.</p>',
+        hints: ['La cola crece solo cuando <code>self.valor &lt; 0</code> después de decrementar.', '<code>signal()</code> desencola solo si la cola no está vacía.']
       },
       {
-        title: 'Detección de condiciones de carrera',
-        enunciado: '<p>Dado el patrón <code>x = x + 1</code> (leer + sumar + escribir) ejecutado por <em>n</em> hilos sin sincronización, implementar <code>contar_interleavings_perdedores(n)</code> que devuelva la cantidad de interleavings donde el resultado final <em>no</em> es el esperado (incremento total de <em>n</em>).</p>',
-        starter: 'def contar_interleavings_perdedores(n):\n    from itertools import product\n    total = 0\n    # Simulación simplificada: cada hilo elige leer, sumar o escribir\n    # en un interleaving aleatorio; cuenta los donde el total no sea n\n    return total',
+        title: 'Lost update: cuántos interleavings pierden el incremento',
+        enunciado: '<p>El clásico <strong>lost update</strong>: dos procesos hacen <code>x = x + 1</code> sobre una variable compartida <code>x</code> (que empieza en 0). Cada proceso ejecuta tres pasos: <code>r</code> (leer <code>x</code>), <code>i</code> (sumar 1 a su copia local), <code>w</code> (escribir la copia en <code>x</code>). En el setup ya tenés <code>intercalar_dos</code>, <code>generar_interleavings</code> y <code>simular(pasos)</code>, que corre un intercalado y devuelve el valor final de <code>x</code>. Implementá <code>contar_perdedores(procesos)</code>, que devuelva cuántos intercalados terminan con un <code>x</code> <em>distinto</em> del esperado (la cantidad de procesos).</p>',
+        setup: 'def intercalar_dos(a, b):\n    if not a:\n        return [list(b)]\n    if not b:\n        return [list(a)]\n    resultado = []\n    for cola in intercalar_dos(a[1:], b):\n        resultado.append([a[0]] + cola)\n    for cola in intercalar_dos(a, b[1:]):\n        resultado.append([b[0]] + cola)\n    return resultado\n\ndef generar_interleavings(secuencias):\n    resultado = [[]]\n    for seq in secuencias:\n        nuevo = []\n        for acum in resultado:\n            for inter in intercalar_dos(acum, seq):\n                nuevo.append(inter)\n        resultado = nuevo\n    return resultado\n\ndef simular(pasos):\n    x = 0\n    local = {}\n    for proceso, op in pasos:\n        if op == \'r\':\n            local[proceso] = x\n        elif op == \'i\':\n            local[proceso] = local.get(proceso, 0) + 1\n        elif op == \'w\':\n            x = local.get(proceso, 0)\n    return x',
+        starter: 'def contar_perdedores(procesos):\n    malos = 0\n    # TODO: generar todos los intercalados y contar los que simulan mal\n    return malos',
         input: '',
         inputLabel: '',
         tests: [
-          { name: '2 hilos, resultado 2', code: 'print(contar_interleavings_perdedores(2))', mustEqual: '0' }
+          { name: 'Ejecución serial siempre da 2', code: 'print(simular([(\'A\', \'r\'), (\'A\', \'i\'), (\'A\', \'w\'), (\'B\', \'r\'), (\'B\', \'i\'), (\'B\', \'w\')]))', mustEqual: '2' },
+          { name: 'De 20 intercalados, 18 pierden el incremento', code: 'print(contar_perdedores([[(\'A\', \'r\'), (\'A\', \'i\'), (\'A\', \'w\')], [(\'B\', \'r\'), (\'B\', \'i\'), (\'B\', \'w\')]]))', mustEqual: '18' }
         ],
-        solution: 'def contar_interleavings_perdedores(n):\n    # Sin sincronización real en Pyodide single-thread; retornamos 0 para este ejercicio conceptual\n    return 0',
-        solutionExp: '<p>En un entorno real de múltiples hilos, los interleavings perdedores dependen del scheduler; aquí simulamos el caso ideal.</p>',
-        hints: ['Este ejercicio está conceptual: en Pyodide single-thread no ocurren true parallel accesses.', 'El foco está en entender por qué la sincronización importa.']
+        solution: 'def contar_perdedores(procesos):\n    malos = 0\n    for inter in generar_interleavings(procesos):\n        if simular(inter) != len(procesos):\n            malos += 1\n    return malos',
+        solutionExp: '<p>Hay C(6,3) = 20 intercalados posibles. Solo 2 dejan <code>x = 2</code> (los totalmente seriales: todo A y luego todo B, o viceversa). Los otros <strong>18</strong> tienen al menos una lectura antes de la escritura rival, así que algún incremento se pierde y <code>x</code> queda en 1. Sin exclusión mutua, el resultado es no determinista y casi siempre wrong.</p>',
+        hints: ['Reutilizá <code>generar_interleavings</code> y <code>simular</code> del setup: solo te falta contar.', 'El valor esperado es <code>len(procesos)</code>: cada proceso aporta un incremento.']
       }
     ],
     archivos: [
@@ -86,7 +91,7 @@
       { type: 'tf', t: '¿Una condición de carrera siempre produce resultados no deterministas?', opts: ['Verdadero', 'Falso'], ans: true, exp: 'Verdadero: sin sincronización adecuada, el mismo código puede producir resultados distintos cada ejecución.' },
       { type: 'fill', t: 'Completá: El <strong>mutex</strong> garantiza que, en cualquier momento, como máximo un hilo accede a la <em>sección crítica</em>.', ans: 'sección crítica', exp: 'El mutex bloquea el acceso a la sección crítica para evitar condiciones de carrera.' },
       { type: 'multi', t: '¿Qué primitivas aseguran exclusión mutua?', opts: ['A) Semáforo y mutex', 'B) Solo variables de condición', 'C) Solo threads', 'D) Solo imports'], ans: [0, 1], exp: 'Tanto el mutex como el semáforo (con valor inicial 1) pueden asegurar exclusión mutua.' },
-      { type: 'code', t: '¿Qué imprime el siguiente código?\nprint(1 if True else 0)', opts: [], ans: '1', exp: '1'}
+      { type: 'code', t: '¿Qué imprime el siguiente código?\n```\nprint(1 if True else 0)\n```', opts: ['0', '1', 'True', 'Error de sintaxis'], ans: 1, exp: 'La condición `True` es verdadera, así que `print` recibe `1`.' }
     ]
   };
 })();

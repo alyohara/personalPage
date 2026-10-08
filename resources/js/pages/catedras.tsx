@@ -99,12 +99,7 @@ export default function Catedras() {
                                 </a>
                             </Button>
                             <Button asChild variant="outline" size="lg">
-                                <a
-                                    href="/materias/ProgConcurrente/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center gap-2"
-                                >
+                                <a href="/materias/ProgConcurrente/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                                     {t.catedras.hero.buttons.progc}
                                     <ArrowRight className="size-4" aria-hidden="true" />
                                 </a>

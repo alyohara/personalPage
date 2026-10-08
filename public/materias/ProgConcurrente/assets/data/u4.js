@@ -26,16 +26,18 @@
     labs: [
       {
         title: 'Análisis de un perfil dado',
-        enunciado: '<p>Dado un diccionario <code>{etapa: fraccion}</code> que representa el tiempo dedicado a cada etapa de una ejecución, implementar <code>cuello_de_botella(frac_tiempos)</code> que devuelva la etapa dominante y el <code>max_speedup_amdahl(frac_par, p)</code> teórico máximo. Tests con casos exactos.</p>',
-        starter: 'def cuello_de_botella(frac_tiempos):\n    dominante = max(frac_tiempos, key=frac_tiempos.get)\n    return dominante, frac_tiempos[dominante]\n\ndef max_speedup_amdahl(frac_par, p):\n    if frac_par == 0: return float(\"inf\")\n    return 1 / ((1 - frac_par) + frac_par / p)',
+        enunciado: '<p>El perfilado de una ejecución dice qué fracción del tiempo se gasta en cada etapa. Implementá <code>cuello_de_botella(frac_tiempos)</code>, que reciba un diccionario <code>{etapa: fraccion}</code> y devuelva <code>(etapa, fraccion)</code> de la etapa dominante. Implementá también <code>max_speedup_amdahl(frac_par, p)</code>: la Ley de Amdahl <code>S = 1 / ((1 - P) + P / p)</code> con <code>P</code> la fracción paralelizable y <code>p</code> la cantidad de procesadores.</p>',
+        starter: 'def cuello_de_botella(frac_tiempos):\n    # TODO: devolver (etapa, fraccion) de la etapa con más fracción\n    pass\n\ndef max_speedup_amdahl(frac_par, p):\n    # TODO: devolver 1 / ((1 - frac_par) + frac_par / p)\n    pass',
         input: '',
         inputLabel: '',
         tests: [
-          { name: 'Perfil simple', code: 'p = {compilado:0.7, otros:0.3}; print(cuello_de_botella(p))', mustEqual: '(\"compilado\", 0.7)' }
+          { name: 'La etapa dominante es la que más tiempo consume', code: "print(cuello_de_botella({'compilado': 0.7, 'otros': 0.3}))", mustEqual: "('compilado', 0.7)" },
+          { name: 'Amdahl con P=0.7 y 4 procesadores', code: 'print(round(max_speedup_amdahl(0.7, 4), 2))', mustEqual: '2.11' },
+          { name: 'Amdahl con P=0.9 y 10 procesadores', code: 'print(round(max_speedup_amdahl(0.9, 10), 2))', mustEqual: '5.26' }
         ],
-        solution: 'def cuello_de_botella(frac_tiempos):\n    dominante = max(frac_tiempos, key=frac_tiempos.get)\n    return dominante, frac_tiempos[dominante]\n\ndef max_speedup_amdahl(frac_par, p):\n    if frac_par == 0: return float(\"inf\")\n    return 1 / ((1 - frac_par) + frac_par / p)',
-        solutionExp: '<p>El resultado muestra la etapa que más tiempo consume y el speedup máximo teórico alcanzable con hilos ideales.</p>',
-        hints: ['Usá <code>max()</code> con <code>key</code> para encontrar la fracción dominante.', 'La fórmula de Amdahl: S = 1 / ((1-P) + P/N).']
+        solution: 'def cuello_de_botella(frac_tiempos):\n    dominante = max(frac_tiempos, key=frac_tiempos.get)\n    return dominante, frac_tiempos[dominante]\n\ndef max_speedup_amdahl(frac_par, p):\n    if frac_par == 0:\n        return float(\'inf\')\n    return 1 / ((1 - frac_par) + frac_par / p)',
+        solutionExp: '<p>Con <code>P = 0.7</code> y 4 procesadores: <code>S = 1 / (0.3 + 0.175) ≈ 2.11</code>, lejos de 4: la parte secuencial (30%) pone el techo. Con <code>P = 0.9</code> y 10 procesadores: <code>S ≈ 5.26</code>. Optimizar la etapa dominante (70% del tiempo) es donde más se gana, no la más fácil.</p>',
+        hints: ['<code>max(d, key=d.get)</code> devuelve la clave con el mayor valor.', 'Redondear a 2 decimales antes de comparar: <code>round(x, 2)</code>.']
       }
     ],
     archivos: [
@@ -51,7 +53,7 @@
       { type: 'mcq', t: '¿Qué herramienta brinda una línea de tiempo global con métricas de CPU/GPU y memoria?', opts: ['A) Nsight Compute', 'B) Nsight Systems', 'C) torch.profiler', 'D) Pyodide'], ans: 1, exp: 'La opción B es correcta: Nsight Systems presenta una línea de tiempo global.' },
       { type: 'tf', t: '¿La metodología de optimización basada en evidencia comienza identificando cuellos de botella?', opts: ['Verdadero', 'Falso'], ans: true, exp: 'Verdadero: el primer paso es identificar los cuellos de botella antes de hipotetizar causas.' },
       { type: 'fill', t: 'Completá: <code>FlashAttention</code> reduce el acceso a memoria leyendo solo lo necesario.', ans: 'memoria', exp: 'FlashAttention accede solo a los datos necesarios, reduciendo el tráfico de memoria y mejorando el rendimiento.' },
-      { type: 'code', t: '¿Qué imprime el siguiente código?\nprint(round(1/((1-0.7)+0.7/4),2))', opts: [], ans: '0.96', exp: '0.96'}
+      { type: 'code', t: '¿Qué imprime el siguiente código?\n```\nprint(round(1 / ((1 - 0.7) + 0.7 / 4), 2))\n```', opts: ['2.11', '2.50', '4.00', '0.48'], ans: 0, exp: '`1 / (0.3 + 0.175) = 1 / 0.475 ≈ 2.11`: el techo de Amdahl con 4 procesadores.' }
     ]
   };
 })();

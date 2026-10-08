@@ -4,6 +4,7 @@
 (function () {
   'use strict';
   window.PCX = window.PCX || {};
+  PCX.tps = PCX.tps || [];
   /* Práctica 1 — enunciado PDF clásico + link a archivo */
   PCX.tps.push({
     id: 'pr-1',
