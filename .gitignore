@@ -24,3 +24,7 @@ yarn-error.log
 /.vscode
 /.zed
 /public/materias/Informatica_y_NTICs/[0-9]*/
+/public/materias/ProgConcurrente/.idea/
+/public/materias/ProgConcurrente/2022-2025/
+/public/materias/ProgConcurrente/2026/
+/public/materias/ProgConcurrente/*.pdf
