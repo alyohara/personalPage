@@ -29,6 +29,13 @@ const courses = [
         site: '/materias/Informatica_y_NTICs/',
         repo: 'https://github.com/alyohara/personalPage',
     },
+    {
+        slug: 'progc',
+        code: 'progc',
+        stats: ['4', '8', '4', '283'],
+        site: '/materias/ProgConcurrente/',
+        repo: 'https://github.com/alyohara/personalPage',
+    },
 ] as const;
 
 export default function Catedras() {

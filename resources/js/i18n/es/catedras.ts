@@ -15,6 +15,7 @@ export const catedras: EnCatedrasDict = {
             ayed: 'Algoritmos y Estructuras de Datos',
             edd: 'Estructuras de Datos',
             ntics: 'Informática y NTICs',
+            progc: 'Programación Concurrente',
         },
     },
     index: {

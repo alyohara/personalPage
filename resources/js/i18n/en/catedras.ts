@@ -13,6 +13,7 @@ export const catedras = {
             ayed: 'Data Structures and Algorithms',
             edd: 'Data Structures',
             ntics: 'Informatics and ICTs',
+            progc: 'Concurrent Programming',
         },
     },
     index: {
