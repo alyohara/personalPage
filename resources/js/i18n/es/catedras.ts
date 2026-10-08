@@ -69,8 +69,24 @@ export const catedras: EnCatedrasDict = {
                     enter: 'Entrar al sitio',
                     repo: 'Repositorio',
                 },
+progc: {
+                title: 'Programación Concurrente',
+                subtitle: 'Cátedra completa - UNaB - Teoría y TP',
+                desc: 'Curso interactivo de Programación Concurrente y Paralela: teoría, laboratorios de Python en el navegador, prácticas, proyecto incremental y material de cursada.',
+                stats: ['unidades', 'preguntas', 'TP y actividades', 'archivos'],
+                features: [
+                    '4 unidades con teoría y autoevaluaciones',
+                    '4 laboratorios Pyodide con tests automáticos',
+                    '4 hitos del proyecto incremental',
+                    '283 archivos descargables organizados por unidad',
+                ],
+                actions: {
+                    enter: 'Entrar al sitio',
+                    repo: 'Repositorio',
+                },
             },
         },
+    },
     },
     tech: {
         title: 'Cómo están armados',

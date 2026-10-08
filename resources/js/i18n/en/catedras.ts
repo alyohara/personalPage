@@ -67,8 +67,24 @@ export const catedras = {
                     enter: 'Go to site',
                     repo: 'Repository',
                 },
+progc: {
+                title: 'Concurrent Programming',
+                subtitle: 'Full course - UNaB - Theory and assignments',
+                desc: 'Interactive Programming Concurrency and Parallelism course: theory, Python labs running in the browser, practical assignments, project incremental and the full course material to download.',
+                stats: ['units', 'questions', 'assignments', 'files'],
+                features: [
+                    '4 units with self-assessments',
+                    '4 Pyodide labs with automatic tests',
+                    '4 incremental project milestones',
+                    '283 downloadable files organized by unit',
+                ],
+                actions: {
+                    enter: 'Go to site',
+                    repo: 'Repository',
+                },
             },
         },
+    },
     },
     tech: {
         title: 'How they are built',
