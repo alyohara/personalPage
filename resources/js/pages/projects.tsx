@@ -10,7 +10,7 @@ import { ArrowRight, ExternalLink } from 'lucide-react';
 
 export default function Projects() {
     const { t } = useI18n();
-    const projects = [
+    const projectCatalog = [
         {
             title: t.projects.items[0].title,
             role: t.projects.items[0].role,
@@ -210,6 +210,7 @@ export default function Projects() {
             category: t.projects.categories[5],
         },
     ] as const;
+    const projects = [11, 4, 0, 1, 21, 10, 2, 19, 3, 5, 6, 7, 8, 9, 12, 13, 14, 15, 16, 17, 18, 20].map((index) => projectCatalog[index]);
     const categories = [t.projects.filter.all, ...Array.from(new Set(projects.map((p) => p.category)))] as const;
     return (
         <PublicLayout>
