@@ -32,7 +32,7 @@ const courses = [
     {
         slug: 'progc',
         code: 'progc',
-        stats: ['4', '8', '2', '283'],
+        stats: ['4', '10', '2', '283'],
         site: '/materias/ProgConcurrente/',
         repo: 'https://github.com/alyohara/personalPage',
     },

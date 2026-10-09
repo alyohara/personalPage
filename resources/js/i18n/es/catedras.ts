@@ -77,7 +77,7 @@ export const catedras: EnCatedrasDict = {
                 stats: ['unidades', 'laboratorios', 'TP y hitos', 'archivos'],
                 features: [
                     '4 unidades con teoría y autoevaluaciones',
-                    '8 laboratorios Pyodide con tests automáticos',
+                    '10 laboratorios Pyodide con tests automáticos',
                     'Prácticas y 4 hitos del proyecto incremental',
                     '283 archivos descargables de la cursada',
                 ],

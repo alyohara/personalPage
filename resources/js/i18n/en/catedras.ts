@@ -75,7 +75,7 @@ export const catedras = {
                 stats: ['units', 'labs', 'assignments', 'files'],
                 features: [
                     '4 units with theory and self-assessments',
-                    '8 Pyodide labs with automatic tests',
+                    '10 Pyodide labs with automatic tests',
                     'Practical assignments and 4 project milestones',
                     '283 downloadable course files',
                 ],

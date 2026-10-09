@@ -39,6 +39,21 @@
         solution: 'def cuantizar(v, bits=8):\n    max_abs = max(abs(x) for x in v)\n    escala = ((2 ** (bits - 1)) - 1) / max_abs if max_abs else 1.0\n    q = [int(round(x * escala)) for x in v]\n    return q, escala\n\ndef descuantizar(q, escala):\n    return [x / escala for x in q]',
         solutionExp: '<p>Con <code>max_abs = 8.5</code> y 8 bits, <code>escala = 127 / 8.5 ≈ 14.94</code>; así <code>-3.0 → -45</code>, <code>8.5 → 127</code>. Al descuantizar, <code>-45 / 14.94 ≈ -3.01</code>: se recupera el valor original con un error de redondeo pequeño, el trade-off de la cuantización.</p>',
         hints: ['<code>escala</code> mapea el valor absoluto más grande al tope del tipo: <code>2**(bits-1) - 1</code>.', 'Para 4 bits el tope es 7, no 127: <code>7 / 3 ≈ 2.33</code>.']
+      },
+      {
+        title: 'Batching de tokens',
+        enunciado: '<p>El <code>batching</code> agrupa varias solicitudes en un lote que la GPU procesa en paralelo: el lote tarda lo que tarde el pedido más largo. Implementá <code>simular_lotes(prompts, batch_size, tokens_por_seg)</code>, que reciba una lista con la cantidad de tokens de cada pedido, el tamaño máximo del lote y los tokens/segundo del modelo, y devuelva los segundos totales (float) de atender todos los pedidos.</p>',
+        starter: 'def simular_lotes(prompts, batch_size, tokens_por_seg):\n    # TODO: cortar prompts en lotes de a batch_size\n    # TODO: cada lote tarda max(lote) / tokens_por_seg\n    # TODO: devolver el total\n    pass',
+        input: '',
+        inputLabel: '',
+        tests: [
+          { name: 'Sin batching: los pedidos se atienden uno tras otro', code: 'print(simular_lotes([10, 20], 1, 10))', mustEqual: '3.0' },
+          { name: 'Batch de a 2: el lote tarda lo del más largo', code: 'print(simular_lotes([10, 20], 2, 10))', mustEqual: '2.0' },
+          { name: 'Batch mayor que los pedidos: todo junto', code: 'print(simular_lotes([8, 8, 8], 4, 4))', mustEqual: '2.0' }
+        ],
+        solution: 'def simular_lotes(prompts, batch_size, tokens_por_seg):\n    total = 0.0\n    for i in range(0, len(prompts), batch_size):\n        lote = prompts[i:i + batch_size]\n        total += max(lote) / tokens_por_seg\n    return total',
+        solutionExp: '<p>Con <code>batch_size=1</code> los pedidos se atienden en serie: <code>10/10 + 20/10 = 3.0</code>s. Con <code>batch_size=2</code> corren juntos y el lote tarda lo del más largo: <code>20/10 = 2.0</code>s. El batching no acelera un pedido individual, pero sube el throughput total: por eso mover el <code>batch</code> cambia los tokens/segundo que mediste en el Hito 3.</p>',
+        hints: ['En un lote todo corre en paralelo: el tiempo del lote lo pone el pedido con más tokens.', '<code>range(0, len(prompts), batch_size)</code> corta la lista en lotes consecutivos.']
       }
     ],
     archivos: [

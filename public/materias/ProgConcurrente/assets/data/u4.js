@@ -38,6 +38,21 @@
         solution: 'def cuello_de_botella(frac_tiempos):\n    dominante = max(frac_tiempos, key=frac_tiempos.get)\n    return dominante, frac_tiempos[dominante]\n\ndef max_speedup_amdahl(frac_par, p):\n    if frac_par == 0:\n        return float(\'inf\')\n    return 1 / ((1 - frac_par) + frac_par / p)',
         solutionExp: '<p>Con <code>P = 0.7</code> y 4 procesadores: <code>S = 1 / (0.3 + 0.175) ≈ 2.11</code>, lejos de 4: la parte secuencial (30%) pone el techo. Con <code>P = 0.9</code> y 10 procesadores: <code>S ≈ 5.26</code>. Optimizar la etapa dominante (70% del tiempo) es donde más se gana, no la más fácil.</p>',
         hints: ['<code>max(d, key=d.get)</code> devuelve la clave con el mayor valor.', 'Redondear a 2 decimales antes de comparar: <code>round(x, 2)</code>.']
+      },
+      {
+        title: 'Speedup y eficiencia',
+        enunciado: '<p>Medir no alcanza: hay que comparar contra lo secuencial. Implementá <code>speedup_y_eficiencia(t_seq, t_par, p)</code>, que reciba el tiempo secuencial, el paralelo y la cantidad de procesadores, y devuelva <code>(speedup, eficiencia)</code> redondeados a 2 decimales: <code>speedup = t_seq / t_par</code> e <code>eficiencia = speedup / p</code>.</p>',
+        starter: 'def speedup_y_eficiencia(t_seq, t_par, p):\n    # TODO: speedup = t_seq / t_par\n    # TODO: eficiencia = speedup / p\n    # TODO: devolver (round(speedup, 2), round(eficiencia, 2))\n    pass',
+        input: '',
+        inputLabel: '',
+        tests: [
+          { name: 'Cuarto del tiempo en 8 procesadores', code: 'print(speedup_y_eficiencia(100, 25, 8))', mustEqual: '(4.0, 0.5)' },
+          { name: 'Mitad del tiempo en 4 procesadores', code: 'print(speedup_y_eficiencia(100, 50, 4))', mustEqual: '(2.0, 0.5)' },
+          { name: 'Un solo procesador: escalamiento perfecto', code: 'print(speedup_y_eficiencia(60, 60, 1))', mustEqual: '(1.0, 1.0)' }
+        ],
+        solution: 'def speedup_y_eficiencia(t_seq, t_par, p):\n    s = t_seq / t_par\n    e = s / p\n    return (round(s, 2), round(e, 2))',
+        solutionExp: '<p>Bajar de 100s a 25s con 8 procesadores da <code>speedup = 4.0</code> y <code>eficiencia = 4/8 = 0.5</code>: solo se aprovecha la mitad del hardware, señal de sobrecarga o parte secuencial (Ley de Amdahl). Un <code>speedup</code> grande con eficiencia baja convence menos que uno modesto con eficiencia alta: ambas cifras van en el informe del Hito 2/4.</p>',
+        hints: ['<code>speedup = t_secuencial / t_paralelo</code>.', '<code>eficiencia = speedup / procesadores</code>; 1.0 significa escalamiento perfecto.']
       }
     ],
     archivos: [
