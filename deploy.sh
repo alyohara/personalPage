@@ -2,6 +2,10 @@
 cd /var/www/bianco
 git pull origin master
 
+# Install locked frontend dependencies and rebuild the Vite manifest/assets.
+npm ci
+npm run build
+
 # Clear and cache routes, views, and configurations
 php artisan route:cache
 php artisan view:clear

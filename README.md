@@ -116,11 +116,13 @@ The repository includes a deploy helper script at deploy.sh.
 Typical production workflow:
 
 1. Pull latest changes
-2. Install/update dependencies
-3. Build frontend assets
+2. Install locked frontend dependencies with `npm ci`
+3. Build frontend assets with `npm run build`
 4. Run migrations if required
 5. Cache routes/config/views
 6. Restart process manager / PHP-FPM as needed
+
+`deploy.sh` performs the frontend dependency installation and build so that changes to `resources/js` are included in the deployed Vite manifest.
 
 ## Project Structure (high level)
 
