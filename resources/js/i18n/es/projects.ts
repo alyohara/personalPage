@@ -164,6 +164,12 @@ export const projects: EnProjectsDict = {
             tech: ['Drupal', 'PHP', 'Multisitio', 'Zeropoint Theme'],
             desc: 'Instalación multisite de Drupal para las entidades primarias de FEMEBA, basada en el tema Zeropoint. Publicado bajo GPLv2.',
         },
+        {
+            title: 'AulaGen — Aula Virtual Asistida por IA',
+            role: 'Creador / Desarrollador Full Stack',
+            tech: ['Laravel 12', 'React', 'TypeScript', 'PostgreSQL', 'pgvector', 'Redis', 'Docker', 'RAG'],
+            desc: 'Plataforma que transforma materiales docentes en aulas virtuales revisables, con generación de contenidos asistida por IA y un asistente estudiantil basado en fuentes.',
+        },
     ],
     categories: [
         'Código abierto',

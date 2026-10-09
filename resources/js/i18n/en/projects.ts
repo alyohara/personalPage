@@ -150,6 +150,12 @@ export const projects = {
             tech: ['Drupal', 'PHP', 'Multisite', 'Zeropoint Theme'],
             desc: 'Drupal multisite installation for FEMEBA primary entities, based on the Zeropoint theme. Released under GPLv2.',
         },
+        {
+            title: 'AulaGen — AI-Assisted Virtual Classroom',
+            role: 'Creator / Full Stack Developer',
+            tech: ['Laravel 12', 'React', 'TypeScript', 'PostgreSQL', 'pgvector', 'Redis', 'Docker', 'RAG'],
+            desc: 'Platform that turns teaching materials into reviewable virtual classrooms, with AI-assisted content generation and a source-grounded student assistant.',
+        },
     ],
     categories: ['Open Source', 'Enterprise', 'Education', 'Data & Analytics', 'Government', 'EdTech', 'Real Estate', 'Developer Tools'],
 };

@@ -200,6 +200,15 @@ export default function Projects() {
             featured: false,
             category: t.projects.categories[1],
         },
+        {
+            title: t.projects.items[21].title,
+            role: t.projects.items[21].role,
+            tech: t.projects.items[21].tech,
+            desc: t.projects.items[21].desc,
+            url: 'https://github.com/alyohara/aulagen',
+            featured: true,
+            category: t.projects.categories[5],
+        },
     ] as const;
     const categories = [t.projects.filter.all, ...Array.from(new Set(projects.map((p) => p.category)))] as const;
     return (
